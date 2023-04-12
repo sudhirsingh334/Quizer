@@ -1,0 +1,73 @@
+ <!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Welcome to Quizer</title>
+<link rel="stylesheet" href="style.css">
+<script language="javascript" src="CheckInputValidation.js"></script>
+
+
+</head>
+
+<body>
+	<h1>Welcome to Quizer</h1>
+	<form action="quizerURL" method="post" onsubmit="return validate(this)">
+		<div class="validation">		       
+	   <input type="text" name="name"placeholder="quize name"><span id="quizerErr" style="color:red"></span><br> 	
+			        
+	   <a href="#"><input type="submit"class="button" value="Submit"></a>
+	   <p id="demo"></p>
+			        
+		</div>
+</form>
+ 
+ 
+</body>
+</html> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html>
+<body>
+
+
+Name: <input type="text" id="myText" >
+
+
+<button type="button" onclick="myFunction()">Try it</button>
+  
+<p id="demo"></p>
+
+<script>
+function myFunction() {
+  var x = document.getElementById("myText");
+  var defaultVal = x.defaultValue;
+  var currentVal = x.value;
+  
+  if (defaultVal == currentVal) {
+    document.getElementById("demo").innerHTML = ""
+    + x.defaultValue + " and " + x.value
+    + "<br>";
+  } else {
+    document.getElementById("demo").innerHTML = " " + defaultVal
+    + "<br>" + currentVal;
+  }
+}
+</script>
+
+</body>
+</html>
+
+
+ -->

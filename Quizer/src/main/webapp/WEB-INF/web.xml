@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:web="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd" id="WebApp_ID" version="5.0">
+  <display-name>Quizer</display-name>
+  <welcome-file-list>
+    <welcome-file>login.html</welcome-file>
+  </welcome-file-list>
+  
+  <servlet>
+    <display-name>QuizerValidation</display-name>
+    <servlet-name>QuizerValidation</servlet-name>
+    <servlet-class>com.quizer.connection.MYSQLConnection</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>QuizerValidation</servlet-name>
+    <url-pattern>/quizerURL</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <display-name>QuizerMYConnection</display-name>
+    <servlet-name>QuizerMYConnection</servlet-name>
+    <servlet-class>com.quize.QuizerMYConnection</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>QuizerMYConnection</servlet-name>
+    <url-pattern>/QuizerAnswerURL</url-pattern>
+  </servlet-mapping>
+</web-app>
