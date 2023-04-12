@@ -7,11 +7,14 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import com.quizer.pojo.Quiz;
+
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @SuppressWarnings("serial")
 public class MYSQLConnection extends HttpServlet {
@@ -35,6 +38,9 @@ public class MYSQLConnection extends HttpServlet {
 			String dbPassword = "sudhirk";
 			Connection conn = DriverManager.getConnection(serverURL,dbUser,dbPassword);
 			PreparedStatement st = conn.prepareStatement("INSERT INTO username VALUES(?)");
+			
+			
+			
 			st.setString(1, quizerName);
 			st.executeUpdate();
 		} catch (SQLException e) {
@@ -44,7 +50,12 @@ public class MYSQLConnection extends HttpServlet {
 		  try {
 			    if (quizerName != null) {  	
 			    RequestDispatcher rd =req.getRequestDispatcher("Quizer.jsp");
-			    req.setAttribute("quizerName", quizerName);
+			    Quiz quiz = new Quiz();
+				quiz.setName(quizerName);
+		        
+				HttpSession session=req.getSession(true); 
+				session.setAttribute("Quiz", quiz);
+
 			    rd.include(req,res);
 			 } 
 			  else {

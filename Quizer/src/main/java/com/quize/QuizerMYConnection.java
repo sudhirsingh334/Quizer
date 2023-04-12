@@ -1,62 +1,79 @@
 package com.quize;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+
+import com.quizer.pojo.Answer;
+import com.quizer.pojo.Question;
+import com.quizer.pojo.Quiz;
+
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import jakarta.servlet.http.HttpSession;
 
 public class QuizerMYConnection extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		
-	String radioOprion = req.getParameter("ans");
-		
-		try {
-			res.setContentType("text/html");
+		PrintWriter pw=res.getWriter();
 
-			try {
-				Class.forName("com.mysql.cj.jdbc.Driver");
-			} catch (ClassNotFoundException e) {
-				
-				e.printStackTrace();
+		String button = req.getParameter("action-button");
+		String questionTitle = req.getParameter("question");
+
+		if (button.equalsIgnoreCase("Next")) {
+			HttpSession  session = req.getSession(false);
+			
+			if (session == null) {
+				pw.print("Session expired. <a href='login.html'><input type='submit'class='button' value='Submit'>Click here to restart.</a>");
+				return;
+			}
+
+			Quiz quiz = (Quiz) session.getAttribute("Quiz");
+			Question question = new Question();
+			
+			question.setTitle(questionTitle);
+			//Add Answers
+			Answer answer1 = new Answer("Option1");
+			Answer answer2 = new Answer("Option1");
+			
+			question.add(answer1);
+			question.add(answer2);
+			quiz.addQuestion(question);
+			
+			session.setAttribute("Quiz", quiz);
+			
+		    RequestDispatcher rd =req.getRequestDispatcher("Quizer.jsp");
+		    rd.include(req,res);
+		} else {
+			System.out.println("Done Button"+button);
+			HttpSession  session = req.getSession(false);
+			
+			if (session == null) {
+				pw.print("Session expired. <a href='login.html'><input type='submit'class='button' value='Submit'>Click here to restart.</a>");
+				return;
 			}
 			
-           String serverURL="jdbc:mysql://localhost:3306/quizer";
-           String dbUser="sudhirk";
-           String dbPassword="sudhirk";
-
-           
-			Connection conn = DriverManager.getConnection(serverURL,dbUser,dbPassword);
-
-			PreparedStatement st = conn.prepareStatement("INSERT INTO quizerdata VALUES(?)");
-			st.setString(1, radioOprion);
-			st.executeUpdate();
-
-		} 
-		catch(SQLException e) {
-			System.out.print("SQL Exception is::"+e.getMessage());
+			Quiz quiz = (Quiz) session.getAttribute("Quiz");
 			
+			if (questionTitle != null) {
+				Question question = new Question();
+				question.setTitle(questionTitle);
+				
+				//Add Answers
+				Answer answer1 = new Answer("Option1");
+				Answer answer2 = new Answer("Option1");
+				
+				question.add(answer1);
+				question.add(answer2);
+				quiz.addQuestion(question);
+			}
+						
+			//Save Quiz into Database
+
 		}
-		
-		 try {
-			 if (radioOprion != null) {
-			  RequestDispatcher rd =req.getRequestDispatcher("QuizerName.html"); 
-			  rd.forward(req, res); 
-			  } 
-		   else {
-		  RequestDispatcher rd = req.getRequestDispatcher("Quizer.html");
-		  rd.forward(req, res);
-		  
-		  } 
-		 } catch (Exception e){ 
-			  System.out.println(e.getMessage()); 
-			  }	
 	}
 }
