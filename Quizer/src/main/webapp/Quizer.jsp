@@ -23,8 +23,8 @@ input {
 	background-color: DodgerBlue;
 	color: white;
 	border-color: DodgerBlue;
-	padding: 10px;
-	width: 80px;
+	
+	width:65px;
 	border-radius: 3px;
 	margin-left: 40%;
 	margin-bottom: 40%;
@@ -34,8 +34,8 @@ input {
 	background-color: DodgerBlue;
 	color: white;
 	border-color: DodgerBlue;
-	padding: 10px;
-	width: 70px;
+	padding:px;
+	width:0px;
 	border-radius: 3px;
 	margin-left: 20%;
 	margin-bottom: -2%;
@@ -65,19 +65,19 @@ Quiz quiz = (Quiz)request.getSession().getAttribute("Quiz");
 out.print("welcome "+quiz.getName());  
 %>
 
-	<form action="QuizerAnswerURL" method="post"
-		onsubmit="return validate(this)">
+	<form action="QuizerAnswerURL" method="post" action="QuizerName.html">
+		
 		<div id="container">
 			<%
 			ArrayList<Question> questionList = quiz.getQuestionList();
 			String quetionNumber = "Q";
 			if (questionList == null) {
 				quetionNumber += "1";
-				
 			} else {
 				quetionNumber += questionList.size()+1;
 			}
-			out.print(quetionNumber);  
+			out.print(quetionNumber); 
+		/* 	out.print("Q"+quiz.getQuestionList().size()+1);   */
 			%>
 			<input type="text" name="question" placeholder="Type Quetion Here"><br></br>
 
@@ -89,20 +89,13 @@ out.print("welcome "+quiz.getName());
 				</div>
 
 			</div>
-
-
-
 		</div>
-
-
 
 		<div class="nextButton">
 			<input type="submit" name="action-button" value="Next" class="button" />
 		</div>
 
 		<input type="submit" name="action-button" value="Done" class="button" />
-
-		</div>
 	</form>
 
 

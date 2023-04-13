@@ -2,11 +2,13 @@ package com.quize;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
+
+import javax.swing.JButton;
 
 import com.quizer.pojo.Answer;
 import com.quizer.pojo.Question;
 import com.quizer.pojo.Quiz;
+import com.quizer.service.PersistentHelper;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -73,7 +75,20 @@ public class QuizerMYConnection extends HttpServlet {
 			}
 						
 			//Save Quiz into Database
+		
+			boolean isSucceded = PersistentHelper.singleton.save(quiz);
+			//Once saved print success message
+			if (isSucceded) {
+				/* pw.write("Quiz "+quiz.getName()+ " has been created successfuly."); */
+				  RequestDispatcher rd =req.getRequestDispatcher("QuizerName.html");
+				  rd.forward(req,res);
+			}
+			else {
+				pw.write("Failed to create quiz, please retry.");
+			}
+
 
 		}
+		
 	}
 }
