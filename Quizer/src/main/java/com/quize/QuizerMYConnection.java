@@ -79,7 +79,7 @@ public class QuizerMYConnection extends HttpServlet {
 			boolean isSucceded = PersistentHelper.singleton.save(quiz);
 			//Once saved print success message
 			if (isSucceded) {
-				/* pw.write("Quiz "+quiz.getName()+ " has been created successfuly."); */
+				 pw.write("Quiz "+quiz.getName()+ " has been created successfuly.");
 				  RequestDispatcher rd =req.getRequestDispatcher("QuizerName.html");
 				  rd.forward(req,res);
 			}

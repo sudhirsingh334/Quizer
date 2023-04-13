@@ -23,8 +23,7 @@ input {
 	background-color: DodgerBlue;
 	color: white;
 	border-color: DodgerBlue;
-	
-	width:65px;
+	width: 65px;
 	border-radius: 3px;
 	margin-left: 40%;
 	margin-bottom: 40%;
@@ -34,8 +33,8 @@ input {
 	background-color: DodgerBlue;
 	color: white;
 	border-color: DodgerBlue;
-	padding:px;
-	width:0px;
+	padding: px;
+	width: 0px;
 	border-radius: 3px;
 	margin-left: 20%;
 	margin-bottom: -2%;
@@ -58,15 +57,13 @@ input {
 
 </head>
 <body>
-	<%@ page import="com.quizer.pojo.*"%>
-	<%@ page import="java.util.*"%>
-	<%
+<%@ page import="com.quizer.pojo.*"%>
+<%@ page import="java.util.*"%>
+<%
 Quiz quiz = (Quiz)request.getSession().getAttribute("Quiz");  
 out.print("welcome "+quiz.getName());  
 %>
-
 	<form action="QuizerAnswerURL" method="post" action="QuizerName.html">
-		
 		<div id="container">
 			<%
 			ArrayList<Question> questionList = quiz.getQuestionList();
@@ -83,7 +80,6 @@ out.print("welcome "+quiz.getName());
 
 			<div>
 				<input type="text" name="ans" id="radioErro1" value="OPtion1">Option1<br></br>
-				<input type="text" name="ans" id="radioErro2" value="OPtion2">Option2<br></br>
 				<div class="add">
 					<a href="#" onClick="return addoptions(this)">+Add Option</a>
 				</div>
