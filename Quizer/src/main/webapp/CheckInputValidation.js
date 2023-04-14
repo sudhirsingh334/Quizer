@@ -8,7 +8,8 @@ function validate(frm) {
 	let vflag=true;
 		if (quizerName == "") {
 					vflag=false;
-		document.getElementById("quizerErr").innerHTML = "Quizer name is required";
+		document.getElementById("quizerErr").innerHTML=
+		"name is required";
 	}
 	else if (quizerName.lenght < 5 || quizerName.lenght > 10) {
 				vflag=false;

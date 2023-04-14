@@ -23,6 +23,7 @@ public class Question {
 		answerList.add(answer);
 	}
 	
-	
-	
+	public void setAnswerList(ArrayList<Answer> answerList) {
+		this.answerList = answerList;
+	}
 }

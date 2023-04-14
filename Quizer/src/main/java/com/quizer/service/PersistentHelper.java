@@ -3,11 +3,17 @@ package com.quizer.service;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.UUID;
 
-import com.quizer.pojo.*;
+import com.database.QuizDAO;
+import com.quizer.pojo.Answer;
+import com.quizer.pojo.Question;
+import com.quizer.pojo.Quiz;
+
 
 public class PersistentHelper {
 
@@ -83,6 +89,44 @@ public class PersistentHelper {
 
 		}
 		return true;
+	}
+	
+	public ArrayList<QuizDAO> getQuizList() {
+		ArrayList<QuizDAO> quizList = new ArrayList<QuizDAO>();
+		
+		try {
+			try {
+				Class.forName("com.mysql.cj.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+				return quizList;
+			}
+
+			String serverURL = "jdbc:mysql://localhost:3306/quizer";
+			String dbUser = "sudhirk";
+			String dbPassword = "sudhirk";
+
+			try (Connection connection = DriverManager.getConnection(serverURL, dbUser, dbPassword)) {
+				try (PreparedStatement stmt = connection
+						.prepareStatement("SELECT * FROM Quiz")) {
+					ResultSet rs = stmt.executeQuery();
+					
+					while (rs.next()) {
+						QuizDAO quizDAO = new QuizDAO();
+						quizDAO.setId(rs.getString("id"));
+						quizDAO.setTitle(rs.getString("title"));
+						quizList.add(quizDAO);
+					}
+				}
+			}
+
+		} catch (SQLException e) {
+			System.out.print("SQL Exception is::" + e.getMessage());
+			return quizList;
+
+		}
+		
+		return quizList;
 	}
 
 }

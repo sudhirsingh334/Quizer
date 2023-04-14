@@ -2,7 +2,7 @@ package com.quizer.pojo;
 
 public class Answer {
 	private String title;
-	private boolean isCorrect;
+	private boolean isCorrect = false;
 	
 	public Answer(String title) {
 		this.title = title;

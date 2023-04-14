@@ -2,8 +2,7 @@ package com.quize;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-
-import javax.swing.JButton;
+import java.util.ArrayList;
 
 import com.quizer.pojo.Answer;
 import com.quizer.pojo.Question;
@@ -23,72 +22,70 @@ public class QuizerMYConnection extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		PrintWriter pw=res.getWriter();
 
-		String button = req.getParameter("action-button");
+		HttpSession  session = req.getSession(false);
+		
+		if (session == null) {
+			pw.print("Session expired. <a href='login.html'><input type='submit'class='button' value='Submit'>Click here to restart.</a>");
+			return;
+		}
+		
 		String questionTitle = req.getParameter("question");
+		String answerTitle = null;
+		String isCorrectOption = "false";
+		int optionNumber = 1;
+		
+		ArrayList<Answer> answerList = new ArrayList<Answer>();
+		
+		do {
+			answerTitle = req.getParameter("answer"+optionNumber);
 
-		if (button.equalsIgnoreCase("Next")) {
-			HttpSession  session = req.getSession(false);
-			
-			if (session == null) {
-				pw.print("Session expired. <a href='login.html'><input type='submit'class='button' value='Submit'>Click here to restart.</a>");
-				return;
+			if (answerTitle != null) {
+				isCorrectOption =  req.getParameter("answer-radio"+optionNumber);
+
+				Answer answer = new Answer(answerTitle);
+
+				if (isCorrectOption != null && isCorrectOption.equalsIgnoreCase("on")) {
+					answer.setCorrect(true);;
+				}
+
+				answerList.add(answer);
+				++optionNumber;
 			}
 
-			Quiz quiz = (Quiz) session.getAttribute("Quiz");
-			Question question = new Question();
-			
-			question.setTitle(questionTitle);
-			//Add Answers
-			Answer answer1 = new Answer("Option1");
-			Answer answer2 = new Answer("Option1");
-			
-			question.add(answer1);
-			question.add(answer2);
-			quiz.addQuestion(question);
-			
-			session.setAttribute("Quiz", quiz);
-			
+		} while (answerTitle != null);
+		
+
+
+		Quiz quiz = (Quiz) session.getAttribute("Quiz");
+		Question question = new Question();
+		
+		question.setTitle(questionTitle);
+		question.setAnswerList(answerList);
+		
+		quiz.addQuestion(question);
+		
+		session.setAttribute("Quiz", quiz);
+		
+		String button = req.getParameter("action-button");
+		
+		if (button.equalsIgnoreCase("Next")) {
+
 		    RequestDispatcher rd =req.getRequestDispatcher("Quizer.jsp");
 		    rd.include(req,res);
 		} else {
-			System.out.println("Done Button"+button);
-			HttpSession  session = req.getSession(false);
-			
-			if (session == null) {
-				pw.print("Session expired. <a href='login.html'><input type='submit'class='button' value='Submit'>Click here to restart.</a>");
-				return;
-			}
-			
-			Quiz quiz = (Quiz) session.getAttribute("Quiz");
-			
-			if (questionTitle != null) {
-				Question question = new Question();
-				question.setTitle(questionTitle);
-				
-				//Add Answers
-				Answer answer1 = new Answer("Option1");
-				Answer answer2 = new Answer("Option1");
-				
-				question.add(answer1);
-				question.add(answer2);
-				quiz.addQuestion(question);
-			}
-						
 			//Save Quiz into Database
-		
 			boolean isSucceded = PersistentHelper.singleton.save(quiz);
+			
 			//Once saved print success message
 			if (isSucceded) {
 				 pw.write("Quiz "+quiz.getName()+ " has been created successfuly.");
 				  RequestDispatcher rd =req.getRequestDispatcher("QuizerName.html");
+				  
 				  rd.forward(req,res);
 			}
 			else {
 				pw.write("Failed to create quiz, please retry.");
 			}
-
-
-		}
-		
+		}	
 	}
 }
