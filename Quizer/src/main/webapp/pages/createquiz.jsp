@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>Welcome to Quizer</title>
 <link rel="stylesheet" href="#">
-<script language="javascript" src="scripts/CheckInputValidation.js"></script>
+<script language="javascript" src="../scripts/validator.js"></script>
 
 <style type="text/css">
 body{
@@ -64,7 +64,7 @@ h1{
 <div class="validation">
 	<h1><em>Welcome to Quizer</em></h1>
 	
-	<form action="quizmanager" method="post" onsubmit="return validate(this)">
+	<form action="quizmanager" method="post" onsubmit="return validateQuizName(this)">
 			    <input type="text" name="quizname" placeholder="quize name"><br>
 			    <span id="quizerError" style="color: red"><%=request.getAttribute("ERRORMESSAGE") != null ?  request.getAttribute("ERRORMESSAGE"):""%></span><br> <a href="#">
 				<input type="submit" class="button" value="Submit"></a>

@@ -31,11 +31,11 @@ background-image: url("https://www.ltjss.net/images/college-list/pcenagpur.jpg")
 
 	<script>
     function openCreateQuizPage() {
-      window.location.href = "createquiz.jsp";
+      window.location.href = "pages/createquiz.jsp";
     }
     
     function openQuizListPage() {
-        window.location.href = "QuizList.jsp";
+        window.location.href = "pages/QuizList.jsp";
       }
   </script>
 </body>

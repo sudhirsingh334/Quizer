@@ -119,7 +119,7 @@ out.write("</em>");
     out.write("</html>");
 %>
 	<div class="validation">
-		<form action="QuizerAnswerURL" method="post" action="QuizerName.html">
+		<form action="addquestion" method="post">
 			<table id="answer-options-table" style="width:100%">
 				<tr>
 					<td style="text-align:right">

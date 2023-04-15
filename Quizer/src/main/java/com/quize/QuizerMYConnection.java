@@ -70,7 +70,7 @@ public class QuizerMYConnection extends HttpServlet {
 		
 		if (button.equalsIgnoreCase("Next")) {
 
-		    RequestDispatcher rd =req.getRequestDispatcher("Quizer.jsp");
+		    RequestDispatcher rd =req.getRequestDispatcher("addquestion.jsp");
 		    rd.include(req,res);
 		} else {
 			//Save Quiz into Database

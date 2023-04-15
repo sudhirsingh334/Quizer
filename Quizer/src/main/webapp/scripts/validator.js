@@ -1,6 +1,6 @@
 
 
-function validate(form) {
+function validateQuizName(form) {
 	document.getElementById("quizerError").innerHTML = "";
 	
 	var quizerName = form.quizname.value;
