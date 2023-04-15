@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>Welcome to Quizer</title>
 <link rel="stylesheet" href="#">
-<script language="javascript" src="CheckInputValidation.js"></script>
+<script language="javascript" src="scripts/CheckInputValidation.js"></script>
 
 <style type="text/css">
 body{
