@@ -24,7 +24,8 @@ function validate() {
 	
 	
 	}
-	function addoptions() {
+	/*function addoptions() 
+	{
          var radiobox = document.createElement('input');
          radiobox.type = 'radio';
          radiobox.id = 'num';
@@ -45,5 +46,16 @@ function validate() {
 
 
 
-      }
+      }*/
+
+
+
+
+function createFunction() {
+	alert("Hiii");
+    var x = document.createElement("INPUT");
+    x.setAttribute("type", "text");
+    x.setAttribute("value", "Hello Pritam !");
+    document.body.appendChild(x);
+}
 

@@ -4,12 +4,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Welcome to Quizer</title>
-<link rel="stylesheet" href="style.c	">
+<link rel="stylesheet" href="#">
 <script language="javascript" src="CheckInputValidation.js"></script>
+
 <style type="text/css">
-
-
-
 body{
 	background-image: url(https://www.nshm.com/wp-content/uploads/2021/04/bba01.jpg);
 }
@@ -40,10 +38,7 @@ h1{
       margin-left:42%;
       margin-bottom:60%;
       margin-top:5%;
-       padding-bottom: 10px;
-      
-            
-      
+      padding-bottom: 10px;
       }
       .validation{
             margin-left:37%;
@@ -57,9 +52,6 @@ h1{
              padding-bottom: 1px;
              padding-top: 10px;
              border: 1px solid white;
-             
-              
-             
       
       }
 </style>
@@ -72,54 +64,10 @@ h1{
 	
 	<form action="quizerURL" method="post" onsubmit="return validate(this)">
 		
-			<input type="text" name="name" placeholder="quize name"><span
-				id="quizerErr" style="color: red"></span><br> <a href="#"><input
-				type="submit" class="button" value="Submit"></a>
-			<p id="demo"></p>
-
-		</div>
-	
+			    <input type="text" name="name" placeholder="quize name"><span id="quizerErr" style="color: red"></span><br> <a href="#">
+				<input type="submit" class="button" value="Submit"></a>
+		
 	</form>
-
-
+	</div>
 </body>
 </html>
-
-
-
-
-
-<!-- <!DOCTYPE html>
-<html>
-<body>
-
-
-Name: <input type="text" id="myText" >
-
-
-<button type="button" onclick="myFunction()">Try it</button>
-  
-<p id="demo"></p>
-
-<script>
-function myFunction() {
-  var x = document.getElementById("myText");
-  var defaultVal = x.defaultValue;
-  var currentVal = x.value;
-  
-  if (defaultVal == currentVal) {
-    document.getElementById("demo").innerHTML = ""
-    + x.defaultValue + " and " + x.value
-    + "<br>";
-  } else {
-    document.getElementById("demo").innerHTML = " " + defaultVal
-    + "<br>" + currentVal;
-  }
-}
-</script>
-
-</body>
-</html>
-
-
- -->
