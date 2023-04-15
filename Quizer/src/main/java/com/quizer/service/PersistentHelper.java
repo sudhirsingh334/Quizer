@@ -128,7 +128,7 @@ public class PersistentHelper {
 		return quizList;
 	}
 
-	Quiz getQuiz(String quizName) {
+	public Quiz getQuiz(String quizName) {
 		Quiz quiz = null;
 		try {
 			try {
@@ -143,7 +143,7 @@ public class PersistentHelper {
 			String dbPassword = "sudhirk";
 
 			try (Connection connection = DriverManager.getConnection(serverURL, dbUser, dbPassword)) {
-				try (PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Quiz WHERE title='?'")) {
+				try (PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Quiz WHERE title=?")) {
 					stmt.setString(1, quizName);
 					ResultSet rs = stmt.executeQuery();
 					if (rs.next()) {
@@ -158,7 +158,7 @@ public class PersistentHelper {
 			}
 
 		} catch (SQLException e) {
-			System.out.print("SQL Exception is::" + e.getMessage());
+			System.out.print("SQL Exception is::" + e.getStackTrace());
 			return quiz;
 
 		}

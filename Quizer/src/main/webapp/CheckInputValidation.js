@@ -1,25 +1,22 @@
 
 
-function validate(frm) {
-
-	document.getElementById("quizerErr").innerHTML = "";
+function validate(form) {
+	document.getElementById("quizerError").innerHTML = "";
 	
-	var quizerName = frm.name.value;
-	let vflag=true;
-		if (quizerName == "") {
-					vflag=false;
-		document.getElementById("quizerErr").innerHTML=
-		"name is required";
+	var quizerName = form.quizname.value;
+	let vflag = true;
+	
+	if (quizerName == "") {
+		vflag = false;
+		document.getElementById("quizerError").innerHTML = "Quiz name is required.";
 	}
-	else if (quizerName.lenght < 5 || quizerName.lenght > 10) {
-				vflag=false;
-		document.getElementById("quizerErr").innerHTML = "Quizer name must have min 5 letters and max of 10 required";
-
-
+	else if (quizerName.length < 5 || quizerName.length > 50) {
+		vflag = false;
+		document.getElementById("quizerError").innerHTML = "Quiz name must have min 5 letters and max of 50.";
 	}
-	else{
-		document.getElementById("quizerErr").innerHTML = "";
+	else {
+		document.getElementById("quizerError").innerHTML = "";
 	}
+	
 	return vflag;
-	
 }

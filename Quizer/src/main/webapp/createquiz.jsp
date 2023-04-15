@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 <html>
@@ -62,11 +64,10 @@ h1{
 <div class="validation">
 	<h1><em>Welcome to Quizer</em></h1>
 	
-	<form action="quizerURL" method="post" onsubmit="return validate(this)">
-		
-			    <input type="text" name="name" placeholder="quize name"><span id="quizerErr" style="color: red"></span><br> <a href="#">
+	<form action="quizmanager" method="post" onsubmit="return validate(this)">
+			    <input type="text" name="quizname" placeholder="quize name"><br>
+			    <span id="quizerError" style="color: red"><%=request.getAttribute("ERRORMESSAGE") != null ?  request.getAttribute("ERRORMESSAGE"):""%></span><br> <a href="#">
 				<input type="submit" class="button" value="Submit"></a>
-		
 	</form>
 	</div>
 </body>

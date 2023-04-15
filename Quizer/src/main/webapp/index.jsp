@@ -31,7 +31,7 @@ background-image: url("https://www.ltjss.net/images/college-list/pcenagpur.jpg")
 
 	<script>
     function openCreateQuizPage() {
-      window.location.href = "login.html";
+      window.location.href = "createquiz.jsp";
     }
     
     function openQuizListPage() {

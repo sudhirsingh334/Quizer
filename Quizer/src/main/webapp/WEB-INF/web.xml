@@ -4,26 +4,32 @@
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
-  
   <servlet>
     <display-name>QuizerValidation</display-name>
     <servlet-name>QuizerValidation</servlet-name>
     <servlet-class>com.quizer.connection.MYSQLConnection</servlet-class>
   </servlet>
-  
   <servlet-mapping>
     <servlet-name>QuizerValidation</servlet-name>
     <url-pattern>/quizerURL</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <display-name>QuizerMYConnection</display-name>
     <servlet-name>QuizerMYConnection</servlet-name>
     <servlet-class>com.quize.QuizerMYConnection</servlet-class>
   </servlet>
-  
   <servlet-mapping>
     <servlet-name>QuizerMYConnection</servlet-name>
     <url-pattern>/QuizerAnswerURL</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>QuizManagerServlet</display-name>
+    <servlet-name>QuizManagerServlet</servlet-name>
+    <servlet-class>com.quizer.servlet.QuizManagerServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>QuizManagerServlet</servlet-name>
+    <url-pattern>/quizmanager</url-pattern>
   </servlet-mapping>
 </web-app>
