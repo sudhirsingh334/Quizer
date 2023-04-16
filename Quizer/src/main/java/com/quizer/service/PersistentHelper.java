@@ -211,4 +211,37 @@ public class PersistentHelper {
 		}
 		return quizHost;
 	}
+	
+	public boolean saveQuizHost(QuizHostDAO quizHost) {
+		boolean status = false;
+		try {
+			try {
+				Class.forName("com.mysql.cj.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+				return status;
+			}
+
+			String serverURL = "jdbc:mysql://localhost:3306/quizer";
+			String dbUser = "sudhirk";
+			String dbPassword = "sudhirk";
+
+			try (Connection connection = DriverManager.getConnection(serverURL, dbUser, dbPassword)) {
+				try (PreparedStatement stmt = connection.prepareStatement("INSERT INTO QuizHost (id, quizId, hostedAt, quizCode) VALUES (?, ?, ?, ?)")) {
+					stmt.setString(1, quizHost.getId());
+					stmt.setString(2, quizHost.getQuizId());
+					stmt.setString(3, quizHost.getHostedAt());
+					stmt.setString(4, quizHost.getQuizCode());
+					stmt.executeUpdate();
+					status = true;
+				}
+			}
+
+		} catch (SQLException e) {
+			System.out.print("SQL Exception is::" + e.getStackTrace());
+			return status;
+
+		}
+		return status;
+	}
 }
