@@ -29,34 +29,17 @@ name {
 </style>
 </head>
 <body>
-	<%@ page import="java.util.*"%>
+	<%@ page import="jakarta.servlet.http.*"%>
 
-	<%
-	class QuizCodeHelper {
-		String generateQuizCode(int len) {
-			String numbers = "0123456789";
-			Random rndm_method = new Random();
-
-			String quizCode = "";
-
-			for (int i = 0; i < len; i++) {
-				quizCode += numbers.charAt(rndm_method.nextInt(numbers.length()));
-			}
-
-			return quizCode;
-		}
-	}
-	%>
 	<div class="name">
 		<div>
 			<h1 id='quizeCode'>
 				<%
-				String code = (new QuizCodeHelper()).generateQuizCode(9);
-				out.write(code);
-				String quizeId = request.getParameter("start-button");
-				
-				out.write("quize id:"+quizeId);
-				
+				HttpSession localSession = request.getSession(false);
+				String quizCode = (String) localSession.getAttribute("current-quiz-code");
+				String quizId = (String) localSession.getAttribute("current-quiz-id");
+				out.write(quizCode);				
+				out.write("<br>quize id:"+quizId);
 				%>
 			</h1>
 			<button onclick="copyElementText('quizeCode')">Copy</button>

@@ -5,12 +5,12 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.UUID;
 
 import com.database.QuizDAO;
+import com.database.QuizHostDAO;
 import com.quizer.pojo.Answer;
 import com.quizer.pojo.Question;
 import com.quizer.pojo.Quiz;
@@ -163,5 +163,52 @@ public class PersistentHelper {
 
 		}
 		return quiz;
+	}
+	
+	public boolean isQuizAlreadyHostedWithCode(String quizCode) {
+		return this.getQuizHost(quizCode) != null;
+	}
+	
+	public QuizHostDAO getQuizHost(String quizCode) {
+		QuizHostDAO quizHost = null;
+		try {
+			try {
+				Class.forName("com.mysql.cj.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+				return quizHost;
+			}
+
+			String serverURL = "jdbc:mysql://localhost:3306/quizer";
+			String dbUser = "sudhirk";
+			String dbPassword = "sudhirk";
+
+			try (Connection connection = DriverManager.getConnection(serverURL, dbUser, dbPassword)) {
+				try (PreparedStatement stmt = connection.prepareStatement("SELECT * FROM QuizHost WHERE quizId=?")) {
+					stmt.setString(1, quizCode);
+					ResultSet rs = stmt.executeQuery();
+					if (rs.next()) {
+						String hostId = rs.getString("id");
+						String quizId = rs.getString("quizId");
+						String hostedAt = rs.getString("hostedAt");
+						String hostQuizCode = rs.getString("quizCode");
+
+						if (hostQuizCode != null && quizId != null) {
+							quizHost = new QuizHostDAO();
+							quizHost.setId(hostId);
+							quizHost.setQuizCode(hostQuizCode);
+							quizHost.setQuizId(quizId);
+							quizHost.setHostedAt(hostedAt);
+						}
+					}
+				}
+			}
+
+		} catch (SQLException e) {
+			System.out.print("SQL Exception is::" + e.getStackTrace());
+			return quizHost;
+
+		}
+		return quizHost;
 	}
 }

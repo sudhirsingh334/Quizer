@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>QuizList</title>
+<script type="text/javascript" src="../scripts/jquery.min.js"></script>
 <style type="text/css">
 body{
 background-image: url(https://www.collegedekho.com/_next/image?url=https%3A%2F%2Fimg.collegedekhocdn.com%2Fmedia%2Fimg%2Finstitute%2Fcrawled_images%2Fadmmvnelkwve.jpg&w=640&q=75);
@@ -45,28 +46,29 @@ margin-left: 38%;
 </head>
 
 <body>
+<div id="login_for_review" class="modal hide"  role="dialog">
+
+</div>
+ <a th:if="${ratingSummary}" href="#"  class="small dark account review_ratings_login">Login to write a review</a>
+<form action="PrepareQuizServlet" method="POST">
+
 	<%@ page import="java.util.*"%>
 	<%@ page import="com.quizer.service.*"%>
 	<%@ page import="com.database.*"%>
-	<h1>Welcom to The Quiz List</h1>
+	<h1>Quiz Library</h1>
  <%
  ArrayList<QuizDAO> quizList = PersistentHelper.singleton.getQuizList();
  Iterator<QuizDAO> it = quizList.iterator();
- 
+
  while (it.hasNext()) {
 	 QuizDAO  quiz = it.next();
-	
-	 out.write("<html>");
-	 out.write("<head>");
-	 out.write("</head>");
-	 out.write("<body>");
+
 	 out.write("<div class='quizeListColor'>");
 	 
-	 out.write(String.format("<p1 style='color:none'>%s</p1><button name=\"start-button\" value=\"%s\" onclick=\"window.location.href = 'startQuiz.jsp';\">Start</button><br></br><br></br>", quiz.getTitle(), quiz.getId()));
+	 out.write(String.format("<p1 style='color:none'>%s</p1><button name=\"start-button\" value=\"%s\">Start</button><br></br><br></br>", quiz.getTitle(), quiz.getId()));
 	 out.write("</div>");
-	 out.write("</body>");
-	 out.write("</html>");
  }
 %>
+</form>
 </body>
 </html>
