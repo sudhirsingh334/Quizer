@@ -62,7 +62,7 @@ margin-left: 38%;
 	 out.write("<body>");
 	 out.write("<div class='quizeListColor'>");
 	 
-	 out.write(String.format("<p1 style='color:none'>%s</p1><button id=\"%s\" onclick=\"window.location.href = 'startQuiz.jsp';\">Start</button><br></br><br></br>", quiz.getTitle(), quiz.getId()));
+	 out.write(String.format("<p1 style='color:none'>%s</p1><button name=\"start-button\" value=\"%s\" onclick=\"window.location.href = 'startQuiz.jsp';\">Start</button><br></br><br></br>", quiz.getTitle(), quiz.getId()));
 	 out.write("</div>");
 	 out.write("</body>");
 	 out.write("</html>");

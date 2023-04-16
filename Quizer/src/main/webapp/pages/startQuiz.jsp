@@ -53,6 +53,10 @@ name {
 				<%
 				String code = (new QuizCodeHelper()).generateQuizCode(9);
 				out.write(code);
+				String quizeId = request.getParameter("start-button");
+				
+				out.write("quize id:"+quizeId);
+				
 				%>
 			</h1>
 			<button onclick="copyElementText('quizeCode')">Copy</button>
