@@ -1,3 +1,4 @@
+<%@page import="org.apache.catalina.core.ThreadLocalLeakPreventionListener"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -30,6 +31,7 @@ name {
 </head>
 <body>
 	<%@ page import="jakarta.servlet.http.*"%>
+	<%@ page import="com.database.*"%>
 
 	<div class="name">
 		<div>
@@ -38,22 +40,39 @@ name {
 				HttpSession localSession = request.getSession(false);
 				String quizCode = (String) localSession.getAttribute("current-quiz-code");
 				String quizId = (String) localSession.getAttribute("current-quiz-id");
+				QuizHostDAO quizHost = (QuizHostDAO) localSession.getAttribute("HostQuiz");
+				boolean isQuizSessionStarted = false;
+				boolean triedStartingQuizSession = false;
+				Object isQuizSessionStartedObject = localSession.getAttribute("QuizSessionStarted");
+				Object 	triedStartingQuizSessionObject = localSession.getAttribute("TriedStartingQuizSession");
+
+				if (isQuizSessionStartedObject != null) {
+					isQuizSessionStarted = (boolean) isQuizSessionStartedObject;
+				}
+				
+				if (triedStartingQuizSessionObject != null) {
+					triedStartingQuizSession = (boolean) triedStartingQuizSessionObject;
+				}
+				
 				out.write(quizCode);				
 				out.write("<br>quize id:"+quizId);
+				
+				if (isQuizSessionStarted && quizHost != null) {
+					out.write("<br>Quiz started at: "+ quizHost.getHostedAt());
+				} else if (triedStartingQuizSession){
+					out.write("<br> Failed to start Quiz, please retry.");
+				}
 				%>
 			</h1>
 			<button onclick="copyElementText('quizeCode')">Copy</button>
 
 		</div>
-		<input type="submit" onClick="myFunction()" value="Start"
-			class="button" />
+		<form action="StartQuizServlet" method="POST">
+				<input type="submit" name="start-button" value="Start" onClick="myFunction()" class="button" />
+		</form>
 
 	</div>
 	<script>
-		function myFunction() {
-			window.location.href = "new.html";
-		}
-
 		function copyElementText(id) {
 			var text = document.getElementById(id).innerText;
 			var elem = document.createElement("textarea");
@@ -64,6 +83,5 @@ name {
 			document.body.removeChild(elem);
 		}
 	</script>
-
 </body>
 </html>

@@ -17,14 +17,7 @@ public class PrepareQuizServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String quizId = request.getParameter("start-button");
-		Enumeration<String> en = request.getParameterNames();
-		
-		 System.out.println("printing enum");  
-		 
-		while(en.hasMoreElements()){  
-            System.out.println(en.nextElement());  
-       }       
+		String quizId = request.getParameter("start-button");   
 		String quizCode = null;
 
 		int codeGenLoop = 0;

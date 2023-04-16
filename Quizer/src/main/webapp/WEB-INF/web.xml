@@ -42,4 +42,14 @@
     <servlet-name>PrepareQuizServlet</servlet-name>
     <url-pattern>/pages/PrepareQuizServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>StartQuizServlet</display-name>
+    <servlet-name>StartQuizServlet</servlet-name>
+    <servlet-class>com.quizer.servlet.StartQuizServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>StartQuizServlet</servlet-name>
+    <url-pattern>/pages/StartQuizServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
