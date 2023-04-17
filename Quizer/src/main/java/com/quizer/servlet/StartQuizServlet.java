@@ -1,6 +1,7 @@
 package com.quizer.servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import com.database.QuizHostDAO;
 import com.database.QuizHostState;
@@ -24,9 +25,12 @@ public class StartQuizServlet extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		String nextPage = "startQuiz.jsp";
 		
+		response.setContentType("text/html");
+		
+		
 		if (session == null) {
-			response.getWriter().print(
-					"Session expired. <a href='login.html'><input type='submit'class='button' value='Submit'>Click here to restart.</a>");
+			response.getWriter().write(
+					"Session expired. <a href='index.jsp'>Click here to restart.</a>");
 			return;
 		}
 		
@@ -63,7 +67,12 @@ public class StartQuizServlet extends HttpServlet {
 			PersistentHelper.singleton.updateQuizHost(quizHost);
 		}
 
+		
 		RequestDispatcher rd = request.getRequestDispatcher(nextPage);
 		rd.include(request, response);
+		
+		if (button.equalsIgnoreCase("Stop")) {
+			session.invalidate();
+		}
 	}
 }
