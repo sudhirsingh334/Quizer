@@ -1,4 +1,5 @@
-<%@page import="org.apache.catalina.core.ThreadLocalLeakPreventionListener"%>
+<%@page
+	import="org.apache.catalina.core.ThreadLocalLeakPreventionListener"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -12,7 +13,7 @@
 	<%@ page import="jakarta.servlet.http.*"%>
 	<%@ page import="com.database.*"%>
 	<div class=container-center>
-				<%
+		<%
 				HttpSession localSession = request.getSession(false);
 				if (localSession == null) {
 					response.getWriter().print(
@@ -77,10 +78,18 @@
            var counter = 0;
 
    function myTimer() {
-      var date = new Date();
-      var diff = date-startDate;
-      var myvar = '<%=quizHost.getHostedAt()%>';
-
+      var startTimeString = '<%=quizHost.getHostedAt()%>';
+      
+      if (startTimeString.length === 0) {
+    	  document.getElementById("timelapse").innerHTML = '00:00:00';
+    	  return;
+      }
+      
+      var startDateString = '<%=quizHost.getHostedAt()%>';
+      var startDate = new Date(startDateString);
+      var currentDate = new Date();
+      var diff = currentDate-startDate;
+      
       var duration = diff/1000;//in seconds
     
       var hrs = duration/3600;
