@@ -20,6 +20,18 @@ public class PrepareQuizServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		HttpSession  session = request.getSession(true);
+
+		QuizHostDAO quizHost = (QuizHostDAO) session.getAttribute("HostQuiz");
+		
+		if (quizHost != null) {
+			//Quiz already hosted
+			RequestDispatcher  rd=request.getRequestDispatcher("startQuiz.jsp");
+			rd.include(request,response);
+			return;
+		}
+		
 		String quizId = request.getParameter("start-button");   
 		String quizCode = null;
 
@@ -30,8 +42,7 @@ public class PrepareQuizServlet extends HttpServlet {
 			quizCode = QuizCodeGenerator.shared.generateQuizCode(6);
 			++codeGenLoop;
 		} while(quizCode == null || PersistentHelper.singleton.isQuizAlreadyHostedWithCode(quizCode) || codeGenLoop>=maxCodeGenRetry);
-		
-		HttpSession  session = request.getSession(true);
+				
 		if (session == null || quizId == null || quizCode == null) {
 			response.getWriter().print("Session expired. <a href='login.html'><input type='submit'class='button' value='Submit'>Click here to restart.</a>");
 			return;
@@ -40,7 +51,7 @@ public class PrepareQuizServlet extends HttpServlet {
 		String hostId = UUID.randomUUID().toString();
 		String timestamp = new Timestamp(System.currentTimeMillis()).toString();
 
-		QuizHostDAO quizHost = new QuizHostDAO();
+		quizHost = new QuizHostDAO();
 
 		quizHost.setId(hostId);
 		quizHost.setQuizId(quizId);
