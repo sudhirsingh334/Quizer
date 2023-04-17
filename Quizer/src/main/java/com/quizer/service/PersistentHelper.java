@@ -11,6 +11,7 @@ import java.util.UUID;
 
 import com.database.QuizDAO;
 import com.database.QuizHostDAO;
+import com.database.QuizHostState;
 import com.quizer.pojo.Answer;
 import com.quizer.pojo.Question;
 import com.quizer.pojo.Quiz;
@@ -192,6 +193,8 @@ public class PersistentHelper {
 						String quizId = rs.getString("quizId");
 						String hostedAt = rs.getString("hostedAt");
 						String hostQuizCode = rs.getString("quizCode");
+						String hostQuizStateString = rs.getString("status");
+						
 
 						if (hostQuizCode != null && quizId != null) {
 							quizHost = new QuizHostDAO();
@@ -199,6 +202,7 @@ public class PersistentHelper {
 							quizHost.setQuizCode(hostQuizCode);
 							quizHost.setQuizId(quizId);
 							quizHost.setHostedAt(hostedAt);
+							quizHost.setState(QuizHostState.valueOf(hostQuizStateString));
 						}
 					}
 				}
@@ -227,11 +231,43 @@ public class PersistentHelper {
 			String dbPassword = "sudhirk";
 
 			try (Connection connection = DriverManager.getConnection(serverURL, dbUser, dbPassword)) {
-				try (PreparedStatement stmt = connection.prepareStatement("INSERT INTO QuizHost (id, quizId, hostedAt, quizCode) VALUES (?, ?, ?, ?)")) {
+				try (PreparedStatement stmt = connection.prepareStatement("INSERT INTO QuizHost (id, quizId, hostedAt, quizCode, status) VALUES (?, ?, ?, ?, ?)")) {
 					stmt.setString(1, quizHost.getId());
 					stmt.setString(2, quizHost.getQuizId());
 					stmt.setString(3, quizHost.getHostedAt());
 					stmt.setString(4, quizHost.getQuizCode());
+					stmt.setString(5, quizHost.getState().name());
+					stmt.executeUpdate();
+					status = true;
+				}
+			}
+
+		} catch (SQLException e) {
+			System.out.print("SQL Exception is::" + e.getStackTrace());
+			return status;
+
+		}
+		return status;
+	}
+	
+	public boolean updateQuizHost(QuizHostDAO quizHost) {
+		boolean status = false;
+		try {
+			try {
+				Class.forName("com.mysql.cj.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+				return status;
+			}
+
+			String serverURL = "jdbc:mysql://localhost:3306/quizer";
+			String dbUser = "sudhirk";
+			String dbPassword = "sudhirk";
+
+			try (Connection connection = DriverManager.getConnection(serverURL, dbUser, dbPassword)) {
+				try (PreparedStatement stmt = connection.prepareStatement("UPDATE QuizHost SET status = ? WHERE id = ?")) {
+					stmt.setString(1, quizHost.getState().name());
+					stmt.setString(2, quizHost.getId());
 					stmt.executeUpdate();
 					status = true;
 				}

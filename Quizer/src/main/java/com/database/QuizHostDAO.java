@@ -5,8 +5,15 @@ public class QuizHostDAO {
 	 private String quizCode;
 	 private String quizId;
 	 private String hostedAt;
+	 private QuizHostState state;
 	 
-	 public QuizHostDAO() {}
+	 public QuizHostState getState() {
+		return state;
+	}
+	public void setState(QuizHostState state) {
+		this.state = state;
+	}
+	public QuizHostDAO() {}
 	public String getId() {
 		return id;
 	}

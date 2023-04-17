@@ -1,8 +1,11 @@
 package com.quizer.servlet;
 
 import java.io.IOException;
-import java.util.Enumeration;
+import java.sql.Timestamp;
+import java.util.UUID;
 
+import com.database.QuizHostDAO;
+import com.database.QuizHostState;
 import com.quizer.service.PersistentHelper;
 import com.quizer.utilities.QuizCodeGenerator;
 
@@ -34,11 +37,25 @@ public class PrepareQuizServlet extends HttpServlet {
 			return;
 		}
 
-		session.setAttribute("current-quiz-id", quizId);
-		session.setAttribute("current-quiz-code", quizCode);
-		System.out.print("current-quiz-code"+quizCode);
-		RequestDispatcher  rd=request.getRequestDispatcher("startQuiz.jsp");
+		String hostId = UUID.randomUUID().toString();
+		String timestamp = new Timestamp(System.currentTimeMillis()).toString();
+
+		QuizHostDAO quizHost = new QuizHostDAO();
+
+		quizHost.setId(hostId);
+		quizHost.setQuizId(quizId);
+		quizHost.setQuizCode(quizCode);
+		quizHost.setHostedAt(timestamp);
+		quizHost.setState(QuizHostState.NotStarted);
 		
+		if (PersistentHelper.singleton.saveQuizHost(quizHost)) {
+			// Start Quiz Session
+			session.setAttribute("HostQuiz", quizHost);
+		} else {
+			session.setAttribute("HostQuiz", null);
+		}
+		
+		RequestDispatcher  rd=request.getRequestDispatcher("startQuiz.jsp");
 		rd.include(request,response);
 	}
 }

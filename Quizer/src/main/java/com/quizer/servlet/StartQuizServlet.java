@@ -1,10 +1,9 @@
 package com.quizer.servlet;
 
 import java.io.IOException;
-import java.sql.Timestamp;
-import java.util.UUID;
 
 import com.database.QuizHostDAO;
+import com.database.QuizHostState;
 import com.quizer.service.PersistentHelper;
 
 import jakarta.servlet.RequestDispatcher;
@@ -23,48 +22,48 @@ public class StartQuizServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
+		String nextPage = "startQuiz.jsp";
+		
 		if (session == null) {
 			response.getWriter().print(
 					"Session expired. <a href='login.html'><input type='submit'class='button' value='Submit'>Click here to restart.</a>");
 			return;
 		}
-		String quizCode = (String) session.getAttribute("current-quiz-code");
-		String quizId = (String) session.getAttribute("current-quiz-id");
-		String hostId = UUID.randomUUID().toString();
 		
-		
-	String timestamp = new Timestamp(System.currentTimeMillis()).toString();
-		
-		session.setAttribute("TriedStartingQuizSession", true);
+		QuizHostDAO quizHost = (QuizHostDAO) session.getAttribute("HostQuiz");
 
-		if (session == null || quizId == null || quizCode == null || hostId == null | timestamp == null) {
+		if (session == null || quizHost == null) {
 			response.getWriter().print(
 					"Session expired. <a href='login.html'><input type='submit'class='button' value='Submit'>Click here to restart.</a>");
 			return;
 		}
 		
-		//Check if quiz is already hosted with quiz Id and show the button state based on quiz state.
-		if (PersistentHelper.singleton.isQuizAlreadyHostedWithCode(quizCode)) {
-			
-		} else {
-			QuizHostDAO quizHost = new QuizHostDAO();
-			
-			quizHost.setId(hostId);
-			quizHost.setQuizId(quizId);
-			quizHost.setQuizCode(quizCode);
-			quizHost.setHostedAt(timestamp);
-			
-			if (PersistentHelper.singleton.saveQuizHost(quizHost)) {
-				//Start Quiz Session
-				session.setAttribute("HostQuiz", quizHost);
-				session.setAttribute("QuizSessionStarted", true);
-			} else {
-				session.setAttribute("HostQuiz", null);
-				session.setAttribute("QuizSessionStarted", false);
-			}
+		QuizHostState quizHostStateOld = quizHost.getState();
+		
+		//Change the state of hosted quiz based on button title;
+		String button = request.getParameter("quiz-start-button");
+		
+		if (button.equalsIgnoreCase("Start") && quizHost.getState() == QuizHostState.NotStarted) {
+			//Start Quiz
+			quizHost.setState(QuizHostState.Started);
+		} else if (button.equalsIgnoreCase("Pause") && (quizHost.getState() == QuizHostState.Started  || quizHost.getState() == QuizHostState.Resumed)) {
+			//Pause the quiz
+			quizHost.setState(QuizHostState.Paused);
+		} else if (button.equalsIgnoreCase("Resume") && quizHost.getState() == QuizHostState.Paused) {
+			//Stop the quiz
+			quizHost.setState(QuizHostState.Resumed);
+		} else if (button.equalsIgnoreCase("Stop") && quizHost.getState() != QuizHostState.NotStarted) {
+			quizHost.setState(QuizHostState.Stopped);
+		} else if (button.equalsIgnoreCase("Show Result") && quizHost.getState() != QuizHostState.Stopped) {
+			nextPage = "showQuizResult.jsp";
 		}
 		
-		RequestDispatcher  rd=request.getRequestDispatcher("startQuiz.jsp");
-		rd.include(request,response);
+		if (quizHostStateOld != quizHost.getState()) {
+			//Update the QuizHost
+			PersistentHelper.singleton.updateQuizHost(quizHost);
+		}
+
+		RequestDispatcher rd = request.getRequestDispatcher(nextPage);
+		rd.include(request, response);
 	}
 }

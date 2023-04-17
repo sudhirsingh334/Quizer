@@ -30,50 +30,53 @@ name {
 </style>
 </head>
 <body>
- <span id="timelapse"></span>
-  <span id="abc">hello</span>
-  <span id="test"></span>
 	<%@ page import="jakarta.servlet.http.*"%>
 	<%@ page import="com.database.*"%>
-
 	<div class="name">
-		<div>
-			<h1 id='quizeCode'>
 				<%
 				HttpSession localSession = request.getSession(false);
-				String quizCode = (String) localSession.getAttribute("current-quiz-code");
-				String quizId = (String) localSession.getAttribute("current-quiz-id");
+				if (localSession == null) {
+					response.getWriter().print(
+							"Session expired. <a href='login.html'><input type='submit'class='button' value='Submit'>Click here to restart.</a>");
+					return;
+				}
+				
 				QuizHostDAO quizHost = (QuizHostDAO) localSession.getAttribute("HostQuiz");
-				boolean isQuizSessionStarted = false;
-				boolean triedStartingQuizSession = false;
-				Object isQuizSessionStartedObject = localSession.getAttribute("QuizSessionStarted");
-				Object 	triedStartingQuizSessionObject = localSession.getAttribute("TriedStartingQuizSession");
 
-				if (isQuizSessionStartedObject != null) {
-					isQuizSessionStarted = (boolean) isQuizSessionStartedObject;
+				if (localSession == null || quizHost == null) {
+					response.getWriter().print(
+							"Session expired. <a href='login.html'><input type='submit'class='button' value='Submit'>Click here to restart.</a>");
+					return;
 				}
 				
-				if (triedStartingQuizSessionObject != null) {
-					triedStartingQuizSession = (boolean) triedStartingQuizSessionObject;
+				if (quizHost.getState() != QuizHostState.Stopped) {
+					out.write("<div>");
+					out.write("<span id='timelapse'></span>");
+					out.write("</div>");
+					
+					out.write("<div>");
+					out.write("<h1 id='quizeCode'>"+quizHost.getQuizCode()+ "</h1>");
+					out.write("<button onclick=\"copyElementText('quizeCode')\">Copy</button>");
+					out.write("</div>");
 				}
 				
-				out.write(quizCode);				
-				out.write("<br>quize id:"+quizId);
-				
-				if (isQuizSessionStarted && quizHost != null) {
-					out.write("<br>Quiz started at: "+ quizHost.getHostedAt());
-				} else if (triedStartingQuizSession){
-					out.write("<br> Failed to start Quiz, please retry.");
+				out.write("<div>");
+				out.write("<form action=\"StartQuizServlet\" method=\"POST\">");
+				if (quizHost.getState() == QuizHostState.NotStarted) {
+					out.write("<input type=\"submit\" name=\"quiz-start-button\" value=\"Start\" onClick=\"myFunction()\" class=\"button\"/>");
+				} else if (quizHost.getState() == QuizHostState.Started || quizHost.getState() == QuizHostState.Resumed){
+					out.write("<input type=\"submit\" name=\"quiz-start-button\" value=\"Pause\" onClick=\"myFunction()\" class=\"button\"/>");
+					out.write("<input type=\"submit\" name=\"quiz-start-button\" value=\"Stop\" onClick=\"myFunction()\" class=\"button\"/>");
+				} else if (quizHost.getState() == QuizHostState.Paused) {
+					out.write("<input type=\"submit\" name=\"quiz-start-button\" value=\"Resume\" onClick=\"myFunction()\" class=\"button\"/>");
+					out.write("<input type=\"submit\" name=\"quiz-start-button\" value=\"Stop\" onClick=\"myFunction()\" class=\"button\"/>");
+				} else if (quizHost.getState() == QuizHostState.Stopped) {
+					out.write("<h1>Quiz Completed successfully.</h1>");
+					out.write("<input type=\"submit\" name=\"quiz-start-button\" value=\"Show Result\" onClick=\"myFunction()\" class=\"button\"/>");
 				}
+				out.write("</form>");
+				out.write("</div>");
 				%>
-			</h1>
-			<button onclick="copyElementText('quizeCode')">Copy</button>
-
-		</div>
-		<form action="StartQuizServlet" method="POST">
-				<input type="submit" name="start-button" value="Start" onClick="myFunction()" class="button" />
-		</form>
-
 	</div>
 	<script>
 		function copyElementText(id) {
@@ -94,7 +97,7 @@ name {
    function myTimer() {
       var date = new Date();
       var diff = date-startDate;
-      var myvar = '<%=quizCode%>';
+      var myvar = '<%=quizHost.getHostedAt()%>';
 
       var duration = diff/1000;//in seconds
     
@@ -104,7 +107,6 @@ name {
 
       var timelapse = padZero(Math.floor(hrs)) + ":" + padZero(Math.floor(mins)) + ":" + padZero(Math.round(secs));
       document.getElementById("timelapse").innerHTML = timelapse;
-      document.getElementById("test").innerHTML = myvar;
 }
 
      function padZero(number){
