@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Start Quiz</title>
 <style type="text/css">
 .button {
 	background-color: DodgerBlue;
@@ -30,6 +30,9 @@ name {
 </style>
 </head>
 <body>
+ <span id="timelapse"></span>
+  <span id="abc">hello</span>
+  <span id="test"></span>
 	<%@ page import="jakarta.servlet.http.*"%>
 	<%@ page import="com.database.*"%>
 
@@ -82,6 +85,32 @@ name {
 			document.execCommand("copy");
 			document.body.removeChild(elem);
 		}
+		
+		//timestamp
+		var startDate = new Date();
+           var myVar=setInterval(function () {myTimer()}, 1000);
+           var counter = 0;
+
+   function myTimer() {
+      var date = new Date();
+      var diff = date-startDate;
+      var myvar = '<%=quizCode%>';
+
+      var duration = diff/1000;//in seconds
+    
+      var hrs = duration/3600;
+      var mins = (duration%3600)/60;//in min
+      var secs = (duration%3600)%60;
+
+      var timelapse = padZero(Math.floor(hrs)) + ":" + padZero(Math.floor(mins)) + ":" + padZero(Math.round(secs));
+      document.getElementById("timelapse").innerHTML = timelapse;
+      document.getElementById("test").innerHTML = myvar;
+}
+
+     function padZero(number){
+         let result = number.toString().padStart(2, '0');
+         return result;
+}
 	</script>
 </body>
 </html>

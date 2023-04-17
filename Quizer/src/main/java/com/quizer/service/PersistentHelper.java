@@ -184,7 +184,7 @@ public class PersistentHelper {
 			String dbPassword = "sudhirk";
 
 			try (Connection connection = DriverManager.getConnection(serverURL, dbUser, dbPassword)) {
-				try (PreparedStatement stmt = connection.prepareStatement("SELECT * FROM QuizHost WHERE quizId=?")) {
+				try (PreparedStatement stmt = connection.prepareStatement("SELECT * FROM QuizHost WHERE quizCode=?")) {
 					stmt.setString(1, quizCode);
 					ResultSet rs = stmt.executeQuery();
 					if (rs.next()) {

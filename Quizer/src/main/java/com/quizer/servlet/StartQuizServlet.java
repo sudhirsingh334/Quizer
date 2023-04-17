@@ -31,7 +31,10 @@ public class StartQuizServlet extends HttpServlet {
 		String quizCode = (String) session.getAttribute("current-quiz-code");
 		String quizId = (String) session.getAttribute("current-quiz-id");
 		String hostId = UUID.randomUUID().toString();
-		String timestamp = new Timestamp(System.currentTimeMillis()).toString();
+		
+		
+	String timestamp = new Timestamp(System.currentTimeMillis()).toString();
+		
 		session.setAttribute("TriedStartingQuizSession", true);
 
 		if (session == null || quizId == null || quizCode == null || hostId == null | timestamp == null) {
@@ -40,20 +43,25 @@ public class StartQuizServlet extends HttpServlet {
 			return;
 		}
 		
-		QuizHostDAO quizHost = new QuizHostDAO();
-		
-		quizHost.setId(hostId);
-		quizHost.setQuizId(quizId);
-		quizHost.setQuizCode(quizCode);
-		quizHost.setHostedAt(timestamp);
-		
-		if (PersistentHelper.singleton.saveQuizHost(quizHost)) {
-			//Start Quiz Session
-			session.setAttribute("HostQuiz", quizHost);
-			session.setAttribute("QuizSessionStarted", true);
+		//Check if quiz is already hosted with quiz Id and show the button state based on quiz state.
+		if (PersistentHelper.singleton.isQuizAlreadyHostedWithCode(quizCode)) {
+			
 		} else {
-			session.setAttribute("HostQuiz", null);
-			session.setAttribute("QuizSessionStarted", false);
+			QuizHostDAO quizHost = new QuizHostDAO();
+			
+			quizHost.setId(hostId);
+			quizHost.setQuizId(quizId);
+			quizHost.setQuizCode(quizCode);
+			quizHost.setHostedAt(timestamp);
+			
+			if (PersistentHelper.singleton.saveQuizHost(quizHost)) {
+				//Start Quiz Session
+				session.setAttribute("HostQuiz", quizHost);
+				session.setAttribute("QuizSessionStarted", true);
+			} else {
+				session.setAttribute("HostQuiz", null);
+				session.setAttribute("QuizSessionStarted", false);
+			}
 		}
 		
 		RequestDispatcher  rd=request.getRequestDispatcher("startQuiz.jsp");
