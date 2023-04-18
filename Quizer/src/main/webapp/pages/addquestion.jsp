@@ -4,21 +4,12 @@
 <html>
 <head>
 <title>Quizer</title>
-<!-- <link rel="stylesheet" href="quizer.css">
- -->
+<link href="styles/style.css" rel="stylesheet" />
 <script language="javascript" src="Quizer.js"></script>
 <style type="text/css">
 
 td {
 margin-left: 10%;
-}
-
-
-input {
-	text-align: center;
-	padding: 8px;
-	border-radius: 20px solid red;
-	margin-left: 10%;
 }
 
 .radioLeft {
@@ -37,40 +28,11 @@ input {
 	margin-bottom: 3%;
 }
 
-.button {
-	background-color: DodgerBlue;
-	color: white;
-	border-color: DodgerBlue;
-	width: 65px;
-	border-radius: 3px;
-	margin-left:10%;
-	margin-bottom:10%;
-	margin-top:7%;
-}
-
-
- img.background {
-      position: absolute;
-      left: 0px;
-      top: 0px;
-      z-index: -1;
-      width: 100%;
-      height: 100%;
-      -webkit-filter: black(5px);
-      filter: blur(5px);
-      }
 
 .add {
 	margin-left: 50%;
 }
 
-h1 {
-	margin-left: 29%;
-}
-
-input {
-	margin-left: 25%;
-}
 
 .validation {
 	margin-left: 5%;
@@ -100,8 +62,6 @@ input {
 
 </head>
 <body>
-    <img class="background" src="https://images.shiksha.com/mediadata/images/1616134515phpy6KjFI.jpeg">
-
 	<%@ page import="com.quizer.pojo.*"%>
 	<%@ page import="java.util.*"%>
 	<%
@@ -109,11 +69,11 @@ input {
 	 out.write("<head>");
 	 out.write("</head>");
 	 out.write("<body>");
-	 out.write("<div class='quizColor'>");
-	 out.write("<em>");
+	 out.write("<div class='container-center'>");
+	 out.write("<h1 class='header-center'>");
 Quiz quiz = (Quiz)request.getSession().getAttribute("Quiz");  
 out.print(quiz.getName()); 
-out.write("</em>");
+out.write("</h1>");
     out.write("</div>");
     out.write("</body>");
     out.write("</html>");
@@ -177,11 +137,13 @@ out.write("</em>");
 				</tr>
 				</div>		
 			</table>
+			<div class='container-center'>
 					<input type="submit" name="action-button" value="Next"
 						class="button" />
 
 				<input type="submit" name="action-button" value="Done"
 					class="button" />
+					</div>
 		</form>
 
 		<script type="text/javascript">
