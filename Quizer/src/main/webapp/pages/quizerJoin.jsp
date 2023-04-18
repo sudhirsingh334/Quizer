@@ -47,9 +47,6 @@ img.background {
 </Style>
 </head>
 <body>
-    <img class="background" src="https://res.cloudinary.com/highereducation/images/f_auto,q_auto/v1662733269/ComputerScience.org/GettyImages-1250639681/GettyImages-1250639681.jpg?_i=AA">
-
-
   <div class="container-center">
 	<button class="button" onclick="openForm()">Join</button>
 

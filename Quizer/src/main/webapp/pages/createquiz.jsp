@@ -6,14 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Welcome to Quizer</title>
-<link rel="stylesheet" href="#">
+<link href="styles/style.css" rel="stylesheet" />
 <script language="javascript" src="../scripts/validator.js"></script>
 
 <style type="text/css">
-body{
-	background-image: url(https://www.nshm.com/wp-content/uploads/2021/04/bba01.jpg);
-}
-
 h1{
   margin-left:20%;
   margin-top:10%;
