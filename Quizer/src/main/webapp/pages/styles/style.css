@@ -45,6 +45,15 @@ html {
   width: 100%;
 }
 
+input {
+  text-align: center;
+  padding: 8px;
+  border-radius: 2px;
+  font-size: 25px;
+  border-width: 2px;
+  border-color: mediumpurple;
+}
+
 p1 {
   margin-left: 20%;
   margin-bottom: 30%;
