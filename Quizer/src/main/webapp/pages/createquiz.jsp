@@ -11,13 +11,13 @@
 </head>
 
 <body>
-	<div class="container-center">
+	<div class="container-center" style="margin-top:10%;">
 		<h1 class="header-center">Create Quiz</h1>
 
 		<form action="quizmanager" method="post"
-			onsubmit="return validateQuizName(this)">
-			<input type="text" name="quizname" placeholder="quize name"><br>
-			<span id="quizerError" style="color: red"><%=request.getAttribute("ERRORMESSAGE") != null ?  request.getAttribute("ERRORMESSAGE"):""%></span><br>
+			onsubmit="return validateQuizName(this)" style="margin-top:5%;">
+			<input type="text" name="quizname" placeholder="quize name"><br><br>
+			<span id="quizerError" style="color: palevioletred"><%=request.getAttribute("ERRORMESSAGE") != null ?  request.getAttribute("ERRORMESSAGE"):""%></span><br>
 			<a href="#"> <input type="submit" class="button" value="Submit"></a>
 		</form>
 	</div>

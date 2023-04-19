@@ -8,7 +8,7 @@
 <link href="pages/styles/style.css" rel="stylesheet" />
 </head>
 <body>
-	<div class="container-center">
+	<div class="container-center" style="margin-top:10%;">
 		<div class="container-center">
 			<img alt="" src="assets/quizer-white-XS.png" style="width: 1200px;"/>
 		</div>
