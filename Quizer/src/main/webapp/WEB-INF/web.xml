@@ -14,12 +14,12 @@
     <url-pattern>/quizerURL</url-pattern>
   </servlet-mapping>
   <servlet>
-    <display-name>QuizerMYConnection</display-name>
-    <servlet-name>QuizerMYConnection</servlet-name>
-    <servlet-class>com.quize.QuizerMYConnection</servlet-class>
+    <display-name>AddQuestionServlet</display-name>
+    <servlet-name>AddQuestionServlet</servlet-name>
+    <servlet-class>com.quizer.servlet.AddQuestionServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>QuizerMYConnection</servlet-name>
+    <servlet-name>AddQuestionServlet</servlet-name>
     <url-pattern>/pages/addquestion</url-pattern>
   </servlet-mapping>
   <servlet>

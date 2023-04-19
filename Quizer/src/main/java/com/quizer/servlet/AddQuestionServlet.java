@@ -1,4 +1,4 @@
-package com.quize;
+package com.quizer.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,7 +16,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-public class QuizerMYConnection extends HttpServlet {
+public class AddQuestionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
