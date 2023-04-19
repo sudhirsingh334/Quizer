@@ -44,7 +44,7 @@ public class PrepareQuizServlet extends HttpServlet {
 		} while(quizCode == null || PersistentHelper.singleton.isQuizAlreadyHostedWithCode(quizCode) || codeGenLoop>=maxCodeGenRetry);
 				
 		if (session == null || quizId == null || quizCode == null) {
-			response.getWriter().print("Session expired. <a href='login.html'><input type='submit'class='button' value='Submit'>Click here to restart.</a>");
+			response.getWriter().print("Session expired. <a href='/Quizer'><input type='submit'class='button' value='Submit'>Click here to restart.</a>");
 			return;
 		}
 

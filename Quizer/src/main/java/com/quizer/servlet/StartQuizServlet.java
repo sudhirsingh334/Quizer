@@ -30,7 +30,7 @@ public class StartQuizServlet extends HttpServlet {
 		
 		if (session == null) {
 			response.getWriter().write(
-					"Session expired. <a href='index.jsp'>Click here to restart.</a>");
+					"Session expired. <a href='/Quizer'>Click here to restart.</a>");
 			return;
 		}
 		
@@ -38,7 +38,7 @@ public class StartQuizServlet extends HttpServlet {
 
 		if (session == null || quizHost == null) {
 			response.getWriter().print(
-					"Session expired. <a href='login.html'><input type='submit'class='button' value='Submit'>Click here to restart.</a>");
+					"Session expired. <a href='/Quizer'><input type='submit'class='button' value='Submit'>Click here to restart.</a>");
 			return;
 		}
 		
