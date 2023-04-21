@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import com.database.QuizHostDAO;
 import com.quizer.service.PersistentHelper;
+import com.quizer.utilities.QuestionPointer;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -21,7 +22,12 @@ public class QuizerManagerServlet extends HttpServlet {
 		session.setAttribute("User-Tried-To-Join", false);
 		String nextPage = "/";
 
-		if (button != null && button.equalsIgnoreCase("Join-Quiz")) {
+		if (button == null) {
+			System.out.println("QuizerManagerServlet:doPost,unknown button pressed");
+			return;
+		}
+		
+		if (button.equalsIgnoreCase("Join-Quiz")) {
 			// Join Quiz
 			// Extract Quiz Code
 			session.setAttribute("User-Tried-To-Join", true);
@@ -30,6 +36,14 @@ public class QuizerManagerServlet extends HttpServlet {
 			QuizHostDAO quizHost = PersistentHelper.singleton.getQuizHost(quizCode);
 			session.setAttribute("QuizHost", quizHost);
 			nextPage = "joinQuiz.jsp";
+		} else if (button.equalsIgnoreCase("Quiz-Question-Back")) {
+			QuestionPointer.decrease(session);
+			nextPage = "quizerQuestion.jsp";
+		}  else if (button.equalsIgnoreCase("Quiz-Question-Next")) {
+			QuestionPointer.increase(session);
+			nextPage = "quizerQuestion.jsp";
+		}  else if (button.equalsIgnoreCase("Quiz-Done")) {
+			//Save The Quiz
 		} else {
 			// Unknown Button Pressed.
 			System.out.println("QuizerManagerServlet:doPost,unknown button pressed");

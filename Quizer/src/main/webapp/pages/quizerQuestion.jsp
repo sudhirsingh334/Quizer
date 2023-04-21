@@ -78,7 +78,10 @@ td {
 
 	if (qsnPointer == null) {
 		qsnPointer = 0;
+		session.setAttribute("QuestionPointer", qsnPointer);
 	}
+
+	System.out.println("\na	:" + qsnPointer + "seesion id: " + session.getId());
 
 	out.write("<html>");
 	out.write("<head>");
@@ -93,16 +96,18 @@ td {
 	out.write("</html>");
 	%>
 	<div class="validation">
-		<form action="" method="post" name="completeQuizRedirect"
+		<form action="QuizerManager" method="post" name="completeQuizRedirect"
 			id="completeQuizRedirect">
 			<table id="answer-options-table" style="width: 100%">
 				<tr>
 					<td style="text-align: right">
 						<%
+						System.out.println("b 	:" + qsnPointer + "seesion id: " + session.getId());
+
 						ArrayList<Question> questionList = quiz.getQuestionList();
 						Question question = questionList.get(qsnPointer);
 						ArrayList<Answer> answerList = question.getAnswers();
-						String quetionNumber = "Q" + qsnPointer;
+						String quetionNumber = "Q" + (qsnPointer + 1);
 						out.print(quetionNumber);
 
 						//Should hide next button
@@ -165,66 +170,78 @@ td {
 				</div>
 			</table>
 			<div class='container-center'>
-				<input type="button" name="action-button" value="Back"
-					class="button" onclick="javascript:showPrevQuetion();"
-					style="display: <%out.write(prevButtonStatus);%>" /> <input
-					type="button" name="action-button" value="Next" class="button"
-					onclick="javascript:showNextQuetion();"
-					style="display: <%out.write(nextButtonStatus);%>" /> <input
-					type="submit" name="action-button"
-					onclick="javascript:completeAndRedirect();" value="Done"
-					class="button" />
+				<Button type="submit" name="QuizerManager-Button"
+					value="Quiz-Question-Back" class="button"
+					style="display: <%out.write(prevButtonStatus);%>">Back</Button>
+				<Button type="submit" name="QuizerManager-Button"
+					value="Quiz-Question-Next" class="button"
+					style="display: <%out.write(nextButtonStatus);%>">Next</Button>
+				<Button class="button" type="submit" name="QuizerManager-Button"
+					onclick="completeAndRedirect();" value="Quiz-Done">Done</Button>
 			</div>
 		</form>
 	</div>
-	<script type="text/javascript">
-		function createOption() {
-			var table = document.getElementById("answer-options-table");
-			var row = table.insertRow(0);
-			var cell1 = row.insertCell(0);
-			cell1.outerHTML = "<input type=\"radio\" name=\"answer-radio2\"><input type=\"text\" name=\"answer2\"  placeholder=\"Type Answer Here\" id=\"radioErro1\" value=\"\"><br></br>";
-		}
 
-		function completeAndRedirect() {
-			var completeQuiz = confirm("Do you want to Complete the quiz ?");
-			if (completeQuiz == true) {
-				document.getElementById("completeQuizRedirect").action = "addquestion";
-				document.getElementById("completeQuizRedirect").submit();
-			} else {
-				return false;
-			}
-		}
-
-		function showPrevQuetion() {
-<%-- 			console.log("Before < Pointer: " +
-	<%out.write(qsnPointer);%>
-		); --%>
-<%-- 	<%//Update the question pointer and reload the same page
-	if (qsnPointer > 0) {
-		--qsnPointer;
-	}%> --%>
-	<%-- 	console.log("After < Pointer: " +
-	<%out.write(qsnPointer);%>
-		); --%>
-
-			window.location.reload();
-		}
-
-		function showNextQuetion() {
-			alert("nexy");
-<%-- 			console.log("Before > Pointer: " +
-	<%out.write(qsnPointer);%>
-		); --%>
-<%-- 	<%//Update the question pointer and reload the same page
-	if (qsnPointer < questionList.size()) {
-		++qsnPointer;
-	}%> --%>
-<%-- 		console.log("After > Pointer: " +
-	<%out.write(qsnPointer);%>
-		); --%>
-			window.location.reload();
-		}
-	</script>
 </body>
+<script type="text/javascript">
+	function createOption() {
+		var table = document.getElementById("answer-options-table");
+		var row = table.insertRow(0);
+		var cell1 = row.insertCell(0);
+		cell1.outerHTML = "<input type=\"radio\" name=\"answer-radio2\"><input type=\"text\" name=\"answer2\"  placeholder=\"Type Answer Here\" id=\"radioErro1\" value=\"\"><br></br>";
+	}
 
+	function completeAndRedirect() {
+		var completeQuiz = confirm("Do you want to Complete the quiz ?");
+		if (completeQuiz == true) {
+			document.getElementById("completeQuizRedirect").action = "addquestion";
+			document.getElementById("completeQuizRedirect").submit();
+		} else {
+			return false;
+		}
+	}
+
+<%-- 	function showPrevQuetion() {
+		alert(
+<%=qsnPointer%>
+	)
+		var qsnPTR =
+<%=qsnPointer%>
+	;
+		var qsnCount =
+<%=questionList.size()%>
+	;
+
+		if (qsnPTR > 0) {
+			var save =
+<%=questionList.size()%>
+	;
+			alert("saved<");
+		}
+		window.location.reload();
+	}
+
+	function showNextQuetion() {
+		alert(
+<%=session.getAttribute("QuestionPointer")%>
+	)
+		alert(
+<%=qsnPointer%>
+	)
+		var qsnPTR =
+<%=qsnPointer%>
+	;
+		var qsnCount =
+<%=QuestionPointer.decrease(session)%>
+	;
+
+		if (qsnPTR < (qsnCount - 1)) {
+			var save =
+<%=QuestionPointer.increase(session)%>
+	;
+		}
+
+		window.location.reload();
+	} --%>
+</script>
 </html>
