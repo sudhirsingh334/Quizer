@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.UUID;
 
+import com.database.AnswerOptionDAO;
 import com.database.QuizDAO;
 import com.database.QuizHostDAO;
 import com.database.QuizHostState;
@@ -186,10 +187,45 @@ public class PersistentHelper {
 					ResultSet rs = stmt.executeQuery();
 					if (rs.next()) {
 						String quizTitle = rs.getString("title");
+						String id = rs.getString("id");
 
-						if (quizTitle != null) {
+						if (id != null) {
 							quiz = new Quiz();
 							quiz.setName(quizTitle);
+							
+							//fetch questions
+							try (PreparedStatement qsnStmt = connection.prepareStatement("SELECT * FROM Question WHERE quizId=?")) {
+								qsnStmt.setString(1, id);
+								ResultSet qsnRS = qsnStmt.executeQuery();
+								
+								while (qsnRS.next()) {
+									
+									String qsnId = qsnRS.getString("id");
+									Question qsn = new Question();
+									
+									qsn.setTitle(qsnRS.getString("title"));
+									
+									//fetch Answer Options
+									try (PreparedStatement answrStmt = connection.prepareStatement("SELECT * FROM AnswerOption WHERE questionId=?")) {
+										answrStmt.setString(1, qsnId);
+										ResultSet answrRS = answrStmt.executeQuery();
+										
+										while (answrRS.next()) {
+											String title = answrRS.getString("title");
+											boolean isCorrect = answrRS.getString("isCorrect") == "1" ? true:false;
+											
+											Answer answr = new Answer(title);
+											answr.setCorrect(isCorrect);
+											
+											qsn.add(answr);
+										}
+									}
+									quiz.addQuestion(qsn);
+									
+								}
+								
+							}
+							
 						}
 					}
 				}

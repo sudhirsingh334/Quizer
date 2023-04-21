@@ -73,7 +73,13 @@ td {
 		Alert.show("Something went wrong, please restart the quiz or contact the admin.", out);
 		return;
 	}
-
+	
+	Integer qsnPointer = (Integer) session.getAttribute("QuestionPointer");
+			
+	if (qsnPointer == null) {
+		qsnPointer = 0;
+	}
+	
 	out.write("<html>");
 	out.write("<head>");
 	out.write("</head>");
@@ -94,25 +100,23 @@ td {
 					<td style="text-align: right">
 						<%
 						ArrayList<Question> questionList = quiz.getQuestionList();
-						String quetionNumber = "Q";
-						if (questionList == null) {
-							quetionNumber += "1";
-						} else {
-							quetionNumber += questionList.size() + 1;
-						}
+						Question question = questionList.get(qsnPointer);
+						ArrayList<Answer> answerList = question.getAnswers();
+						System.out.println("\n\nQuestion:"+question.getTitle());
+						String quetionNumber = "Q"+qsnPointer;
 						out.print(quetionNumber);
 						%>
 					</td>
 					<td><input type="text" name="question"
-						placeholder="Type Quetion Here" class="resizedTextbox"><br></br>
+						placeholder="Type Quetion Here" class="resizedTextbox" value="<% out.write(question.getTitle()); %>" readonly><br></br>
 					</td>
 				</tr>
 				<tr>
 					<td style="text-align: right"><input type="radio"
 						name="answer-radio1"></td>
 					<td><input type="text" name="answer1"
-						placeholder="Type Answer Here" id="radioErro1" value=""
-						style="margin: auto">
+						placeholder="Type Answer Here" id="radioErro1"
+						style="margin: auto" value="<%out.write(answerList.get(0).getTitle()); %>" readonly>
 						</div></td>
 
 				</tr>
@@ -120,7 +124,7 @@ td {
 					<td style="text-align: right"><input type="radio"
 						name="answer-radio2"></td>
 					<td><input type="text" name="answer2"
-						placeholder="Type Answer Here" id="radioErro1" value=""
+						placeholder="Type Answer Here" id="radioErro1" value="<%out.write(answerList.get(1).getTitle());%>" readonly
 						style="margin: auto">
 						</div></td>
 
@@ -131,7 +135,7 @@ td {
 					<td style="text-align: right"><input type="radio"
 						name="answer-radio3"></td>
 					<td><input type="text" name="answer3"
-						placeholder="Type Answer Here" id="radioErro1" value=""
+						placeholder="Type Answer Here" id="radioErro1" value="<%out.write(answerList.get(2).getTitle());%>" readonly
 						style="margin: auto">
 						</div></td>
 
@@ -142,7 +146,7 @@ td {
 					<td style="text-align: right"><input type="radio"
 						name="answer-radio4"></td>
 					<td><input type="text" name="answer4"
-						placeholder="Type Answer Here" id="radioErro1" value=""
+						placeholder="Type Answer Here" id="radioErro1" value="<%out.write(answerList.get(3).getTitle());%>" readonly
 						style="margin: auto">
 						</div></td>
 
@@ -152,8 +156,10 @@ td {
 				</div>
 			</table>
 			<div class='container-center'>
-				<input type="submit" name="action-button" value="Next"
-					class="button" /> <input type="submit" name="action-button"
+			<input type="button" name="action-button" value="Back"
+					class="button"  onclick="showPrevQuetion();"/> 
+				<input type="button" name="action-button" value="Next"
+					class="button" onclick="showNextQuetion();"/> <input type="submit" name="action-button"
 					onclick="javascript:completeAndRedirect();" value="Done"
 					class="button" />
 			</div>
@@ -175,6 +181,26 @@ td {
 				} else {
 					return false;
 				}
+			}
+			
+			function showPrevQuetion() {
+				<%
+				//Update the question pointer and reload the same page
+				if (qsnPointer > 0) {
+					--qsnPointer;
+				}
+				%>
+				window.location.reload();
+			}
+			
+			function showNextQuetion() {
+				<%
+				//Update the question pointer and reload the same page
+				if (qsnPointer < questionList.size()) {
+					++qsnPointer;
+				}
+				%>
+				window.location.reload();
 			}
 		</script>
 </body>
