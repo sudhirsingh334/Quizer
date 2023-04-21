@@ -9,6 +9,8 @@
 <!-- <script language="javascript" src="../scripts/Quizervalidator.js"></script>
  -->
 <style type="text/css">
+
+
 td {
 	margin-left: 10%;
 }
@@ -38,13 +40,12 @@ td {
 	margin-right: 5%;
 	margin-top: 5%;
 	margin-bottom: 5%;
-	border-radius: 3px;
-	background-color: lavender;
+	background-color: white;
 	opacity: 0.8;
 	padding: 50px;
 	padding-bottom: 1px;
 	padding-top: 10px;
-	border: 1px solid white;
+	border: 1px solid white; 
 }
 
 .quizColor {
@@ -89,7 +90,10 @@ td {
 	out.write("<body>");
 	out.write("<div class='container-center'>");
 	out.write("<h1 class='header-center'>");
+	out.write("<em>");
 	out.print(quiz.getName());
+	out.write("</em>");
+
 	out.write("</h1>");
 	out.write("</div>");
 	out.write("</body>");
@@ -122,8 +126,7 @@ td {
 					</td>
 				</tr>
 				<tr>
-					<td style="text-align: right"><input type="radio"
-						name="answer-radio1"></td>
+					<td style="text-align: right"><input type="radio"name="answer-radio1"></td>	
 					<td><input type="text" name="answer1"
 						placeholder="Type Answer Here" id="radioErro1"
 						style="margin: auto"
@@ -132,11 +135,11 @@ td {
 
 				</tr>
 				<tr>
-					<td style="text-align: right"><input type="radio"
-						name="answer-radio2"></td>
-					<td><input type="text" name="answer2"
-						placeholder="Type Answer Here" id="radioErro1"
-						value="<%out.write(answerList.get(1).getTitle());%>" readonly
+					<td style="text-align: right"><input type="radio"name="answer-radio1"></td>
+						
+					<td><input type="text" name="answer2"placeholder="Type Answer Here" id="radioErro1"value="<%out.write(answerList.get(1).getTitle());%>" readonly
+						
+						
 						style="margin: auto">
 						</div></td>
 
@@ -145,7 +148,7 @@ td {
 				</tr>
 				<tr>
 					<td style="text-align: right"><input type="radio"
-						name="answer-radio3"></td>
+						name="answer-radio1"></td>
 					<td><input type="text" name="answer3"
 						placeholder="Type Answer Here" id="radioErro1"
 						value="<%out.write(answerList.get(2).getTitle());%>" readonly
@@ -157,8 +160,8 @@ td {
 				</tr>
 				<tr>
 					<td style="text-align: right"><input type="radio"
-						name="answer-radio4"></td>
-					<td><input type="text" name="answer4"
+						name="answer-radio1"></td>
+					<td><input type="text" name="answer1"
 						placeholder="Type Answer Here" id="radioErro1"
 						value="<%out.write(answerList.get(3).getTitle());%>" readonly
 						style="margin: auto">

@@ -47,11 +47,14 @@ html {
 
 input {
   text-align: center;
-  padding: 8px;
-  border-radius: 2px;
+  padding: 5px;
+  /*	border-radius: 2px;*/
   font-size: 20px;
-  border-width: 2px;
-  border-color: mediumpurple;
+  /*border-width: 2px;*/
+  /*border-color: mediumpurple;*/
+  border: none;
+  border-left: none;
+  border-right: none;
 }
 
 p1 {
