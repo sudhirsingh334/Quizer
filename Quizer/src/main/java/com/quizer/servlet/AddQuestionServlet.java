@@ -25,7 +25,7 @@ public class AddQuestionServlet extends HttpServlet {
 		HttpSession  session = req.getSession(false);
 		
 		if (session == null) {
-			pw.print("Session expired. <a href='login.html'><input type='submit'class='button' value='Submit'>Click here to restart.</a>");
+			pw.print("Session expired. <a href='/Quizer'><input type='submit'class='button' value='Submit'>Click here to restart.</a>");
 			return;
 		}
 		

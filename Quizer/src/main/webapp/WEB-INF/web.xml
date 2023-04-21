@@ -52,4 +52,14 @@
     <servlet-name>StartQuizServlet</servlet-name>
     <url-pattern>/pages/StartQuizServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>QuizerManagerServlet</display-name>
+    <servlet-name>QuizerManagerServlet</servlet-name>
+    <servlet-class>com.quizer.servlet.QuizerManagerServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>QuizerManagerServlet</servlet-name>
+    <url-pattern>/pages/QuizerManager</url-pattern>
+  </servlet-mapping>
 </web-app>

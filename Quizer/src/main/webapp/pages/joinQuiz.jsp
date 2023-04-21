@@ -58,11 +58,45 @@ img.background {
 </Style>
 </head>
 <body>
+<%@ page import="com.quizer.pojo.*"%>
+	<%@ page import="java.util.*"%>
+	<%@ page import="com.database.*"%>
+	<%
+	response.setContentType("text/html");
+	Object userTriedToJoin  = session.getAttribute("User-Tried-To-Join");
+	System.out.print("userTriedToJoin"+userTriedToJoin);
+	if (userTriedToJoin != null) {
+		boolean userTried = (boolean) userTriedToJoin;
+		System.out.print("userTried"+(userTried ? "true":"false"));
+
+		if (userTried == true) {
+			//fetch Quiz Host from session
+			QuizHostDAO  quizHost = (QuizHostDAO) session.getAttribute("QuizHost");
+			System.out.print("quizHost"+quizHost);
+
+			if (quizHost != null) {
+				//Fetch Questions
+				out.println("<script type=\"text/javascript\">");
+				out.println("location='addquestion.jsp';");
+				out.println("</script>");
+			} else {
+				session.setAttribute("User-Tried-To-Join", false);
+				session.setAttribute("QuizHost", null);
+				//QuizHost not available with supllied quiz code.
+				out.write("alert('Invalid quiz code!')");
+				out.println("<script type=\"text/javascript\">");
+				out.println("alert('Invalid quiz code!');");
+				out.println("location='/Quizer';");
+				out.println("</script>");
+			}
+		}
+	}
+	%>
 	<div class="container-center">
 		<button class="button" onclick="openForm()">Join</button>
 
 
-		<form   name="f1" action="addQuizerDetails" method="post" class="form" id="join-quiz-form" onsubmit="return quizerValidator()">
+		<form   name="f1" action="QuizerManager" method="post" class="form" id="join-quiz-form" onsubmit="return quizerValidator()">
 			<img src="https://cdn-icons-png.flaticon.com/128/6807/6807025.png"alt="Avatar" class="avatar">
 				
 		<div class="input-container"><i class="fa fa-user icon"></i> <input type="text"	placeholder="enter your name" name="quizername"><br></br>
@@ -70,11 +104,11 @@ img.background {
 			</div>
 			<div class="input-container">
 				<i class="fa fa-key icon"></i> 
-					<input type="text" placeholder="enter quiz code" name="quizerid"><br></br> <span
+					<input type="text" placeholder="enter quiz code" name="QuizCode"><br></br> <span
 					id="validatorQuizerIdError" style="color:palevioletred"></span><br></br>
 			</div>
 
-			<button type="submit" class="button-extended">Join</button>
+			<button type="submit" class="button-extended" name="QuizerManager-Button" value="Join-Quiz">Join</button>
 				
 			<button type="button" class="button-error-extended"
 				onclick="closeForm()">Close</button>
