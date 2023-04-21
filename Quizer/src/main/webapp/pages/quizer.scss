@@ -70,6 +70,9 @@ p1 {
 .container-center {
 	text-align: center;
 	width: 100%;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: center;
 
 	&-form-popup {
 		@extend .container-center;
@@ -107,7 +110,7 @@ p1 {
 	left: 40%;
 	margin-top: -5%;
 	margin-bottom: 10px;
-	
+
 	border-radius: 2px solid red;
 	padding: 1%;
 

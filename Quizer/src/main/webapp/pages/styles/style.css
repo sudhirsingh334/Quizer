@@ -63,6 +63,9 @@ p1 {
 .container-center, .container-center-form-popup {
   text-align: center;
   width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
 }
 .container-center-form-popup {
   display: none;
