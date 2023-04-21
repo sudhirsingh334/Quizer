@@ -1,3 +1,4 @@
+<%@page import="com.quizer.service.PersistentHelper"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -61,6 +62,7 @@ img.background {
 <%@ page import="com.quizer.pojo.*"%>
 	<%@ page import="java.util.*"%>
 	<%@ page import="com.database.*"%>
+	<%@ page import="com.quizer.utilities.*" %>
 	<%
 	response.setContentType("text/html");
 	Object userTriedToJoin  = session.getAttribute("User-Tried-To-Join");
@@ -75,19 +77,26 @@ img.background {
 			System.out.print("quizHost"+quizHost);
 
 			if (quizHost != null) {
-				//Fetch Questions
+				//Fetch Quiz
+				Quiz quiz = PersistentHelper.singleton.getQuizById(quizHost.getQuizId());
+				
+				if (quiz == null) {
+					session.setAttribute("User-Tried-To-Join", false);
+					session.setAttribute("QuizHost", null);
+					Alert.show("something went wrong. please contact the admin.", out);
+					return;
+				} 
+				
+				session.setAttribute("Quiz", quiz);
+				
 				out.println("<script type=\"text/javascript\">");
-				out.println("location='addquestion.jsp';");
+				out.println("location='quizerQuestion.jsp';");
 				out.println("</script>");
 			} else {
 				session.setAttribute("User-Tried-To-Join", false);
 				session.setAttribute("QuizHost", null);
 				//QuizHost not available with supllied quiz code.
-				out.write("alert('Invalid quiz code!')");
-				out.println("<script type=\"text/javascript\">");
-				out.println("alert('Invalid quiz code!');");
-				out.println("location='/Quizer';");
-				out.println("</script>");
+				Alert.show("Invalid quiz code. Please contact the admin.", out);
 			}
 		}
 	}

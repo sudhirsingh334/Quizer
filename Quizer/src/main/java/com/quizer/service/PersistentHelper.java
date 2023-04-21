@@ -166,6 +166,43 @@ public class PersistentHelper {
 		return quiz;
 	}
 	
+	public Quiz getQuizById(String quizId) {
+		Quiz quiz = null;
+		try {
+			try {
+				Class.forName("com.mysql.cj.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+				return quiz;
+			}
+
+			String serverURL = "jdbc:mysql://localhost:3306/quizer";
+			String dbUser = "sudhirk";
+			String dbPassword = "sudhirk";
+
+			try (Connection connection = DriverManager.getConnection(serverURL, dbUser, dbPassword)) {
+				try (PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Quiz WHERE id=?")) {
+					stmt.setString(1, quizId);
+					ResultSet rs = stmt.executeQuery();
+					if (rs.next()) {
+						String quizTitle = rs.getString("title");
+
+						if (quizTitle != null) {
+							quiz = new Quiz();
+							quiz.setName(quizTitle);
+						}
+					}
+				}
+			}
+
+		} catch (SQLException e) {
+			System.out.print("SQL Exception is::" + e.getStackTrace());
+			return quiz;
+
+		}
+		return quiz;
+	}
+	
 	public boolean isQuizAlreadyHostedWithCode(String quizCode) {
 		return this.getQuizHost(quizCode) != null;
 	}
