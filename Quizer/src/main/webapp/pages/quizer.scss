@@ -30,8 +30,8 @@ html {
 	height: 45px;
 	margin-bottom: 20px;
 	margin-top: 20px;
-	margin-right: 20px;
-	margin-left: 20px;
+	margin-right: 15px;
+	margin-left: 4px;
 	opacity: 1.0;
 	border-radius: 4px;
 
@@ -56,7 +56,7 @@ input {
 	text-align: center;
 	padding: 8px;
 	border-radius: 2px;
-	font-size: 25px;
+	font-size: 20px;
 	border-width: 2px;
 	border-color: mediumpurple;
 }
@@ -105,7 +105,9 @@ p1 {
 	width: 25%;
 	position: absolute;
 	left: 40%;
-	margin-top: -12%;
+	margin-top: -5%;
+	margin-bottom: 10px;
+	
 	border-radius: 2px solid red;
 	padding: 1%;
 

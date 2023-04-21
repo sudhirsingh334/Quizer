@@ -1,54 +1,54 @@
-     function openForm() {
-	     document.getElementById("join-quiz-form").style.display = "block";
-      }
+function openForm() {
+	document.getElementById("join-quiz-form").style.display = "block";
+}
 
-    function closeForm() {
-      	document.getElementById("join-quiz-form").style.display = "none";
-   }
+function closeForm() {
+	document.getElementById("join-quiz-form").style.display = "none";
+}
 
-     function openCreateQuizPage() {
-		  window.location.href = "createquiz.jsp";
-		    } 
-		    
+function quizerValidator() {
+	var quizername = document.f1.quizername.value;
+	var quizerid = document.f1.quizerid.value;
 
-    // Quizer Validator
-    
-  
-   function quizerValidator(form) {
-	
-	document.getElementById("validatorQuizerNameError").innerHTML = "";
-	document.getElementById("validatorQuizerIdError").innerHTML = "";
-	
-	
-
-	  var quizername = form.quizername.value;
-	  var quizerid = form.quizerid.value;
-	
-	let vflag = true;
+	let status = true;
 	if (quizername == "") {
-		vflag = false;
-		document.getElementById("validatorQuizerNameError").innerHTML = "Quzer name is requred.";
-		
+		 status = false;
+		 alert("Quzer name is requred");
+		//document.getElementById("validatorQuizerNameError").innerHTML = "Quzer name is requred.";
+      
 	}
-	else if (quizername.length < 5 || quizername.length > 50) {
-		vflag = false;
-		document.getElementById("validatorQuizerNameError").innerHTML = "<br></br> Quiz name must have min 5 letters and max of 50.";
+	else if (quizername.length < 5 || quizername.length > 20) {
+     	status = false;
+     			 alert("Quiz name must have min 5 letters and max of 20.");
+
+		//document.getElementById("validatorQuizerNameError").innerHTML ="Quiz name must have min 5 letters and max of 20.";
+			
 	}
 	else {
 		document.getElementById("validatorQuizerNameError").innerHTML = "";
+	
+			
 	}
-	// add id
+	
+	
 	if (quizerid == "") {
-		vflag = false;
-		document.getElementById("validatorQuizerIdError").innerHTML = "Quiz id is required.";
+	   status = false;
+	   alert("Quiz code is required");
+		//document.getElementById("validatorQuizerIdError").innerHTML =  " Quiz code is required.";
+		   
+			
 	}
-	else if (quizerid.length == 6) {
-		vflag = false;
-		document.getElementById("validatorQuizerIdError").innerHTML = "Quiz id must have  6 letters ";
+	else if (quizerid.length < 6 || quizerid.length > 6) {
+		status = false;	
+		 alert("Quiz code must have  6 letters");	
+		//document.getElementById("validatorQuizerIdError").innerHTML = "Quiz code must have  6 letters ";
+		
 	}
 	else {
 		document.getElementById("validatorQuizerIdError").innerHTML = "";
 	}
-
-	return vflag;
+   return status;
+	
 }
+
+f
