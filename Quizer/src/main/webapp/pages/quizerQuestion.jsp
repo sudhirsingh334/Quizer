@@ -63,8 +63,8 @@ td {
 <body>
 	<%@ page import="com.quizer.pojo.*"%>
 	<%@ page import="java.util.*"%>
-	<%@ page import="com.quizer.utilities.*" %>
-	
+	<%@ page import="com.quizer.utilities.*"%>
+
 	<%
 	Quiz quiz = (Quiz) session.getAttribute("Quiz");
 	if (quiz == null) {
@@ -73,13 +73,13 @@ td {
 		Alert.show("Something went wrong, please restart the quiz or contact the admin.", out);
 		return;
 	}
-	
+
 	Integer qsnPointer = (Integer) session.getAttribute("QuestionPointer");
-			
+
 	if (qsnPointer == null) {
 		qsnPointer = 0;
 	}
-	
+
 	out.write("<html>");
 	out.write("<head>");
 	out.write("</head>");
@@ -102,13 +102,18 @@ td {
 						ArrayList<Question> questionList = quiz.getQuestionList();
 						Question question = questionList.get(qsnPointer);
 						ArrayList<Answer> answerList = question.getAnswers();
-						System.out.println("\n\nQuestion:"+question.getTitle());
-						String quetionNumber = "Q"+qsnPointer;
+						String quetionNumber = "Q" + qsnPointer;
 						out.print(quetionNumber);
+
+						//Should hide next button
+						String nextButtonStatus = (qsnPointer == (questionList.size() - 1)) ? "none" : "block";
+						//should hide back button
+						String prevButtonStatus = (qsnPointer == 0) ? "none" : "block";
 						%>
 					</td>
 					<td><input type="text" name="question"
-						placeholder="Type Quetion Here" class="resizedTextbox" value="<% out.write(question.getTitle()); %>" readonly><br></br>
+						placeholder="Type Quetion Here" class="resizedTextbox"
+						value="<%out.write(question.getTitle());%>" readonly><br></br>
 					</td>
 				</tr>
 				<tr>
@@ -116,7 +121,8 @@ td {
 						name="answer-radio1"></td>
 					<td><input type="text" name="answer1"
 						placeholder="Type Answer Here" id="radioErro1"
-						style="margin: auto" value="<%out.write(answerList.get(0).getTitle()); %>" readonly>
+						style="margin: auto"
+						value="<%out.write(answerList.get(0).getTitle());%>" readonly>
 						</div></td>
 
 				</tr>
@@ -124,7 +130,8 @@ td {
 					<td style="text-align: right"><input type="radio"
 						name="answer-radio2"></td>
 					<td><input type="text" name="answer2"
-						placeholder="Type Answer Here" id="radioErro1" value="<%out.write(answerList.get(1).getTitle());%>" readonly
+						placeholder="Type Answer Here" id="radioErro1"
+						value="<%out.write(answerList.get(1).getTitle());%>" readonly
 						style="margin: auto">
 						</div></td>
 
@@ -135,7 +142,8 @@ td {
 					<td style="text-align: right"><input type="radio"
 						name="answer-radio3"></td>
 					<td><input type="text" name="answer3"
-						placeholder="Type Answer Here" id="radioErro1" value="<%out.write(answerList.get(2).getTitle());%>" readonly
+						placeholder="Type Answer Here" id="radioErro1"
+						value="<%out.write(answerList.get(2).getTitle());%>" readonly
 						style="margin: auto">
 						</div></td>
 
@@ -146,7 +154,8 @@ td {
 					<td style="text-align: right"><input type="radio"
 						name="answer-radio4"></td>
 					<td><input type="text" name="answer4"
-						placeholder="Type Answer Here" id="radioErro1" value="<%out.write(answerList.get(3).getTitle());%>" readonly
+						placeholder="Type Answer Here" id="radioErro1"
+						value="<%out.write(answerList.get(3).getTitle());%>" readonly
 						style="margin: auto">
 						</div></td>
 
@@ -156,52 +165,66 @@ td {
 				</div>
 			</table>
 			<div class='container-center'>
-			<input type="button" name="action-button" value="Back"
-					class="button"  onclick="showPrevQuetion();"/> 
-				<input type="button" name="action-button" value="Next"
-					class="button" onclick="showNextQuetion();"/> <input type="submit" name="action-button"
+				<input type="button" name="action-button" value="Back"
+					class="button" onclick="javascript:showPrevQuetion();"
+					style="display: <%out.write(prevButtonStatus);%>" /> <input
+					type="button" name="action-button" value="Next" class="button"
+					onclick="javascript:showNextQuetion();"
+					style="display: <%out.write(nextButtonStatus);%>" /> <input
+					type="submit" name="action-button"
 					onclick="javascript:completeAndRedirect();" value="Done"
 					class="button" />
 			</div>
 		</form>
+	</div>
+	<script type="text/javascript">
+		function createOption() {
+			var table = document.getElementById("answer-options-table");
+			var row = table.insertRow(0);
+			var cell1 = row.insertCell(0);
+			cell1.outerHTML = "<input type=\"radio\" name=\"answer-radio2\"><input type=\"text\" name=\"answer2\"  placeholder=\"Type Answer Here\" id=\"radioErro1\" value=\"\"><br></br>";
+		}
 
-		<script type="text/javascript">
-			function createOption() {
-				var table = document.getElementById("answer-options-table");
-				var row = table.insertRow(0);
-				var cell1 = row.insertCell(0);
-				cell1.outerHTML = "<input type=\"radio\" name=\"answer-radio2\"><input type=\"text\" name=\"answer2\"  placeholder=\"Type Answer Here\" id=\"radioErro1\" value=\"\"><br></br>";
+		function completeAndRedirect() {
+			var completeQuiz = confirm("Do you want to Complete the quiz ?");
+			if (completeQuiz == true) {
+				document.getElementById("completeQuizRedirect").action = "addquestion";
+				document.getElementById("completeQuizRedirect").submit();
+			} else {
+				return false;
 			}
+		}
 
-			function completeAndRedirect() {
-				var completeQuiz = confirm("Do you want to Complete the quiz ?");
-				if (completeQuiz == true) {
-					document.getElementById("completeQuizRedirect").action = "addquestion";
-					document.getElementById("completeQuizRedirect").submit();
-				} else {
-					return false;
-				}
-			}
-			
-			function showPrevQuetion() {
-				<%
-				//Update the question pointer and reload the same page
-				if (qsnPointer > 0) {
-					--qsnPointer;
-				}
-				%>
-				window.location.reload();
-			}
-			
-			function showNextQuetion() {
-				<%
-				//Update the question pointer and reload the same page
-				if (qsnPointer < questionList.size()) {
-					++qsnPointer;
-				}
-				%>
-				window.location.reload();
-			}
-		</script>
+		function showPrevQuetion() {
+<%-- 			console.log("Before < Pointer: " +
+	<%out.write(qsnPointer);%>
+		); --%>
+<%-- 	<%//Update the question pointer and reload the same page
+	if (qsnPointer > 0) {
+		--qsnPointer;
+	}%> --%>
+	<%-- 	console.log("After < Pointer: " +
+	<%out.write(qsnPointer);%>
+		); --%>
+
+			window.location.reload();
+		}
+
+		function showNextQuetion() {
+			alert("nexy");
+<%-- 			console.log("Before > Pointer: " +
+	<%out.write(qsnPointer);%>
+		); --%>
+<%-- 	<%//Update the question pointer and reload the same page
+	if (qsnPointer < questionList.size()) {
+		++qsnPointer;
+	}%> --%>
+<%-- 		console.log("After > Pointer: " +
+	<%out.write(qsnPointer);%>
+		); --%>
+			window.location.reload();
+		}
+	</script>
 </body>
+
 </html>

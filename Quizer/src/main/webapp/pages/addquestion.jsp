@@ -78,7 +78,7 @@ td {
 	out.write("</html>");
 	%>
 	<div class="validation">
-		<form action="" method="post" name="completeQuizRedirect"
+		<form action="addquestion" method="post" name="completeQuizRedirect"
 			id="completeQuizRedirect">
 			<table id="answer-options-table" style="width: 100%">
 				<tr>
@@ -144,8 +144,7 @@ td {
 			</table>
 			<div class='container-center'>
 				<input type="submit" name="action-button" value="Next"
-					class="button" /> <input type="submit" name="action-button"
-					onclick="javascript:completeAndRedirect();" value="Done"
+					class="button" /> <input type="submit" name="action-button" value="Done"
 					class="button" />
 			</div>
 		</form>

@@ -66,15 +66,13 @@ img.background {
 	<%
 	response.setContentType("text/html");
 	Object userTriedToJoin  = session.getAttribute("User-Tried-To-Join");
-	System.out.print("userTriedToJoin"+userTriedToJoin);
+
 	if (userTriedToJoin != null) {
 		boolean userTried = (boolean) userTriedToJoin;
-		System.out.print("userTried"+(userTried ? "true":"false"));
 
 		if (userTried == true) {
 			//fetch Quiz Host from session
 			QuizHostDAO  quizHost = (QuizHostDAO) session.getAttribute("QuizHost");
-			System.out.print("quizHost"+quizHost);
 
 			if (quizHost != null) {
 				//Fetch Quiz

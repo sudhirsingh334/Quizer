@@ -79,7 +79,7 @@ public class AddQuestionServlet extends HttpServlet {
 			//Once saved print success message
 			if (isSucceded) {
 				 pw.write("Quiz "+quiz.getName()+ " has been created successfuly.");
-				  RequestDispatcher rd =req.getRequestDispatcher("QuizerName.html");
+				  RequestDispatcher rd =req.getRequestDispatcher("/");
 				  
 				  rd.forward(req,res);
 			}
