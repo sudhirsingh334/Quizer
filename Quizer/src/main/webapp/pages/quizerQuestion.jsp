@@ -197,7 +197,7 @@ td {
 	function completeAndRedirect() {
 		var completeQuiz = confirm("Do you want to Complete the quiz ?");
 		if (completeQuiz == true) {
-			document.getElementById("completeQuizRedirect").action = "addquestion";
+			document.getElementById("completeQuizRedirect").action = "/Quizer";
 			document.getElementById("completeQuizRedirect").submit();
 		} else {
 			return false;
