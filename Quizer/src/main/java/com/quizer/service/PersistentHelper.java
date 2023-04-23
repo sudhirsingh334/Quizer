@@ -35,8 +35,8 @@ public class PersistentHelper {
 			}
 
 			String serverURL = "jdbc:mysql://localhost:3306/quizer";
-			String dbUser = "sudhirk";
-			String dbPassword = "sudhirk";
+			String dbUser = "root";
+			String dbPassword = "Sudhirk@9934";
 
 			try (Connection connection = DriverManager.getConnection(serverURL, dbUser, dbPassword)) {
 
