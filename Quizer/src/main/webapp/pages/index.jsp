@@ -6,8 +6,16 @@
 <meta charset="UTF-8">
 <title>Quizer</title>
 <link href="pages/styles/style.css" rel="stylesheet" />
+    <link href="https://companieslogo.com/img/orig/KAHOT.OL-e50e329b.png?t=1603470544"rel="icon" class="headericon">
 
 
+<style type="text/css">
+
+.headericon{
+	size: 20px;
+
+
+</style>
 </head>
 
 
