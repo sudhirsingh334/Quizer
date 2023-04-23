@@ -104,7 +104,7 @@ td {
 			id="completeQuizRedirect">
 			<table id="answer-options-table" style="width: 100%">
 				<tr>
-					<td style="text-align: right">
+					<td style="margin-tio:10%; color:black; margin-left:1000%">
 						<%
 						System.out.println("b 	:" + qsnPointer + "seesion id: " + session.getId());
 

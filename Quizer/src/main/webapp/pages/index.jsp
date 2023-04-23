@@ -17,7 +17,7 @@
 	<div class="container-center" style="margin-top: 10%;">
 		<div class="container-center">
 			<img alt="" src="assets/quizer-white-XS.png"
-				style="width: 1200px; margin-left: 36%; margin-bottom: 5%;" />
+				style="width: 1200px; margin-left: 60%; margin-bottom: 5%;" />
 		</div>
 		
 		     <input type="submit"onClick="openJoinQuizPage()" value="Join" class="button"/>
