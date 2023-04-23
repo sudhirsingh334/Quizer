@@ -9,13 +9,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.UUID;
 
-import com.database.AnswerOptionDAO;
 import com.database.QuizDAO;
 import com.database.QuizHostDAO;
 import com.database.QuizHostState;
 import com.quizer.pojo.Answer;
 import com.quizer.pojo.Question;
 import com.quizer.pojo.Quiz;
+import com.quizer.utilities.DBConfig;
 
 public class PersistentHelper {
 
@@ -34,11 +34,7 @@ public class PersistentHelper {
 				return false;
 			}
 
-			String serverURL = "jdbc:mysql://localhost:3306/quizer";
-			String dbUser = "root";
-			String dbPassword = "Sudhirk@9934";
-
-			try (Connection connection = DriverManager.getConnection(serverURL, dbUser, dbPassword)) {
+			try (Connection connection = DriverManager.getConnection(DBConfig.url, DBConfig.username, DBConfig.password)) {
 
 				String quizID = UUID.randomUUID().toString();
 				try (PreparedStatement stmt = connection
@@ -104,11 +100,7 @@ public class PersistentHelper {
 				return quizList;
 			}
 
-			String serverURL = "jdbc:mysql://localhost:3306/quizer";
-			String dbUser = "sudhirk";
-			String dbPassword = "sudhirk";
-
-			try (Connection connection = DriverManager.getConnection(serverURL, dbUser, dbPassword)) {
+			try (Connection connection = DriverManager.getConnection(DBConfig.url, DBConfig.username, DBConfig.password)) {
 				try (PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Quiz")) {
 					ResultSet rs = stmt.executeQuery();
 
@@ -140,11 +132,7 @@ public class PersistentHelper {
 				return quiz;
 			}
 
-			String serverURL = "jdbc:mysql://localhost:3306/quizer";
-			String dbUser = "sudhirk";
-			String dbPassword = "sudhirk";
-
-			try (Connection connection = DriverManager.getConnection(serverURL, dbUser, dbPassword)) {
+			try (Connection connection = DriverManager.getConnection(DBConfig.url, DBConfig.username, DBConfig.password)) {
 				try (PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Quiz WHERE title=?")) {
 					stmt.setString(1, quizName);
 					ResultSet rs = stmt.executeQuery();
@@ -177,11 +165,7 @@ public class PersistentHelper {
 				return quiz;
 			}
 
-			String serverURL = "jdbc:mysql://localhost:3306/quizer";
-			String dbUser = "sudhirk";
-			String dbPassword = "sudhirk";
-
-			try (Connection connection = DriverManager.getConnection(serverURL, dbUser, dbPassword)) {
+			try (Connection connection = DriverManager.getConnection(DBConfig.url, DBConfig.username, DBConfig.password)) {
 				try (PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Quiz WHERE id=?")) {
 					stmt.setString(1, quizId);
 					ResultSet rs = stmt.executeQuery();
@@ -253,11 +237,7 @@ public class PersistentHelper {
 				return quizHost;
 			}
 
-			String serverURL = "jdbc:mysql://localhost:3306/quizer";
-			String dbUser = "sudhirk";
-			String dbPassword = "sudhirk";
-
-			try (Connection connection = DriverManager.getConnection(serverURL, dbUser, dbPassword)) {
+			try (Connection connection = DriverManager.getConnection(DBConfig.url, DBConfig.username, DBConfig.password)) {
 				try (PreparedStatement stmt = connection.prepareStatement("SELECT * FROM QuizHost WHERE quizCode=?")) {
 					stmt.setString(1, quizCode);
 					ResultSet rs = stmt.executeQuery();
@@ -299,11 +279,7 @@ public class PersistentHelper {
 				return status;
 			}
 
-			String serverURL = "jdbc:mysql://localhost:3306/quizer";
-			String dbUser = "sudhirk";
-			String dbPassword = "sudhirk";
-
-			try (Connection connection = DriverManager.getConnection(serverURL, dbUser, dbPassword)) {
+			try (Connection connection = DriverManager.getConnection(DBConfig.url, DBConfig.username, DBConfig.password)) {
 				try (PreparedStatement stmt = connection.prepareStatement("INSERT INTO QuizHost (id, quizId, hostedAt, quizCode, status) VALUES (?, ?, ?, ?, ?)")) {
 					stmt.setString(1, quizHost.getId());
 					stmt.setString(2, quizHost.getQuizId());
@@ -333,11 +309,7 @@ public class PersistentHelper {
 				return status;
 			}
 
-			String serverURL = "jdbc:mysql://localhost:3306/quizer";
-			String dbUser = "sudhirk";
-			String dbPassword = "sudhirk";
-
-			try (Connection connection = DriverManager.getConnection(serverURL, dbUser, dbPassword)) {
+			try (Connection connection = DriverManager.getConnection(DBConfig.url, DBConfig.username, DBConfig.password)) {
 				try (PreparedStatement stmt = connection.prepareStatement("UPDATE QuizHost SET status = ? WHERE id = ?")) {
 					stmt.setString(1, quizHost.getState().name());
 					stmt.setString(2, quizHost.getId());
