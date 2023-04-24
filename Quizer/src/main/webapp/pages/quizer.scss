@@ -35,6 +35,8 @@ html {
 	opacity: 1.0;
 	border-radius: 4px;
 
+
+
 	&-error {
 		@extend .button;
 		background-color: red;
@@ -121,11 +123,11 @@ p1 {
 
 .form input[type=text],
 .form input[type=password] {
-	width: 80%;
+	width: 60%;
 	padding: 15px;
 	margin: 2px 0 10px 0;
 	border: none;
-	margin-right: 10%;
+	margin-right: 1%;
 	border-radius: 1px auto black;
 }
 

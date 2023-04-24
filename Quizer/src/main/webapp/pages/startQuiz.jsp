@@ -8,6 +8,17 @@
 <meta charset="UTF-8">
 <title>Start Quiz</title>
 <link href="styles/style.css" rel="stylesheet" />
+    <link href="https://companieslogo.com/img/orig/KAHOT.OL-e50e329b.png?t=1603470544"rel="icon" class="headericon">
+
+ <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+ <link rel="stylesheet" href="css/login_style.css">
+ 
+
 </head>
 <body>
 	<%@ page import="jakarta.servlet.http.*"%>
@@ -72,6 +83,8 @@
 			document.body.removeChild(elem);
 		}
 		
+		
+		
 		//timestamp
 		var startDate = new Date();
            var myVar=setInterval(function () {myTimer()}, 1000);
@@ -104,6 +117,10 @@
          let result = number.toString().padStart(2, '0');
          return result;
 }
+     
+     
+     
+     
 	</script>
 </body>
 </html>
