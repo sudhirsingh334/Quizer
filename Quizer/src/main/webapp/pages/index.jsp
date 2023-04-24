@@ -31,6 +31,10 @@
 		     <input type="submit"onClick="openJoinQuizPage()" value="Join" class="button"/>
 		     <input type="submit" onClick="openCreateQuizPage()" value="Create" class="button"/>
 			 <input type="submit" onClick="openQuizListPage()" value="Library" class="button"/>
+			 
+			  <input type="submit" onClick="testPage()" value="Test" class="button"/>
+			 
+			 
 			
 	</div>
 	<script>
@@ -44,6 +48,11 @@
 
 		function openQuizListPage() {
 			window.location.href = "pages/QuizList.jsp";
+		}
+		
+		
+		function testPage() {
+			window.location.href = "pages/test.html";
 		}
 	</script>
 </body>

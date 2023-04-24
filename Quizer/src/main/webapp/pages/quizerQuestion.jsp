@@ -60,9 +60,10 @@ td {
 }
 
 .timedate{
-color:white;
+    color:white;
      position: absolute;
      top:0;
+     right:0;
 
 }
 
@@ -223,23 +224,27 @@ color:white;
 			return false;
 		}
 	}
-	 /* timestamp */
-	var startDate = new Date();
-	var myVar=setInterval(function () {myTimer()}, 1000);
-	var counter = 0;
-
 	function myTimer() {
-	    var date = new Date();
-	    var diff = date-startDate;
+	      <%-- var startTimeString = '<%=quizHost.getHostedAt()%>';
+	       --%>
+	      
+	      if (startTimeString.length === 0) {
+	    	  document.getElementById("timelapse").innerHTML = '00:00:00';
+	    	  return;
+	      }
+	      
+	      var startDate = new Date();
+	      var currentDate = new Date();
+	      var diff = currentDate-startDate;
+	      
+	      var duration = diff/1000;//in seconds
 	    
-	    var duration = diff/1000;//in seconds
-	    
-	    var hrs = duration/3600;
-	    var mins = (duration%3600)/60;//in min
-	    var secs = (duration%3600)%60;
+	      var hrs = duration/3600;
+	      var mins = (duration%3600)/60;//in min
+	      var secs = (duration%3600)%60;
 
-	    var timelapse = padZero(Math.floor(hrs)) + ":" + padZero(Math.floor(mins)) + ":" + padZero(Math.round(secs));
-	    document.getElementById("timelapse").innerHTML = timelapse;
+	      var timelapse = padZero(Math.floor(hrs)) + ":" + padZero(Math.floor(mins)) + ":" + padZero(Math.round(secs));
+	      document.getElementById("timelapse").innerHTML = timelapse;
 	}
 
 	function padZero(number){
