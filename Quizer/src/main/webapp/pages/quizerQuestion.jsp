@@ -8,6 +8,8 @@
 <script language="javascript" src="Quizer.js"></script>
 <!-- <script language="javascript" src="../scripts/Quizervalidator.js"></script>
  -->
+     <link href="https://companieslogo.com/img/orig/KAHOT.OL-e50e329b.png?t=1603470544"rel="icon" class="headericon">
+ 
 <style type="text/css">
 
 
@@ -56,12 +58,25 @@ td {
 	color: white;
 	font-size: 30px;
 }
+
+.timedate{
+color:white;
+     position: absolute;
+     top:0;
+
+}
+
+ 
+  
+
 </style>
 
 
 
 </head>
 <body>
+ <h1 id="timelapse" class="timedate"></h1>
+ 
 	<%@ page import="com.quizer.pojo.*"%>
 	<%@ page import="java.util.*"%>
 	<%@ page import="com.quizer.utilities.*"%>
@@ -99,9 +114,14 @@ td {
 	out.write("</body>");
 	out.write("</html>");
 	%>
+	
+
+	
 	<div class="validation">
 		<form action="QuizerManager" method="post" name="completeQuizRedirect"
 			id="completeQuizRedirect">
+			
+			
 			<table id="answer-options-table" style="width: 100%">
 				<tr>
 					<td style="margin-tio:10%; color:black; margin-left:1000%">
@@ -173,14 +193,14 @@ td {
 				</div>
 			</table>
 			<div class='container-center'>
-				<Button type="submit" name="QuizerManager-Button"
-					value="Quiz-Question-Back" class="button"
-					style="display: <%out.write(prevButtonStatus);%>">Back</Button>
+				<Button type="submit" name="QuizerManager-Button" value="Quiz-Question-Back" class="button" style="display: <%out.write(prevButtonStatus);%>">Back</Button>
+					
+					
 				<Button type="submit" name="QuizerManager-Button"
 					value="Quiz-Question-Next" class="button"
 					style="display: <%out.write(nextButtonStatus);%>">Next</Button>
-				<Button class="button" type="submit" name="QuizerManager-Button"
-					onclick="completeAndRedirect();" value="Quiz-Done">Done</Button>
+				<Button class="button" type="submit" name="QuizerManager-Button" onclick="completeAndRedirect();" value="Quiz-Done" style="color:white;margin-left:50% ">Done</Button>
+					
 			</div>
 		</form>
 	</div>
@@ -203,48 +223,31 @@ td {
 			return false;
 		}
 	}
+	 /* timestamp */
+	var startDate = new Date();
+	var myVar=setInterval(function () {myTimer()}, 1000);
+	var counter = 0;
 
-<%-- 	function showPrevQuetion() {
-		alert(
-<%=qsnPointer%>
-	)
-		var qsnPTR =
-<%=qsnPointer%>
-	;
-		var qsnCount =
-<%=questionList.size()%>
-	;
+	function myTimer() {
+	    var date = new Date();
+	    var diff = date-startDate;
+	    
+	    var duration = diff/1000;//in seconds
+	    
+	    var hrs = duration/3600;
+	    var mins = (duration%3600)/60;//in min
+	    var secs = (duration%3600)%60;
 
-		if (qsnPTR > 0) {
-			var save =
-<%=questionList.size()%>
-	;
-			alert("saved<");
-		}
-		window.location.reload();
+	    var timelapse = padZero(Math.floor(hrs)) + ":" + padZero(Math.floor(mins)) + ":" + padZero(Math.round(secs));
+	    document.getElementById("timelapse").innerHTML = timelapse;
 	}
 
-	function showNextQuetion() {
-		alert(
-<%=session.getAttribute("QuestionPointer")%>
-	)
-		alert(
-<%=qsnPointer%>
-	)
-		var qsnPTR =
-<%=qsnPointer%>
-	;
-		var qsnCount =
-<%=QuestionPointer.decrease(session)%>
-	;
+	function padZero(number){
+	         let result = number.toString().padStart(2, '0');
+	         return result;
+	}
+	
+	
 
-		if (qsnPTR < (qsnCount - 1)) {
-			var save =
-<%=QuestionPointer.increase(session)%>
-	;
-		}
-
-		window.location.reload();
-	} --%>
 </script>
 </html>
