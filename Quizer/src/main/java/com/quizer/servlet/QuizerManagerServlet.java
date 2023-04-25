@@ -1,8 +1,13 @@
 package com.quizer.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
+import com.database.QuizAnswerDAO;
 import com.database.QuizHostDAO;
+import com.quizer.pojo.Answer;
+import com.quizer.pojo.Question;
+import com.quizer.pojo.Quiz;
 import com.quizer.service.PersistentHelper;
 import com.quizer.utilities.QuestionPointer;
 
@@ -18,13 +23,20 @@ public class QuizerManagerServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String button = request.getParameter("QuizerManager-Button");
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		session.setAttribute("User-Tried-To-Join", false);
 		String nextPage = "/";
 
 		if (button == null) {
 			System.out.println("QuizerManagerServlet:doPost,unknown button pressed");
 			return;
+		}
+		Quiz quiz = (Quiz) session.getAttribute("Quiz");
+
+		ArrayList<QuizAnswerDAO> quizAnsDAOList = (ArrayList<QuizAnswerDAO>) session.getAttribute("QuizAnswerDAO");
+		
+		if (quizAnsDAOList == null) {
+			quizAnsDAOList = new ArrayList<QuizAnswerDAO>();
 		}
 		
 		if (button.equalsIgnoreCase("Join-Quiz")) {
@@ -40,6 +52,35 @@ public class QuizerManagerServlet extends HttpServlet {
 			QuestionPointer.decrease(session);
 			nextPage = "quizerQuestion.jsp";
 		}  else if (button.equalsIgnoreCase("Quiz-Question-Next")) {
+			Integer qsnPointer = (Integer) session.getAttribute("QuestionPointer");
+			//fetch selected answer
+			int optionNumber = 1;
+			
+			String answerTitle = "";
+			
+			do {
+				answerTitle = request.getParameter("answer"+optionNumber);
+
+				if (answerTitle != null) {
+					String isCorrectOption =  request.getParameter("answer-radio"+optionNumber);
+					
+					if (isCorrectOption != null && isCorrectOption.equalsIgnoreCase("on")) {
+						ArrayList<Question> questionList = quiz.getQuestionList();
+						Question question = questionList.get(qsnPointer);
+						ArrayList<Answer> answerList = question.getAnswers();
+						Answer answer = answerList.get(optionNumber);
+						
+						QuizAnswerDAO quizAnsDAO = new QuizAnswerDAO();
+						quizAnsDAO.setAnswerId(Integer.toString(optionNumber));
+						quizAnsDAOList.add(quizAnsDAO);
+						session.setAttribute("QuizAnswerDAOList", quizAnsDAOList);
+						break;
+					}
+
+					++optionNumber;
+				}
+
+			} while (answerTitle != null);
 			QuestionPointer.increase(session);
 			nextPage = "quizerQuestion.jsp";
 		}  else if (button.equalsIgnoreCase("Quiz-Done")) {

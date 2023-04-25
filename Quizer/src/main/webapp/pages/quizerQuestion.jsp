@@ -6,9 +6,7 @@
 <title>Quizer</title>
 <link href="styles/style.css" rel="stylesheet" />
 <script language="javascript" src="Quizer.js"></script>
-<!-- <script language="javascript" src="../scripts/Quizervalidator.js"></script>
- -->
-     <link href="https://companieslogo.com/img/orig/KAHOT.OL-e50e329b.png?t=1603470544"rel="icon" class="headericon">
+ <link href="https://companieslogo.com/img/orig/KAHOT.OL-e50e329b.png?t=1603470544"rel="icon" class="headericon">
  
 <style type="text/css">
 
@@ -66,14 +64,7 @@ td {
      right:0;
 
 }
-
- 
-  
-
 </style>
-
-
-
 </head>
 <body>
  <h1 id="timelapse" class="timedate"></h1>
@@ -81,6 +72,7 @@ td {
 	<%@ page import="com.quizer.pojo.*"%>
 	<%@ page import="java.util.*"%>
 	<%@ page import="com.quizer.utilities.*"%>
+	<%@ page import="com.database.*"%>
 
 	<%
 	Quiz quiz = (Quiz) session.getAttribute("Quiz");
@@ -109,23 +101,19 @@ td {
 	out.write("<em>");
 	out.print(quiz.getName());
 	out.write("</em>");
-
 	out.write("</h1>");
 	out.write("</div>");
 	out.write("</body>");
 	out.write("</html>");
 	%>
 	
-
-	
 	<div class="validation">
 		<form action="QuizerManager" method="post" name="completeQuizRedirect"
 			id="completeQuizRedirect">
 			
-			
 			<table id="answer-options-table" style="width: 100%">
 				<tr>
-					<td style="margin-tio:10%; color:black; margin-left:1000%">
+					<td style="margin-top:10%; color:black; margin-left:1000%">
 						<%
 						System.out.println("b 	:" + qsnPointer + "seesion id: " + session.getId());
 
@@ -139,6 +127,16 @@ td {
 						String nextButtonStatus = (qsnPointer == (questionList.size() - 1)) ? "none" : "block";
 						//should hide back button
 						String prevButtonStatus = (qsnPointer == 0) ? "none" : "block";
+						
+						ArrayList<QuizAnswerDAO> quizAnsDAOList = (ArrayList<QuizAnswerDAO>) session.getAttribute("QuizAnswerDAOList");
+						QuizAnswerDAO option = null;
+						if (quizAnsDAOList == null) {
+							quizAnsDAOList = new ArrayList<QuizAnswerDAO>();
+						} else if (qsnPointer<quizAnsDAOList.size()){
+							option = quizAnsDAOList.get(qsnPointer);
+						}
+						
+
 						%>
 					</td>
 					<td><input type="text" name="question"
@@ -147,7 +145,11 @@ td {
 					</td>
 				</tr>
 				<tr>
-					<td style="text-align: right"><input type="radio"name="answer-radio1"></td>	
+					<td style="text-align: right"><input type="radio"name="answer-radio1" <% 
+					if (option != null && option.getAnswerId().equalsIgnoreCase("0")) {
+						out.write("checked");
+					}
+					%>></td>	
 					<td><input type="text" name="answer1"
 						placeholder="Type Answer Here" id="radioErro1"
 						style="margin: auto"
@@ -156,7 +158,11 @@ td {
 
 				</tr>
 				<tr>
-					<td style="text-align: right"><input type="radio"name="answer-radio1"></td>
+					<td style="text-align: right"><input type="radio"name="answer-radio1" <% 
+							if (option != null && option.getAnswerId().equalsIgnoreCase("1")) {
+								out.write("checked");
+							}
+					%>></td>
 						
 					<td><input type="text" name="answer2"placeholder="Type Answer Here" id="radioErro1"value="<%out.write(answerList.get(1).getTitle());%>" readonly
 						
@@ -166,10 +172,13 @@ td {
 
 				</tr>
 
-				</tr>
 				<tr>
 					<td style="text-align: right"><input type="radio"
-						name="answer-radio1"></td>
+						name="answer-radio1" <% 
+								if (option != null && option.getAnswerId().equalsIgnoreCase("2")) {
+									out.write("checked");
+								}
+					%>></td>
 					<td><input type="text" name="answer3"
 						placeholder="Type Answer Here" id="radioErro1"
 						value="<%out.write(answerList.get(2).getTitle());%>" readonly
@@ -178,10 +187,13 @@ td {
 
 				</tr>
 
-				</tr>
 				<tr>
 					<td style="text-align: right"><input type="radio"
-						name="answer-radio1"></td>
+						name="answer-radio1" <% 
+								if (option != null && option.getAnswerId().equalsIgnoreCase("3")) {
+									out.write("checked");
+								}
+					%>></td>
 					<td><input type="text" name="answer1"
 						placeholder="Type Answer Here" id="radioErro1"
 						value="<%out.write(answerList.get(3).getTitle());%>" readonly
@@ -224,35 +236,28 @@ td {
 			return false;
 		}
 	}
-	function myTimer() {
-	      <%-- var startTimeString = '<%=quizHost.getHostedAt()%>';
-	       --%>
-	      
-	      if (startTimeString.length === 0) {
-	    	  document.getElementById("timelapse").innerHTML = '00:00:00';
-	    	  return;
-	      }
-	      
-	      var startDate = new Date();
-	      var currentDate = new Date();
-	      var diff = currentDate-startDate;
-	      
-	      var duration = diff/1000;//in seconds
-	    
-	      var hrs = duration/3600;
-	      var mins = (duration%3600)/60;//in min
-	      var secs = (duration%3600)%60;
+	
+	var startDate = new Date();
+	var myVar=setInterval(function () {myTimer()}, 1000);
+	var counter = 0;
 
-	      var timelapse = padZero(Math.floor(hrs)) + ":" + padZero(Math.floor(mins)) + ":" + padZero(Math.round(secs));
-	      document.getElementById("timelapse").innerHTML = timelapse;
+	function myTimer() {
+	    var date = new Date();
+	    var diff = date-startDate;
+	    
+	    var duration = diff/1000;//in seconds
+	    
+	    var hrs = duration/3600;
+	    var mins = (duration%3600)/60;//in min
+	    var secs = (duration%3600)%60;
+
+	    var timelapse = padZero(Math.floor(hrs)) + ":" + padZero(Math.floor(mins)) + ":" + padZero(Math.round(secs));
+	    document.getElementById("timelapse").innerHTML = timelapse;
 	}
 
 	function padZero(number){
 	         let result = number.toString().padStart(2, '0');
 	         return result;
 	}
-	
-	
-
 </script>
 </html>
