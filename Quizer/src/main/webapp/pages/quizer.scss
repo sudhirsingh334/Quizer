@@ -57,13 +57,10 @@ html {
 input {
 	text-align: left;
 	padding: 5px;
-/*	border-radius: 2px;*/
 	font-size: 20px;
-	/*border-width: 2px;*/
-	/*border-color: mediumpurple;*/
-	 border:none;
-	 border-left: none;
-	 border-right: none;
+	border:white;
+	border-left: none;
+	border-right: none;
 }
 
 p1 {
@@ -123,12 +120,13 @@ p1 {
 
 .form input[type=text],
 .form input[type=password] {
-	width: 60%;
+	width: 40%;
 	padding: 15px;
 	margin: 2px 0 10px 0;
 	border: none;
-	margin-right: 1%;
+	margin-right: auto;
 	border-radius: 1px auto black;
+	margin-left: 100%;
 }
 
 .form input[type=text]:focus,

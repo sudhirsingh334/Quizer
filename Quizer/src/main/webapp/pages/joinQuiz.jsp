@@ -68,11 +68,11 @@ img.background {
 		display: none;
 	background-color: lightblue;
 	margin: auto;
-	width: 25%;
+	width:auto;
 	position: absolute;
-	left: 40%;
-	margin-top:5%;
-	margin-bottom: 10px;
+	left: auto;
+	margin-top:50%;
+	margin-bottom:autopx;
 
 	border-radius: 2px solid red;
 	padding: 1%;
