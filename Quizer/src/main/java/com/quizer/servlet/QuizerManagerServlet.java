@@ -54,9 +54,11 @@ public class QuizerManagerServlet extends HttpServlet {
 		} else if (button.equalsIgnoreCase("Quiz-Question-Next") || button.equalsIgnoreCase("Quiz-Question-Back") || button.equalsIgnoreCase("Quiz-Done")) {
 			Integer qsnPointer = (Integer) session.getAttribute("QuestionPointer");
 
-			Integer selectedOptionIndex = Integer.valueOf(request.getParameter("answer-option"));
+			String option = request.getParameter("answer-option");
+			
+			if (option != null) {
+				Integer selectedOptionIndex = Integer.valueOf(request.getParameter("answer-option"));
 
-			if (selectedOptionIndex != null) {
 				CandidateDTO candidate = (CandidateDTO) session.getAttribute("CandidateDTO");
 
 				AnswerDTO answer = candidate.getQuiz().getCondidateQuestionDTOList().get(qsnPointer).getAnswerDTOList()

@@ -418,11 +418,9 @@ public class PersistentHelper {
 					stmt.setString(1, candidate.getId());
 					stmt.setString(2, candidate.getName());
 					stmt.setString(3, candidate.getQuizHost().getId());
-					stmt.setString(3, candidate.getQuizHost().getId());
-					stmt.executeQuery();
-					
-					status = true;
-					
+					stmt.setString(3, candidate.getQuizHost().getId());					
+					status = stmt.executeUpdate() == 1 ? true:false;
+									
 					try (PreparedStatement answerStmt = connection
 							.prepareStatement("INSERT INTO CandidateSelectedAnswer (id, answerOptionId, questionId, candidateId) VALUES (?, ?, ?, ?)")) {
 						
@@ -439,9 +437,8 @@ public class PersistentHelper {
 							answerStmt.setString(1, UUID.randomUUID().toString());
 							answerStmt.setString(2, selectedAnsOption.getId());
 							answerStmt.setString(3, qsn.getId());
-							answerStmt.setString(4, candidate.getId());
-							answerStmt.executeQuery();
-							status = true;
+							answerStmt.setString(4, candidate.getId());							
+							status = answerStmt.executeUpdate() == 1 ? true:false;
 						}						
 					}
 				}
