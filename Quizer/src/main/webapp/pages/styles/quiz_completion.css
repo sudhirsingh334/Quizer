@@ -1,14 +1,14 @@
 body {
-    background-color:black; 
+    background-color: white; 
     font-family: Arial, Helvetica, sans-serif; 
 }
 
 @theme_button {
-	background-color: blue;
+	background-color: rebeccapurple;
 }
 
 .theme_blue_button {
-	background-color: blue;
+	background-color: rebeccapurple;
 	color: white;
 	padding: 16px 20px;
 	border: none;
@@ -72,32 +72,34 @@ body {
 #card {
     position: relative;
     top: 110px;
-    width: 320px;
+    width: auto;
     display: block;
     margin: auto;
     text-align: center;
     font-family: "Source Sans Pro", sans-serif;
+    
+    
 }	
 
 #upper-side {
     padding: 2em;
-    background-color: blue;
+    background-color:white;
     display: block;
-    color: #fff;
+    color: rebeccapurple;
     border-top-right-radius: 8px;
     border-top-left-radius: 8px;
 }
 #checkmark {
     font-weight: lighter;
-    fill: #fff;
-    margin: -3.5em auto auto 20px;
+    fill: rebeccapurple;
+    margin-left:4em;
 }
 #status {
     font-weight: lighter;
     text-transform: uppercase;
     letter-spacing: 2px;
-    font-size: 1em;
-    margin-top: -0.2em;
+    font-size: 3em;
+    margin-top: 10px;
     margin-bottom: 0;
 }
 #lower-side {
@@ -118,7 +120,7 @@ body {
     position: relative;
     top: 1.5em;
     text-decoration: none;
-    background:blue;
+    background:rebeccapurple;
     color: #fff;
     margin: auto;
     padding: 0.8em 3em;
