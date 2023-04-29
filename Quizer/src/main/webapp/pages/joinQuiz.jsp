@@ -64,19 +64,16 @@ img.background {
 .form-container{
 	border-radius: 10px;
 	padding: 30px;
-		
-		display: none;
+	display: block;
 	background-color: lightblue;
 	margin: auto;
 	width:auto;
 	position: absolute;
 	left: auto;
-	margin-top:50%;
+	margin-top:5%;
 	margin-bottom:autopx;
-
 	border-radius: 2px solid red;
 	padding: 1%;
-	
 }
 
  
@@ -125,8 +122,8 @@ img.background {
       <section class="col-12 col-sm-6 col-md-4">
 	
 	<div class="container-center">
-		<button class="button" onclick="openForm()">Join</button>
-
+<!-- 		<button class="button" onclick="openForm()">Join</button>
+ -->
 
 		<form  class="form-container" name="f1" action="QuizerManager" method="post" class="form" id="join-quiz-form" onsubmit="return quizerValidator()">
 		 <div class="form-group">
@@ -144,7 +141,7 @@ img.background {
 			<button type="submit" class="button-extended" name="QuizerManager-Button" value="Join-Quiz">Join</button>
 				
 			<button type="button" class="button-error-extended"
-				onclick="closeForm()">Close</button>
+				onclick="openHomePage()">Close</button>
         </div>
 
 		</form>
@@ -164,6 +161,10 @@ img.background {
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-	
+<script type="text/javascript">
+function openHomePage() {
+	location='/Quizer';
+}
+</script>
   </body>
 </html>
