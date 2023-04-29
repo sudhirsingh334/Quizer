@@ -1,9 +1,9 @@
 package com.quiz.dto;
 
-public class AnswerDTO {
+public class QuizDTO {
+
 	private String id;
 	private String title;
-	private boolean isCorrect;
 
 	public String getId() {
 		return id;
@@ -20,13 +20,4 @@ public class AnswerDTO {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-
-	public boolean isCorrect() {
-		return isCorrect;
-	}
-
-	public void setCorrect(boolean isCorrect) {
-		this.isCorrect = isCorrect;
-	}
-
 }

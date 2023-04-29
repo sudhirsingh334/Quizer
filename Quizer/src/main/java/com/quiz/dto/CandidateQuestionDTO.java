@@ -1,9 +1,11 @@
 package com.quiz.dto;
 
+import java.util.ArrayList;
+
 public class CandidateQuestionDTO {
-	private	String title;
-	private	AnswerDTO answerDTO;
-	private String selectAnswerDTO;
+	private String title;
+	private ArrayList<AnswerDTO> answerDTO;
+	private AnswerDTO selectedAnswerDTO;
 
 	public String getTitle() {
 		return title;
@@ -13,20 +15,20 @@ public class CandidateQuestionDTO {
 		this.title = title;
 	}
 
-	public AnswerDTO getAnswerDTO() {
+	public ArrayList<AnswerDTO> getAnswerDTO() {
 		return answerDTO;
 	}
 
-	public void setAnswerDTO(AnswerDTO answerDTO) {
+	public void setAnswerDTO(ArrayList<AnswerDTO> answerDTO) {
 		this.answerDTO = answerDTO;
 	}
 
-	public String getSelectAnswerDTO() {
-		return selectAnswerDTO;
+	public AnswerDTO getSelectedAnswerDTO() {
+		return selectedAnswerDTO;
 	}
 
-	public void setSelectAnswerDTO(String selectAnswerDTO) {
-		this.selectAnswerDTO = selectAnswerDTO;
+	public void setSelectedAnswerDTO(AnswerDTO selectedAnswerDTO) {
+		this.selectedAnswerDTO = selectedAnswerDTO;
 	}
 
 }
