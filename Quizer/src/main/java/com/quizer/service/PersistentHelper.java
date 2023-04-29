@@ -13,6 +13,7 @@ import com.database.QuizDAO;
 import com.database.QuizHostDAO;
 import com.database.QuizHostState;
 import com.quiz.dto.AnswerDTO;
+import com.quiz.dto.CandidateDTO;
 import com.quiz.dto.CandidateQuestionDTO;
 import com.quiz.dto.QuizDTO;
 import com.quizer.pojo.Answer;
@@ -394,6 +395,60 @@ public class PersistentHelper {
 
 		} catch (SQLException e) {
 			System.out.print("SQL Exception is::" + e.getStackTrace());
+			return status;
+
+		}
+		return status;
+	}
+	
+	public boolean saveCandidate(CandidateDTO candidate) {
+		boolean status = false;
+		
+		try {
+			try {
+				Class.forName("com.mysql.cj.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+				return false;
+			}
+
+			try (Connection connection = DriverManager.getConnection(DBConfig.url, DBConfig.username, DBConfig.password)) {
+				try (PreparedStatement stmt = connection
+						.prepareStatement("INSERT INTO Candidate (id, name, quizHostId) VALUES (?, ?, ?)")) {
+					stmt.setString(1, candidate.getId());
+					stmt.setString(2, candidate.getName());
+					stmt.setString(3, candidate.getQuizHost().getId());
+					stmt.setString(3, candidate.getQuizHost().getId());
+					stmt.executeQuery();
+					
+					status = true;
+					
+					try (PreparedStatement answerStmt = connection
+							.prepareStatement("INSERT INTO CandidateSelectedAnswer (id, answerOptionId, questionId, candidateId) VALUES (?, ?, ?, ?)")) {
+						
+						Iterator<CandidateQuestionDTO> iterator = candidate.getQuiz().getCondidateQuestionDTOList().iterator();
+						
+						while (iterator.hasNext()) {
+							CandidateQuestionDTO qsn = iterator.next();
+							AnswerDTO selectedAnsOption = qsn.getSelectedAnswerDTO();
+							
+							if (selectedAnsOption == null) {
+								continue;
+							}
+							
+							answerStmt.setString(1, UUID.randomUUID().toString());
+							answerStmt.setString(2, selectedAnsOption.getId());
+							answerStmt.setString(3, qsn.getId());
+							answerStmt.setString(4, candidate.getId());
+							answerStmt.executeQuery();
+							status = true;
+						}						
+					}
+				}
+			}
+		} catch (SQLException e) {
+			System.out.print("SQL Exception is::" + e.getStackTrace());
+			status = false;
 			return status;
 
 		}

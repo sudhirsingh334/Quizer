@@ -51,7 +51,7 @@ public class QuizerManagerServlet extends HttpServlet {
 
 			session.setAttribute("CandidateDTO", candidate);
 			nextPage = "joinQuiz.jsp";
-		} else if (button.equalsIgnoreCase("Quiz-Question-Next") || button.equalsIgnoreCase("Quiz-Question-Back")) {
+		} else if (button.equalsIgnoreCase("Quiz-Question-Next") || button.equalsIgnoreCase("Quiz-Question-Back") || button.equalsIgnoreCase("Quiz-Done")) {
 			Integer qsnPointer = (Integer) session.getAttribute("QuestionPointer");
 
 			Integer selectedOptionIndex = Integer.valueOf(request.getParameter("answer-option"));
@@ -67,13 +67,22 @@ public class QuizerManagerServlet extends HttpServlet {
 			
 			if (button.equalsIgnoreCase("Quiz-Question-Back")) {
 				QuestionPointer.decrease(session);
+				nextPage = "quizerQuestion.jsp";
 			} else if (button.equalsIgnoreCase("Quiz-Question-Next")) {
 				QuestionPointer.increase(session);
+				nextPage = "quizerQuestion.jsp";
+			} else if (button.equalsIgnoreCase("Quiz-Done")) {
+				// Save The Quiz
+				CandidateDTO candidate = (CandidateDTO) session.getAttribute("CandidateDTO");
+				if (PersistentHelper.singleton.saveCandidate(candidate)) {
+					//Show quiz completed successfully.
+					session.invalidate();
+					nextPage = "quiz_completion.html";
+				} else {
+					//show something wrong please try again.
+					nextPage = "quizerQuestion.jsp";
+				}
 			}
-			nextPage = "quizerQuestion.jsp";
-
-		} else if (button.equalsIgnoreCase("Quiz-Done")) {
-			// Save The Quiz
 		} else {
 			// Unknown Button Pressed.
 			System.out.println("QuizerManagerServlet:doPost,unknown button pressed");
