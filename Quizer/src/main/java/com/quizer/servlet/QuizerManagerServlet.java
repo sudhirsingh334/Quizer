@@ -51,10 +51,7 @@ public class QuizerManagerServlet extends HttpServlet {
 
 			session.setAttribute("CandidateDTO", candidate);
 			nextPage = "joinQuiz.jsp";
-		} else if (button.equalsIgnoreCase("Quiz-Question-Back")) {
-			QuestionPointer.decrease(session);
-			nextPage = "quizerQuestion.jsp";
-		} else if (button.equalsIgnoreCase("Quiz-Question-Next")) {
+		} else if (button.equalsIgnoreCase("Quiz-Question-Next") || button.equalsIgnoreCase("Quiz-Question-Back")) {
 			Integer qsnPointer = (Integer) session.getAttribute("QuestionPointer");
 
 			Integer selectedOptionIndex = Integer.valueOf(request.getParameter("answer-option"));
@@ -67,9 +64,14 @@ public class QuizerManagerServlet extends HttpServlet {
 				candidate.getQuiz().getCondidateQuestionDTOList().get(qsnPointer).setSelectedAnswerDTO(answer);
 				session.setAttribute("CandidateDTO", candidate);
 			}
-
-			QuestionPointer.increase(session);
+			
+			if (button.equalsIgnoreCase("Quiz-Question-Back")) {
+				QuestionPointer.decrease(session);
+			} else if (button.equalsIgnoreCase("Quiz-Question-Next")) {
+				QuestionPointer.increase(session);
+			}
 			nextPage = "quizerQuestion.jsp";
+
 		} else if (button.equalsIgnoreCase("Quiz-Done")) {
 			// Save The Quiz
 		} else {
