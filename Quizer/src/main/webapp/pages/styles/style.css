@@ -23,7 +23,6 @@ html {
   color: white;
   font-size: 16px;
   padding: 10px;
-  border: none;
   cursor: pointer;
   width: 150px;
   height: 45px;
@@ -35,23 +34,46 @@ html {
   border-radius: 4px;
 }
 .button-error {
-  background-color: red;
+  background-color: white;
+  border-width: 1px;
+  border-color: lightcoral;
+  color: lightcoral;
+  border-radius: 5px;
 }
 .button-error-extended {
   width: 100%;
-  background-color: red;
+  background-color: white;
+  border-width: 1px;
+  border-color: lightcoral;
+  color: lightcoral;
+  border-radius: 5px;
 }
 .button-extended {
   width: 100%;
+  border: none;
 }
 
 input {
+  text-align: center;
+  padding: 5px;
+  font-size: 25px;
+  border-color: rebeccapurple;
+  border-width: thin;
+  border-radius: 5px;
+}
+
+.text-large {
+  text-align: left;
+  padding: 5px;
+  font-size: 30px;
+  border: none;
+}
+
+.text-medium {
   text-align: left;
   padding: 5px;
   font-size: 20px;
-  border: white;
-  border-left: none;
-  border-right: none;
+  border: none;
 }
 
 p1 {
@@ -92,26 +114,14 @@ p1 {
 
 .form {
   display: none;
-  background-color: lightblue;
+  background-color: white;
   margin: auto;
   width: 25%;
   position: absolute;
   left: 40%;
   margin-top: -5%;
   margin-bottom: 10px;
-  border-radius: 2px solid red;
   padding: 1%;
-}
-
-.form input[type=text],
-.form input[type=password] {
-  width: 40%;
-  padding: 15px;
-  margin: 2px 0 10px 0;
-  border: none;
-  margin-right: auto;
-  border-radius: 1px auto black;
-  margin-left: 100%;
 }
 
 .form input[type=text]:focus,
@@ -194,6 +204,21 @@ p1 {
   -moz-transition: all 0.4s ease;
   -o-transition: all 0.4s ease;
   transition: all 0.4s ease;
+}
+
+.form-container {
+  border-radius: 10px;
+  padding: 30px;
+  display: block;
+  background-color: white;
+  margin: auto;
+  width: auto;
+  position: absolute;
+  left: auto;
+  margin-top: 5%;
+  margin-bottom: autopx;
+  border-radius: 2px solid red;
+  padding: 1%;
 }
 
 /*# sourceMappingURL=style.css.map */

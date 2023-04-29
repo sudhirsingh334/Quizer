@@ -7,15 +7,11 @@
 <title>Quizer</title>
 <link href="styles/style.css" rel="stylesheet" />
 <script language="javascript" src="Quizer.js"></script>
- <link href="https://companieslogo.com/img/orig/KAHOT.OL-e50e329b.png?t=1603470544"rel="icon" class="headericon">
- 
+<link
+	href="https://companieslogo.com/img/orig/KAHOT.OL-e50e329b.png?t=1603470544"
+	rel="icon" class="headericon">
+
 <style type="text/css">
-
-
-td {
-	margin-left: 10%;
-}
-
 .radioLeft {
 	text-align: left;
 	display: inline;
@@ -46,7 +42,7 @@ td {
 	padding: 50px;
 	padding-bottom: 1px;
 	padding-top: 10px;
-	border: 1px solid white; 
+	border: 1px solid white;
 }
 
 .quizColor {
@@ -58,18 +54,17 @@ td {
 	font-size: 30px;
 }
 
-.timedate{
-    color:white;
-     position: absolute;
-     top:0;
-     right:0;
-
+.timedate {
+	color: white;
+	position: absolute;
+	top: 0;
+	right: 0;
 }
 </style>
 </head>
 <body>
- <h1 id="timelapse" class="timedate"></h1>
- 
+	<h1 id="timelapse" class="timedate"></h1>
+
 	<%@ page import="com.quizer.pojo.*"%>
 	<%@ page import="java.util.*"%>
 	<%@ page import="com.quizer.utilities.*"%>
@@ -78,7 +73,7 @@ td {
 
 	<%
 	CandidateDTO candidate = (CandidateDTO) session.getAttribute("CandidateDTO");
-	
+
 	if (candidate == null) {
 		session.setAttribute("User-Tried-To-Join", false);
 		session.setAttribute("QuizHost", null);
@@ -87,7 +82,7 @@ td {
 	}
 
 	QuizDTO quiz = candidate.getQuiz();
-	
+
 	Integer qsnPointer = (Integer) session.getAttribute("QuestionPointer");
 
 	if (qsnPointer == null) {
@@ -111,27 +106,27 @@ td {
 	out.write("</body>");
 	out.write("</html>");
 	%>
-	
+
 	<div class="validation">
 		<form action="QuizerManager" method="post" name="completeQuizRedirect"
 			id="completeQuizRedirect">
-			
+
 			<table id="answer-options-table" style="width: 100%">
 				<tr>
-					<td style="margin-top:10%; color:black; margin-left:1000%">
+					<td style="width:5%">
 						<%
 						System.out.println("b 	:" + qsnPointer + "seesion id: " + session.getId());
 
 						ArrayList<CandidateQuestionDTO> questionList = quiz.getCondidateQuestionDTOList();
-						
+
 						CandidateQuestionDTO question = questionList.get(qsnPointer);
-						
+
 						ArrayList<AnswerDTO> answerList = question.getAnswerDTOList();
-						
+
 						AnswerDTO selectedAnswer = question.getSelectedAnswerDTO();
-						
-						String quetionNumber = "Q" + (qsnPointer + 1);
-						out.print(quetionNumber);
+
+						String quetionNumber = String.format("%02d", (qsnPointer + 1)) + ".";
+						out.write(String.format("<p class='text-large' style='text-align:right'>%s</p>", quetionNumber));
 
 						//Should hide next button
 						String nextButtonStatus = (qsnPointer == (questionList.size() - 1)) ? "none" : "block";
@@ -139,66 +134,58 @@ td {
 						String prevButtonStatus = (qsnPointer == 0) ? "none" : "block";
 						%>
 					</td>
-					<td><input type="text" name="question"
-						placeholder="Type Quetion Here" class="resizedTextbox"
-						value="<%out.write(question.getTitle());%>" readonly><br></br>
+					<td><p class="text-large">
+							<%out.write(question.getTitle());%>
+						</p></td>
+				</tr>
+				<tr>
+					<td style="text-align: right"><input type="radio"
+						name="answer-option" id="0" value="0"
+						<%if (selectedAnswer != null && answerList.get(0).getId().equalsIgnoreCase(selectedAnswer.getId())) {
+	out.write("checked");
+}%>></td>
+					<td><p class="text-medium" style="margin: auto">
+							<%out.write(answerList.get(0).getTitle());%>
+						</p></td>
+
+				</tr>
+				<tr>
+					<td style="text-align: right"><input type="radio"
+						name="answer-option" id="1" value="1"
+						<%if (selectedAnswer != null && answerList.get(1).getId().equalsIgnoreCase(selectedAnswer.getId())) {
+	out.write("checked");
+}%>>
 					</td>
-				</tr>
-				<tr>
-					<td style="text-align: right"><input type="radio"name="answer-option" id="0" value="0" <% 
-							if (selectedAnswer != null && answerList.get(0).getId().equalsIgnoreCase(selectedAnswer.getId())) {
-								out.write("checked");
-							}
-					%>></td>	
-					<td><input type="text" name="answer1"
-						placeholder="Type Answer Here" id="radioErro1"
-						style="margin: auto"
-						value="<%out.write(answerList.get(0).getTitle());%>" readonly>
-						</div></td>
 
-				</tr>
-				<tr>
-					<td style="text-align: right"><input type="radio"name="answer-option" id="1" value="1" <% 
-							if (selectedAnswer != null && answerList.get(1).getId().equalsIgnoreCase(selectedAnswer.getId())) {
-								out.write("checked");
-							}
-					%>></td>
-						
-					<td><input type="text" name="answer2"placeholder="Type Answer Here" id="radioErro1"value="<%out.write(answerList.get(1).getTitle());%>" readonly
-						
-						
-						style="margin: auto">
-						</div></td>
+					<td><p class="text-medium" style="margin: auto">
+							<%out.write(answerList.get(1).getTitle());%>
+						</p></td>
 
 				</tr>
 
 				<tr>
 					<td style="text-align: right"><input type="radio"
-						name="answer-option" id="2" value="2" <% 
-							if (selectedAnswer != null && answerList.get(2).getId().equalsIgnoreCase(selectedAnswer.getId())) {
-								out.write("checked");
-							}
-					%>></td>
-					<td><input type="text" name="answer3"
-						placeholder="Type Answer Here" id="radioErro1"
-						value="<%out.write(answerList.get(2).getTitle());%>" readonly
-						style="margin: auto">
-						</div></td>
+						name="answer-option" id="2" value="2"
+						<%if (selectedAnswer != null && answerList.get(2).getId().equalsIgnoreCase(selectedAnswer.getId())) {
+	out.write("checked");
+}%>>
+					</td>
+					<td><p class="text-medium" style="margin: auto">
+							<%out.write(answerList.get(2).getTitle());%>
+						</p></td>
 
 				</tr>
 
 				<tr>
 					<td style="text-align: right"><input type="radio"
-						name="answer-option" id="3" value="3" <% 
-							if (selectedAnswer != null && answerList.get(3).getId().equalsIgnoreCase(selectedAnswer.getId())) {
-								out.write("checked");
-							}
-					%>></td>
-					<td><input type="text" name="answer1"
-						placeholder="Type Answer Here" id="radioErro1"
-						value="<%out.write(answerList.get(3).getTitle());%>" readonly
-						style="margin: auto">
-						</div></td>
+						name="answer-option" id="3" value="3"
+						<%if (selectedAnswer != null && answerList.get(3).getId().equalsIgnoreCase(selectedAnswer.getId())) {
+	out.write("checked");
+}%>>
+					</td>
+					<td><p class="text-medium" style="margin: auto">
+							<%out.write(answerList.get(3).getTitle());%>
+						</p></td>
 
 				</tr>
 				</td>
@@ -206,14 +193,18 @@ td {
 				</div>
 			</table>
 			<div class='container-center'>
-				<Button type="submit" name="QuizerManager-Button" value="Quiz-Question-Back" class="button" style="display: <%out.write(prevButtonStatus);%>">Back</Button>
-					
-					
+				<Button type="submit" name="QuizerManager-Button"
+					value="Quiz-Question-Back" class="button"
+					style="display: <%out.write(prevButtonStatus);%>">Back</Button>
+
+
 				<Button type="submit" name="QuizerManager-Button"
 					value="Quiz-Question-Next" class="button"
 					style="display: <%out.write(nextButtonStatus);%>">Next</Button>
-				<Button class="button" type="submit" name="QuizerManager-Button" onclick="completeAndRedirect();" value="Quiz-Done" style="color:white;margin-left:50% ">Done</Button>
-					
+				<Button class="button" type="submit" name="QuizerManager-Button"
+					onclick="completeAndRedirect();" value="Quiz-Done"
+					style="color: white; margin-left: 50%">Done</Button>
+
 			</div>
 		</form>
 	</div>
