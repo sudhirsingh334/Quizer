@@ -145,10 +145,10 @@ td {
 					</td>
 				</tr>
 				<tr>
-					<td style="text-align: right"><input type="radio"name="answer-radio1" <% 
-					if (selectedAnswer != null && answerList.get(0).getId().equalsIgnoreCase(selectedAnswer.getId())) {
-						out.write("checked");
-					}
+					<td style="text-align: right"><input type="radio"name="answer-option" id="0" value="0" <% 
+							if (selectedAnswer != null && answerList.get(0).getId().equalsIgnoreCase(selectedAnswer.getId())) {
+								out.write("checked");
+							}
 					%>></td>	
 					<td><input type="text" name="answer1"
 						placeholder="Type Answer Here" id="radioErro1"
@@ -158,7 +158,7 @@ td {
 
 				</tr>
 				<tr>
-					<td style="text-align: right"><input type="radio"name="answer-radio1" <% 
+					<td style="text-align: right"><input type="radio"name="answer-option" id="1" value="1" <% 
 							if (selectedAnswer != null && answerList.get(1).getId().equalsIgnoreCase(selectedAnswer.getId())) {
 								out.write("checked");
 							}
@@ -174,10 +174,10 @@ td {
 
 				<tr>
 					<td style="text-align: right"><input type="radio"
-						name="answer-radio1" <% 
-								if (selectedAnswer != null && answerList.get(2).getId().equalsIgnoreCase(selectedAnswer.getId())) {
-									out.write("checked");
-								}
+						name="answer-option" id="2" value="2" <% 
+							if (selectedAnswer != null && answerList.get(2).getId().equalsIgnoreCase(selectedAnswer.getId())) {
+								out.write("checked");
+							}
 					%>></td>
 					<td><input type="text" name="answer3"
 						placeholder="Type Answer Here" id="radioErro1"
@@ -189,10 +189,10 @@ td {
 
 				<tr>
 					<td style="text-align: right"><input type="radio"
-						name="answer-radio1" <% 
-								if (selectedAnswer != null && answerList.get(3).getId().equalsIgnoreCase(selectedAnswer.getId())) {
-									out.write("checked");
-								}
+						name="answer-option" id="3" value="3" <% 
+							if (selectedAnswer != null && answerList.get(3).getId().equalsIgnoreCase(selectedAnswer.getId())) {
+								out.write("checked");
+							}
 					%>></td>
 					<td><input type="text" name="answer1"
 						placeholder="Type Answer Here" id="radioErro1"
