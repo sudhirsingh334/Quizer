@@ -1,3 +1,4 @@
+<%@page import="com.quiz.dto.CandidateDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -73,16 +74,20 @@ td {
 	<%@ page import="java.util.*"%>
 	<%@ page import="com.quizer.utilities.*"%>
 	<%@ page import="com.database.*"%>
+	<%@ page import="com.quiz.dto.*"%>
 
 	<%
-	Quiz quiz = (Quiz) session.getAttribute("Quiz");
-	if (quiz == null) {
+	CandidateDTO candidate = (CandidateDTO) session.getAttribute("CandidateDTO");
+	
+	if (candidate == null) {
 		session.setAttribute("User-Tried-To-Join", false);
 		session.setAttribute("QuizHost", null);
 		Alert.show("Something went wrong, please restart the quiz or contact the admin.", out);
 		return;
 	}
 
+	QuizDTO quiz = candidate.getQuiz();
+	
 	Integer qsnPointer = (Integer) session.getAttribute("QuestionPointer");
 
 	if (qsnPointer == null) {
@@ -117,9 +122,14 @@ td {
 						<%
 						System.out.println("b 	:" + qsnPointer + "seesion id: " + session.getId());
 
-						ArrayList<Question> questionList = quiz.getQuestionList();
-						Question question = questionList.get(qsnPointer);
-						ArrayList<Answer> answerList = question.getAnswers();
+						ArrayList<CandidateQuestionDTO> questionList = quiz.getCondidateQuestionDTOList();
+						
+						CandidateQuestionDTO question = questionList.get(qsnPointer);
+						
+						ArrayList<AnswerDTO> answerList = question.getAnswerDTOList();
+						
+						AnswerDTO selectedAnswer = question.getSelectedAnswerDTO();
+						
 						String quetionNumber = "Q" + (qsnPointer + 1);
 						out.print(quetionNumber);
 
@@ -127,16 +137,6 @@ td {
 						String nextButtonStatus = (qsnPointer == (questionList.size() - 1)) ? "none" : "block";
 						//should hide back button
 						String prevButtonStatus = (qsnPointer == 0) ? "none" : "block";
-						
-						ArrayList<QuizAnswerDAO> quizAnsDAOList = (ArrayList<QuizAnswerDAO>) session.getAttribute("QuizAnswerDAOList");
-						QuizAnswerDAO option = null;
-						if (quizAnsDAOList == null) {
-							quizAnsDAOList = new ArrayList<QuizAnswerDAO>();
-						} else if (qsnPointer<quizAnsDAOList.size()){
-							option = quizAnsDAOList.get(qsnPointer);
-						}
-						
-
 						%>
 					</td>
 					<td><input type="text" name="question"
@@ -146,7 +146,7 @@ td {
 				</tr>
 				<tr>
 					<td style="text-align: right"><input type="radio"name="answer-radio1" <% 
-					if (option != null && option.getAnswerId().equalsIgnoreCase("0")) {
+					if (selectedAnswer != null && answerList.get(0).getId().equalsIgnoreCase(selectedAnswer.getId())) {
 						out.write("checked");
 					}
 					%>></td>	
@@ -159,7 +159,7 @@ td {
 				</tr>
 				<tr>
 					<td style="text-align: right"><input type="radio"name="answer-radio1" <% 
-							if (option != null && option.getAnswerId().equalsIgnoreCase("1")) {
+							if (selectedAnswer != null && answerList.get(1).getId().equalsIgnoreCase(selectedAnswer.getId())) {
 								out.write("checked");
 							}
 					%>></td>
@@ -175,7 +175,7 @@ td {
 				<tr>
 					<td style="text-align: right"><input type="radio"
 						name="answer-radio1" <% 
-								if (option != null && option.getAnswerId().equalsIgnoreCase("2")) {
+								if (selectedAnswer != null && answerList.get(2).getId().equalsIgnoreCase(selectedAnswer.getId())) {
 									out.write("checked");
 								}
 					%>></td>
@@ -190,7 +190,7 @@ td {
 				<tr>
 					<td style="text-align: right"><input type="radio"
 						name="answer-radio1" <% 
-								if (option != null && option.getAnswerId().equalsIgnoreCase("3")) {
+								if (selectedAnswer != null && answerList.get(3).getId().equalsIgnoreCase(selectedAnswer.getId())) {
 									out.write("checked");
 								}
 					%>></td>

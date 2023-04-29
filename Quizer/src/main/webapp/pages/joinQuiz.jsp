@@ -85,49 +85,42 @@ img.background {
 
 
 <body>
-<%@ page import="com.quizer.pojo.*"%>
+	<%@ page import="com.quizer.pojo.*"%>
 	<%@ page import="java.util.*"%>
 	<%@ page import="com.database.*"%>
-	<%@ page import="com.quizer.utilities.*" %>
+	<%@ page import="com.quizer.utilities.*"%>
+	<%@ page import="com.quiz.dto.*"%>
 	<%
 	response.setContentType("text/html");
-	Object userTriedToJoin  = session.getAttribute("User-Tried-To-Join");
+	Object userTriedToJoin = session.getAttribute("User-Tried-To-Join");
 
 	if (userTriedToJoin != null) {
 		boolean userTried = (boolean) userTriedToJoin;
 
 		if (userTried == true) {
 			//fetch Quiz Host from session
-			QuizHostDAO  quizHost = (QuizHostDAO) session.getAttribute("QuizHost");
+			CandidateDTO candidate = (CandidateDTO) session.getAttribute("CandidateDTO");
 
-			if (quizHost != null) {
-				//Fetch Quiz
-				Quiz quiz = PersistentHelper.singleton.getQuizById(quizHost.getQuizId());
-				
-				if (quiz == null) {
-					session.setAttribute("User-Tried-To-Join", false);
-					session.setAttribute("QuizHost", null);
-					Alert.show("something went wrong. please contact the admin.", out);
-					return;
-				} 
-				
-				session.setAttribute("Quiz", quiz);
-				
-				out.println("<script type=\"text/javascript\">");
-				out.println("location='quizerQuestion.jsp';");
-				out.println("</script>");
-			} else {
+			if (candidate == null) {
 				session.setAttribute("User-Tried-To-Join", false);
-				session.setAttribute("QuizHost", null);
-				//QuizHost not available with supllied quiz code.
-				Alert.show("Invalid quiz code. Please contact the admin.", out);
+				Alert.show("something went wrong. please contact the admin.", out);
+				return;
 			}
+			
+			out.println("<script type=\"text/javascript\">");
+			out.println("location='quizerQuestion.jsp';");
+			out.println("</script>");
+		} else {
+			session.setAttribute("User-Tried-To-Join", false);
+			session.setAttribute("QuizHost", null);
+			//QuizHost not available with supllied quiz code.
+			Alert.show("Invalid quiz code. Please contact the admin.", out);
 		}
 	}
 	%>
-	
-	
-	 <section class="container-fluid">
+
+
+	<section class="container-fluid">
      <section class="row justify-content-center">
       <section class="col-12 col-sm-6 col-md-4">
 	

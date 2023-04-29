@@ -2,43 +2,52 @@ package com.quiz.dto;
 
 import java.util.ArrayList;
 
-import com.database.QuizDAO;
+import com.database.*;
 
 public class CandidateDTO {
+	private String id;
 	private String name;
-	private String hostId;
+	private QuizHostDAO quizHost;
 	private QuizDTO quiz;
-	private ArrayList<CandidateQuestionDTO> condidateQuestionDTOList;
+	
+	
+	public CandidateDTO(String id, String name, QuizHostDAO quizHost, QuizDTO quiz) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.quizHost = quizHost;
+		this.quiz = quiz;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public String getName() {
 		return name;
+	}
+	
+	public QuizHostDAO getQuizHost() {
+		return quizHost;
+	}
+
+	public void setQuizHost(QuizHostDAO quizHost) {
+		this.quizHost = quizHost;
 	}
 
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	public String getHostId() {
-		return hostId;
-	}
-
-	public void setHostId(String hostId) {
-		this.hostId = hostId;
-	}
-	
 	public QuizDTO getQuiz() {
 		return quiz;
 	}
 
 	public void setQuiz(QuizDTO quiz) {
 		this.quiz = quiz;
-	}
-
-	public ArrayList<CandidateQuestionDTO> getCondidateQuestionDTOList() {
-		return condidateQuestionDTOList;
-	}
-
-	public void setCondidateQuestionDTOList(ArrayList<CandidateQuestionDTO> condidateQuestionDTOList) {
-		this.condidateQuestionDTOList = condidateQuestionDTOList;
 	}
 }

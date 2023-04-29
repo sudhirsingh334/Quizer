@@ -12,6 +12,9 @@ import java.util.UUID;
 import com.database.QuizDAO;
 import com.database.QuizHostDAO;
 import com.database.QuizHostState;
+import com.quiz.dto.AnswerDTO;
+import com.quiz.dto.CandidateQuestionDTO;
+import com.quiz.dto.QuizDTO;
 import com.quizer.pojo.Answer;
 import com.quizer.pojo.Question;
 import com.quizer.pojo.Quiz;
@@ -223,6 +226,77 @@ public class PersistentHelper {
 		return quiz;
 	}
 	
+	public QuizDTO getQuizDTO(String quizId) {
+		QuizDTO quiz = null;
+		try {
+			try {
+				Class.forName("com.mysql.cj.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+				return quiz;
+			}
+
+			try (Connection connection = DriverManager.getConnection(DBConfig.url, DBConfig.username, DBConfig.password)) {
+				try (PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Quiz WHERE id=?")) {
+					stmt.setString(1, quizId);
+					ResultSet rs = stmt.executeQuery();
+					if (rs.next()) {
+						String quizTitle = rs.getString("title");
+						String id = rs.getString("id");
+
+						if (id != null) {
+							quiz = new QuizDTO();
+							quiz.setId(quizId);
+							quiz.setName(quizTitle);
+							
+							//fetch questions
+							try (PreparedStatement qsnStmt = connection.prepareStatement("SELECT * FROM Question WHERE quizId=?")) {
+								qsnStmt.setString(1, id);
+								ResultSet qsnRS = qsnStmt.executeQuery();
+								
+								while (qsnRS.next()) {
+									
+									String qsnId = qsnRS.getString("id");
+									CandidateQuestionDTO qsn = new CandidateQuestionDTO();
+									
+									qsn.setId(qsnRS.getString("id"));
+									qsn.setTitle(qsnRS.getString("title"));
+									
+									//fetch Answer Options
+									try (PreparedStatement answrStmt = connection.prepareStatement("SELECT * FROM AnswerOption WHERE questionId=?")) {
+										answrStmt.setString(1, qsnId);
+										ResultSet answrRS = answrStmt.executeQuery();
+										
+										while (answrRS.next()) {
+											String title = answrRS.getString("title");
+											boolean isCorrect = answrRS.getString("isCorrect") == "1" ? true:false;
+											
+											AnswerDTO answr = new AnswerDTO();
+											answr.setId(answrRS.getString("id"));
+											answr.setTitle(title);
+											answr.setCorrect(isCorrect);
+											
+											qsn.add(answr);
+										}
+									}
+									quiz.add(qsn);
+									
+								}
+								
+							}
+							
+						}
+					}
+				}
+			}
+
+		} catch (SQLException e) {
+			System.out.print("SQL Exception is::" + e.getStackTrace());
+			return quiz;
+
+		}
+		return quiz;
+	}
 	public boolean isQuizAlreadyHostedWithCode(String quizCode) {
 		return this.getQuizHost(quizCode) != null;
 	}
