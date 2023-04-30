@@ -16,6 +16,8 @@ import com.quiz.dto.AnswerDTO;
 import com.quiz.dto.CandidateDTO;
 import com.quiz.dto.CandidateQuestionDTO;
 import com.quiz.dto.QuizDTO;
+import com.quiz.dto.QuizHostDTO;
+import com.quiz.dto.QuizResults;
 import com.quizer.pojo.Answer;
 import com.quizer.pojo.Question;
 import com.quizer.pojo.Quiz;
@@ -450,5 +452,46 @@ public class PersistentHelper {
 
 		}
 		return status;
+	}
+	
+	public QuizResults getQuizResults() {
+		QuizResults results = new QuizResults();
+		try {
+			try {
+				Class.forName("com.mysql.cj.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+				return results;
+			}
+
+			try (Connection connection = DriverManager.getConnection(DBConfig.url, DBConfig.username, DBConfig.password)) {
+				try (PreparedStatement stmt = connection.prepareStatement("SELECT * FROM QuizHost")) {
+					ResultSet rs = stmt.executeQuery();
+					while (rs.next()) {
+						String hostId = rs.getString("id");
+						String quizId = rs.getString("quizId");
+						String hostedAt = rs.getString("hostedAt");
+						String hostQuizCode = rs.getString("quizCode");
+						String hostQuizStateString = rs.getString("status");
+						
+
+						if (hostQuizCode != null && quizId != null) {
+							QuizHostDTO quizHost = new QuizHostDTO();
+							quizHost.setId(hostId);
+							quizHost.setCode(hostQuizCode);
+							quizHost.setHostedAt(hostedAt);
+							quizHost.setStatus(QuizHostState.valueOf(hostQuizStateString));
+							results.add(quizHost);
+						}
+					}
+				}
+			}
+
+		} catch (SQLException e) {
+			System.out.print("SQL Exception is::" + e.getStackTrace());
+			return results;
+
+		}
+		return results;
 	}
 }
