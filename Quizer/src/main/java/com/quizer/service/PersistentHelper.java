@@ -18,6 +18,7 @@ import com.quiz.dto.CandidateQuestionDTO;
 import com.quiz.dto.QuizDTO;
 import com.quiz.dto.QuizHostDTO;
 import com.quiz.dto.QuizResults;
+import com.quiz.dto.ResultCandidate;
 import com.quizer.pojo.Answer;
 import com.quizer.pojo.Question;
 import com.quizer.pojo.Quiz;
@@ -476,14 +477,32 @@ public class PersistentHelper {
 						
 						QuizDTO quiz = this.getQuizDTO(quizId);
 						
+						QuizHostDTO quizHost = new QuizHostDTO();
+
 						if (hostQuizCode != null && quizId != null && quiz != null) {
-							QuizHostDTO quizHost = new QuizHostDTO();
 							quizHost.setId(hostId);
 							quizHost.setCode(hostQuizCode);
 							quizHost.setQuizId(quizId);
 							quizHost.setQuizName(quiz.getName());
 							quizHost.setHostedAt(hostedAt);
 							quizHost.setStatus(QuizHostState.valueOf(hostQuizStateString));
+							
+							//Fetch Candidates who joined this quiz Host
+							try (PreparedStatement candidateStmt = connection.prepareStatement("SELECT * FROM Candidate where quizHostId = ?")) {
+								candidateStmt.setString(1, hostId);
+								ResultSet candidateRS = candidateStmt.executeQuery();
+								ArrayList<ResultCandidate> candidates = new ArrayList<ResultCandidate>();
+								
+								while (candidateRS.next()) {
+									String candId = candidateRS.getString("id");
+									String name = candidateRS.getString("name");
+									ResultCandidate candidate = new ResultCandidate(candId, name);
+									candidates.add(candidate);
+								}
+								
+								quizHost.setCandidateList(candidates);
+							}
+							
 							results.add(quizHost);
 						}
 					}

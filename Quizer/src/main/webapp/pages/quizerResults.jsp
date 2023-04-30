@@ -98,20 +98,27 @@ ArrayList<QuizHostDTO> hosts = new ArrayList<QuizHostDTO>();
 							String hiddenRowHeaderFormated = String.format(hiddenRowHeader, dataTarget);
 							
 							out.write(hiddenRowHeaderFormated);
-									
+							
+							ArrayList<ResultCandidate> candidateList = host.getCandidateList();
+							Iterator<ResultCandidate> rcIT = candidateList.iterator();
+							
 							String candidateRow = "<tr data-toggle='collapse' class='accordion-toggle'"+
 									"data-target='#demo10'>"+
-									"<td><a href='#'>Enginner Software</a></td>"+
-									"<td>Google</td>"+
-									"<td>U$8.00000</td>"+
-									"<td>2016/09/27</td>"+
-									"<td>2017/09/27</td>"+
+									"<td><a href='#'>%s</a></td>"+
+									"<td>%s</td>"+
+									"<td>%s</td>"+
+									"<td>%s</td>"+
+									"<td>%s</td>"+
 									"<td><a href='#' class='btn btn-default btn-sm'> "+
 									"<i class='glyphicon glyphicon-cog'></i>"+
 									"</a></td>"+
 								"</tr>";
 								
-								out.write(candidateRow);
+								while (rcIT.hasNext()) {
+									ResultCandidate rsltCand = rcIT.next();
+									String candidateRowFormated = String.format(candidateRow, rsltCand.getName(), "#", "#","#", "#");
+									out.write(candidateRowFormated);
+								}
 								
 								out.write("</tbody> </table> </div></td></tr>");
 								++hostRowCounter;	
