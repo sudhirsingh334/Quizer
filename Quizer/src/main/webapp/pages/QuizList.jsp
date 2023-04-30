@@ -17,6 +17,13 @@
 	<h1 class="header-center">Quiz Library</h1>
  <%
  ArrayList<QuizDAO> quizList = PersistentHelper.singleton.getQuizList();
+ if (quizList == null || quizList.isEmpty()) {
+	 out.write("<div class='container-center' style='text-align: center;display: block; color: white;'>");
+	 out.write(String.format("<p style='text-align: center;display: block; color: white;'>%s</p>", "Empty Library."));
+	 out.write("</div>");
+	return;
+ }
+ 
  Iterator<QuizDAO> it = quizList.iterator();
 
  while (it.hasNext()) {
