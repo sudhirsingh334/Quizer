@@ -221,4 +221,8 @@ p1 {
   padding: 1%;
 }
 
+.hiddenRow {
+  padding: 0 !important;
+}
+
 /*# sourceMappingURL=style.css.map */
