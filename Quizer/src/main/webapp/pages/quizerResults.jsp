@@ -78,7 +78,14 @@ ArrayList<QuizHostDTO> hosts = new ArrayList<QuizHostDTO>();
 									"<td>%s</td>"+
 									"<td>%s</td>"+
 								"</tr>";
-							String hostRowHTMLFormated = String.format(hostRowHTML, dataTarget, host.getQuizName(), host.getCode(), host.getHostedAt(), host.getStatus(), "#");
+							int participantsCount = 0;
+							ArrayList<ResultCandidate> candidateList = host.getCandidateList();
+							
+							if (candidateList != null) {
+								participantsCount = candidateList.size();
+							}
+							
+							String hostRowHTMLFormated = String.format(hostRowHTML, dataTarget, host.getQuizName(), host.getCode(), host.getHostedAt(), host.getStatus(), participantsCount);
 							out.write(hostRowHTMLFormated);
 							
 							String hiddenRowHeader = "<tr>"+
@@ -101,7 +108,6 @@ ArrayList<QuizHostDTO> hosts = new ArrayList<QuizHostDTO>();
 							
 							out.write(hiddenRowHeaderFormated);
 							
-							ArrayList<ResultCandidate> candidateList = host.getCandidateList();
 							Iterator<ResultCandidate> rcIT = candidateList.iterator();
 							
 							String candidateRow = "<tr data-toggle='collapse' class='accordion-toggle'"+
