@@ -59,6 +59,14 @@ ArrayList<QuizHostDTO> hosts = new ArrayList<QuizHostDTO>();
 
 						<tbody>
 						<% 
+						
+						if (hosts == null || hosts.size() <1) {
+							String noHostRecordRow = "<tr data-toggle='collapse' data-target='#%s' class='accordion-toggle'>" +
+									"<td colspan='12' style='text-align: center;'> No Quiz Hosted Yet</td></tr>";
+									out.write(noHostRecordRow);
+									
+						}
+						
 						Iterator<QuizHostDTO> it = hosts.iterator();
 						int hostRowCounter = 1;
 						
@@ -78,6 +86,7 @@ ArrayList<QuizHostDTO> hosts = new ArrayList<QuizHostDTO>();
 									"<td>%s</td>"+
 									"<td>%s</td>"+
 								"</tr>";
+								
 							int participantsCount = 0;
 							ArrayList<ResultCandidate> candidateList = host.getCandidateList();
 							
