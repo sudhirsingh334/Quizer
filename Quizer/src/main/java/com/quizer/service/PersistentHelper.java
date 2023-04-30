@@ -41,7 +41,8 @@ public class PersistentHelper {
 				return false;
 			}
 
-			try (Connection connection = DriverManager.getConnection(DBConfig.url, DBConfig.username, DBConfig.password)) {
+			try (Connection connection = DriverManager.getConnection(DBConfig.url, DBConfig.username,
+					DBConfig.password)) {
 
 				String quizID = UUID.randomUUID().toString();
 				try (PreparedStatement stmt = connection
@@ -107,7 +108,8 @@ public class PersistentHelper {
 				return quizList;
 			}
 
-			try (Connection connection = DriverManager.getConnection(DBConfig.url, DBConfig.username, DBConfig.password)) {
+			try (Connection connection = DriverManager.getConnection(DBConfig.url, DBConfig.username,
+					DBConfig.password)) {
 				try (PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Quiz")) {
 					ResultSet rs = stmt.executeQuery();
 
@@ -139,7 +141,8 @@ public class PersistentHelper {
 				return quiz;
 			}
 
-			try (Connection connection = DriverManager.getConnection(DBConfig.url, DBConfig.username, DBConfig.password)) {
+			try (Connection connection = DriverManager.getConnection(DBConfig.url, DBConfig.username,
+					DBConfig.password)) {
 				try (PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Quiz WHERE title=?")) {
 					stmt.setString(1, quizName);
 					ResultSet rs = stmt.executeQuery();
@@ -161,7 +164,7 @@ public class PersistentHelper {
 		}
 		return quiz;
 	}
-	
+
 	public Quiz getQuizById(String quizId) {
 		Quiz quiz = null;
 		try {
@@ -172,7 +175,8 @@ public class PersistentHelper {
 				return quiz;
 			}
 
-			try (Connection connection = DriverManager.getConnection(DBConfig.url, DBConfig.username, DBConfig.password)) {
+			try (Connection connection = DriverManager.getConnection(DBConfig.url, DBConfig.username,
+					DBConfig.password)) {
 				try (PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Quiz WHERE id=?")) {
 					stmt.setString(1, quizId);
 					ResultSet rs = stmt.executeQuery();
@@ -183,40 +187,42 @@ public class PersistentHelper {
 						if (id != null) {
 							quiz = new Quiz();
 							quiz.setName(quizTitle);
-							
-							//fetch questions
-							try (PreparedStatement qsnStmt = connection.prepareStatement("SELECT * FROM Question WHERE quizId=?")) {
+
+							// fetch questions
+							try (PreparedStatement qsnStmt = connection
+									.prepareStatement("SELECT * FROM Question WHERE quizId=?")) {
 								qsnStmt.setString(1, id);
 								ResultSet qsnRS = qsnStmt.executeQuery();
-								
+
 								while (qsnRS.next()) {
-									
+
 									String qsnId = qsnRS.getString("id");
 									Question qsn = new Question();
-									
+
 									qsn.setTitle(qsnRS.getString("title"));
-									
-									//fetch Answer Options
-									try (PreparedStatement answrStmt = connection.prepareStatement("SELECT * FROM AnswerOption WHERE questionId=?")) {
+
+									// fetch Answer Options
+									try (PreparedStatement answrStmt = connection
+											.prepareStatement("SELECT * FROM AnswerOption WHERE questionId=?")) {
 										answrStmt.setString(1, qsnId);
 										ResultSet answrRS = answrStmt.executeQuery();
-										
+
 										while (answrRS.next()) {
 											String title = answrRS.getString("title");
-											boolean isCorrect = answrRS.getString("isCorrect") == "1" ? true:false;
-											
+											boolean isCorrect = answrRS.getString("isCorrect") == "1" ? true : false;
+
 											Answer answr = new Answer(title);
 											answr.setCorrect(isCorrect);
-											
+
 											qsn.add(answr);
 										}
 									}
 									quiz.addQuestion(qsn);
-									
+
 								}
-								
+
 							}
-							
+
 						}
 					}
 				}
@@ -229,7 +235,7 @@ public class PersistentHelper {
 		}
 		return quiz;
 	}
-	
+
 	public QuizDTO getQuizDTO(String quizId) {
 		QuizDTO quiz = null;
 		try {
@@ -240,7 +246,8 @@ public class PersistentHelper {
 				return quiz;
 			}
 
-			try (Connection connection = DriverManager.getConnection(DBConfig.url, DBConfig.username, DBConfig.password)) {
+			try (Connection connection = DriverManager.getConnection(DBConfig.url, DBConfig.username,
+					DBConfig.password)) {
 				try (PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Quiz WHERE id=?")) {
 					stmt.setString(1, quizId);
 					ResultSet rs = stmt.executeQuery();
@@ -252,43 +259,45 @@ public class PersistentHelper {
 							quiz = new QuizDTO();
 							quiz.setId(quizId);
 							quiz.setName(quizTitle);
-							
-							//fetch questions
-							try (PreparedStatement qsnStmt = connection.prepareStatement("SELECT * FROM Question WHERE quizId=?")) {
+
+							// fetch questions
+							try (PreparedStatement qsnStmt = connection
+									.prepareStatement("SELECT * FROM Question WHERE quizId=?")) {
 								qsnStmt.setString(1, id);
 								ResultSet qsnRS = qsnStmt.executeQuery();
-								
+
 								while (qsnRS.next()) {
-									
+
 									String qsnId = qsnRS.getString("id");
 									CandidateQuestionDTO qsn = new CandidateQuestionDTO();
-									
+
 									qsn.setId(qsnRS.getString("id"));
 									qsn.setTitle(qsnRS.getString("title"));
-									
-									//fetch Answer Options
-									try (PreparedStatement answrStmt = connection.prepareStatement("SELECT * FROM AnswerOption WHERE questionId=?")) {
+
+									// fetch Answer Options
+									try (PreparedStatement answrStmt = connection
+											.prepareStatement("SELECT * FROM AnswerOption WHERE questionId=?")) {
 										answrStmt.setString(1, qsnId);
 										ResultSet answrRS = answrStmt.executeQuery();
-										
+
 										while (answrRS.next()) {
 											String title = answrRS.getString("title");
-											boolean isCorrect = answrRS.getString("isCorrect") == "1" ? true:false;
-											
+											boolean isCorrect = answrRS.getString("isCorrect") == "1" ? true : false;
+
 											AnswerDTO answr = new AnswerDTO();
 											answr.setId(answrRS.getString("id"));
 											answr.setTitle(title);
 											answr.setCorrect(isCorrect);
-											
+
 											qsn.add(answr);
 										}
 									}
 									quiz.add(qsn);
-									
+
 								}
-								
+
 							}
-							
+
 						}
 					}
 				}
@@ -301,10 +310,11 @@ public class PersistentHelper {
 		}
 		return quiz;
 	}
+
 	public boolean isQuizAlreadyHostedWithCode(String quizCode) {
 		return this.getQuizHost(quizCode) != null;
 	}
-	
+
 	public QuizHostDAO getQuizHost(String quizCode) {
 		QuizHostDAO quizHost = null;
 		try {
@@ -315,7 +325,8 @@ public class PersistentHelper {
 				return quizHost;
 			}
 
-			try (Connection connection = DriverManager.getConnection(DBConfig.url, DBConfig.username, DBConfig.password)) {
+			try (Connection connection = DriverManager.getConnection(DBConfig.url, DBConfig.username,
+					DBConfig.password)) {
 				try (PreparedStatement stmt = connection.prepareStatement("SELECT * FROM QuizHost WHERE quizCode=?")) {
 					stmt.setString(1, quizCode);
 					ResultSet rs = stmt.executeQuery();
@@ -325,7 +336,6 @@ public class PersistentHelper {
 						String hostedAt = rs.getString("hostedAt");
 						String hostQuizCode = rs.getString("quizCode");
 						String hostQuizStateString = rs.getString("status");
-						
 
 						if (hostQuizCode != null && quizId != null) {
 							quizHost = new QuizHostDAO();
@@ -346,7 +356,7 @@ public class PersistentHelper {
 		}
 		return quizHost;
 	}
-	
+
 	public boolean saveQuizHost(QuizHostDAO quizHost) {
 		boolean status = false;
 		try {
@@ -357,8 +367,10 @@ public class PersistentHelper {
 				return status;
 			}
 
-			try (Connection connection = DriverManager.getConnection(DBConfig.url, DBConfig.username, DBConfig.password)) {
-				try (PreparedStatement stmt = connection.prepareStatement("INSERT INTO QuizHost (id, quizId, hostedAt, quizCode, status) VALUES (?, ?, ?, ?, ?)")) {
+			try (Connection connection = DriverManager.getConnection(DBConfig.url, DBConfig.username,
+					DBConfig.password)) {
+				try (PreparedStatement stmt = connection.prepareStatement(
+						"INSERT INTO QuizHost (id, quizId, hostedAt, quizCode, status) VALUES (?, ?, ?, ?, ?)")) {
 					stmt.setString(1, quizHost.getId());
 					stmt.setString(2, quizHost.getQuizId());
 					stmt.setString(3, quizHost.getHostedAt());
@@ -376,7 +388,7 @@ public class PersistentHelper {
 		}
 		return status;
 	}
-	
+
 	public boolean updateQuizHost(QuizHostDAO quizHost) {
 		boolean status = false;
 		try {
@@ -387,8 +399,10 @@ public class PersistentHelper {
 				return status;
 			}
 
-			try (Connection connection = DriverManager.getConnection(DBConfig.url, DBConfig.username, DBConfig.password)) {
-				try (PreparedStatement stmt = connection.prepareStatement("UPDATE QuizHost SET status = ? WHERE id = ?")) {
+			try (Connection connection = DriverManager.getConnection(DBConfig.url, DBConfig.username,
+					DBConfig.password)) {
+				try (PreparedStatement stmt = connection
+						.prepareStatement("UPDATE QuizHost SET status = ? WHERE id = ?")) {
 					stmt.setString(1, quizHost.getState().name());
 					stmt.setString(2, quizHost.getId());
 					stmt.executeUpdate();
@@ -403,10 +417,10 @@ public class PersistentHelper {
 		}
 		return status;
 	}
-	
+
 	public boolean saveCandidate(CandidateDTO candidate) {
 		boolean status = false;
-		
+
 		try {
 			try {
 				Class.forName("com.mysql.cj.jdbc.Driver");
@@ -415,34 +429,36 @@ public class PersistentHelper {
 				return false;
 			}
 
-			try (Connection connection = DriverManager.getConnection(DBConfig.url, DBConfig.username, DBConfig.password)) {
+			try (Connection connection = DriverManager.getConnection(DBConfig.url, DBConfig.username,
+					DBConfig.password)) {
 				try (PreparedStatement stmt = connection
 						.prepareStatement("INSERT INTO Candidate (id, name, quizHostId) VALUES (?, ?, ?)")) {
 					stmt.setString(1, candidate.getId());
 					stmt.setString(2, candidate.getName());
 					stmt.setString(3, candidate.getQuizHost().getId());
-					stmt.setString(3, candidate.getQuizHost().getId());					
-					status = stmt.executeUpdate() == 1 ? true:false;
-									
-					try (PreparedStatement answerStmt = connection
-							.prepareStatement("INSERT INTO CandidateSelectedAnswer (id, answerOptionId, questionId, candidateId) VALUES (?, ?, ?, ?)")) {
-						
-						Iterator<CandidateQuestionDTO> iterator = candidate.getQuiz().getCondidateQuestionDTOList().iterator();
-						
+					stmt.setString(3, candidate.getQuizHost().getId());
+					status = stmt.executeUpdate() == 1 ? true : false;
+
+					try (PreparedStatement answerStmt = connection.prepareStatement(
+							"INSERT INTO CandidateSelectedAnswer (id, answerOptionId, questionId, candidateId) VALUES (?, ?, ?, ?)")) {
+
+						Iterator<CandidateQuestionDTO> iterator = candidate.getQuiz().getCondidateQuestionDTOList()
+								.iterator();
+
 						while (iterator.hasNext()) {
 							CandidateQuestionDTO qsn = iterator.next();
 							AnswerDTO selectedAnsOption = qsn.getSelectedAnswerDTO();
-							
+
 							if (selectedAnsOption == null) {
 								continue;
 							}
-							
+
 							answerStmt.setString(1, UUID.randomUUID().toString());
 							answerStmt.setString(2, selectedAnsOption.getId());
 							answerStmt.setString(3, qsn.getId());
-							answerStmt.setString(4, candidate.getId());							
-							status = answerStmt.executeUpdate() == 1 ? true:false;
-						}						
+							answerStmt.setString(4, candidate.getId());
+							status = answerStmt.executeUpdate() == 1 ? true : false;
+						}
 					}
 				}
 			}
@@ -454,7 +470,7 @@ public class PersistentHelper {
 		}
 		return status;
 	}
-	
+
 	public QuizResults getQuizResults() {
 		QuizResults results = new QuizResults();
 		try {
@@ -465,7 +481,8 @@ public class PersistentHelper {
 				return results;
 			}
 
-			try (Connection connection = DriverManager.getConnection(DBConfig.url, DBConfig.username, DBConfig.password)) {
+			try (Connection connection = DriverManager.getConnection(DBConfig.url, DBConfig.username,
+					DBConfig.password)) {
 				try (PreparedStatement stmt = connection.prepareStatement("SELECT * FROM QuizHost")) {
 					ResultSet rs = stmt.executeQuery();
 					while (rs.next()) {
@@ -474,9 +491,8 @@ public class PersistentHelper {
 						String hostedAt = rs.getString("hostedAt");
 						String hostQuizCode = rs.getString("quizCode");
 						String hostQuizStateString = rs.getString("status");
-						
 						QuizDTO quiz = this.getQuizDTO(quizId);
-						
+
 						QuizHostDTO quizHost = new QuizHostDTO();
 
 						if (hostQuizCode != null && quizId != null && quiz != null) {
@@ -486,23 +502,62 @@ public class PersistentHelper {
 							quizHost.setQuizName(quiz.getName());
 							quizHost.setHostedAt(hostedAt);
 							quizHost.setStatus(QuizHostState.valueOf(hostQuizStateString));
-							
-							//Fetch Candidates who joined this quiz Host
-							try (PreparedStatement candidateStmt = connection.prepareStatement("SELECT * FROM Candidate where quizHostId = ?")) {
+
+							// Fetch Candidates who joined this quiz Host
+							try (PreparedStatement candidateStmt = connection
+									.prepareStatement("SELECT * FROM Candidate where quizHostId = ?")) {
 								candidateStmt.setString(1, hostId);
 								ResultSet candidateRS = candidateStmt.executeQuery();
 								ArrayList<ResultCandidate> candidates = new ArrayList<ResultCandidate>();
-								
+
 								while (candidateRS.next()) {
 									String candId = candidateRS.getString("id");
 									String name = candidateRS.getString("name");
+									String quizHostId = candidateRS.getString("quizHostId");
 									ResultCandidate candidate = new ResultCandidate(candId, name);
+
+									// Fetch QuestionListAttempted by candidate
+									try (PreparedStatement selectedAnswrStmt = connection.prepareStatement(
+											"SELECT * FROM CandidateSelectedAnswer where candidateId = ?")) {
+										selectedAnswrStmt.setString(1, candId);
+										ResultSet selectedAnswrRS = selectedAnswrStmt.executeQuery();
+										ArrayList<CandidateQuestionDTO> candQsnList = new ArrayList<CandidateQuestionDTO>();
+
+										while (selectedAnswrRS.next()) {
+											String answerOptionId = selectedAnswrRS.getString("answerOptionId");
+											String questionId = selectedAnswrRS.getString("questionId");
+
+											// Fetch Question
+											try (PreparedStatement qsnStmt = connection
+													.prepareStatement("SELECT * FROM Question where id = ?")) {
+												qsnStmt.setString(1, questionId);
+												ResultSet qsnRS = qsnStmt.executeQuery();
+
+												if (qsnRS.next()) {
+													String qsnId = qsnRS.getString("id");
+													String qsnTitle = qsnRS.getString("title");
+													String qsnQuizId = qsnRS.getString("quizId");
+													CandidateQuestionDTO candQsn = new CandidateQuestionDTO();
+													candQsn.setId(qsnQuizId);
+													candQsn.setTitle(qsnTitle);
+													// Fetch Answer Option for the question
+													candQsn.setAnswerDTOList(
+															getAnswerOptionList(connection, questionId));
+													// Fetch Selected Answer Option
+													candQsn.setSelectedAnswerDTO(
+															getAnswerOption(connection, answerOptionId));
+													candQsnList.add(candQsn);
+												}
+											}
+											candidate.setAttemptedQuestionList(candQsnList);
+										}
+									}
+
 									candidates.add(candidate);
 								}
-								
 								quizHost.setCandidateList(candidates);
 							}
-							
+
 							results.add(quizHost);
 						}
 					}
@@ -515,5 +570,47 @@ public class PersistentHelper {
 
 		}
 		return results;
+	}
+
+	public ArrayList<AnswerDTO> getAnswerOptionList(Connection connection, String questionId) throws SQLException {
+		ArrayList<AnswerDTO> answerDTOList = new ArrayList<AnswerDTO>();
+
+		try (PreparedStatement ansOptionStmt = connection
+				.prepareStatement("SELECT * FROM AnswerOption where questionId = ?")) {
+			ansOptionStmt.setString(1, questionId);
+			ResultSet ansOptionRS = ansOptionStmt.executeQuery();
+			while (ansOptionRS.next()) {
+				// id | title | isCorrect | questionId
+				String ansOptionId = ansOptionRS.getString("id");
+				String ansOptionTitle = ansOptionRS.getString("title");
+				boolean ansOptionIsCorrect = ansOptionRS.getBoolean("isCorrect");
+				AnswerDTO ansDTO = new AnswerDTO();
+				ansDTO.setId(ansOptionId);
+				ansDTO.setTitle(ansOptionTitle);
+				ansDTO.setCorrect(ansOptionIsCorrect);
+				answerDTOList.add(ansDTO);
+			}
+		}
+		return answerDTOList;
+	}
+
+	public AnswerDTO getAnswerOption(Connection connection, String answerOptionId) throws SQLException {
+		AnswerDTO answerDTO = null;
+
+		try (PreparedStatement ansOptionStmt = connection.prepareStatement("SELECT * FROM AnswerOption where id = ?")) {
+			ansOptionStmt.setString(1, answerOptionId);
+			ResultSet ansOptionRS = ansOptionStmt.executeQuery();
+			if (ansOptionRS.next()) {
+				// id | title | isCorrect | questionId
+				String ansOptionId = ansOptionRS.getString("id");
+				String ansOptionTitle = ansOptionRS.getString("title");
+				boolean ansOptionIsCorrect = ansOptionRS.getBoolean("isCorrect");
+				answerDTO = new AnswerDTO();
+				answerDTO.setId(ansOptionId);
+				answerDTO.setTitle(ansOptionTitle);
+				answerDTO.setCorrect(ansOptionIsCorrect);
+			}
+		}
+		return answerDTO;
 	}
 }

@@ -1,3 +1,4 @@
+<%@page import="java.util.stream.Collectors"%>
 <%@page import="com.quizer.service.PersistentHelper"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -89,7 +90,7 @@ ArrayList<QuizHostDTO> hosts = new ArrayList<QuizHostDTO>();
 													"<th>Joined At</th>"+
 													"<th>Attempted</th>"+
 													"<th>Correct</th>"+
-													"<th>score</th>"+
+													"<th>Score</th>"+
 													"<th>Action</th>"+
 												"</tr>"+
 											"</thead>"+
@@ -116,7 +117,62 @@ ArrayList<QuizHostDTO> hosts = new ArrayList<QuizHostDTO>();
 								
 								while (rcIT.hasNext()) {
 									ResultCandidate rsltCand = rcIT.next();
-									String candidateRowFormated = String.format(candidateRow, rsltCand.getName(), "#", "#","#", "#");
+									//Calculate Number of Attempted Questions
+									//Attempted Questions -> The question which has selected answer is attempted question.
+									//Calculate Total Correct Questions
+									// Correct Question -> if the id of slected Answer is equal to the id of answer from OptionList of question which is correct
+
+									int totalQuestion = 0;
+									int attemptedQsnCount = 0;
+									int correctAnswers = 0;
+									String scorePerc = "NA";
+									
+									if (rsltCand.getAttemptedQuestionList() != null) {
+									Iterator<CandidateQuestionDTO> candQsnIT = rsltCand.getAttemptedQuestionList().iterator();
+									Quiz quiz = PersistentHelper.singleton.getQuizById(host.getQuizId());
+									
+									if (quiz != null && quiz.getQuestionList() != null) {
+										totalQuestion = quiz.getQuestionList().size();
+									}
+									
+									while (candQsnIT.hasNext()) {
+										CandidateQuestionDTO candQsn = candQsnIT.next();
+										
+										if (candQsn.getSelectedAnswerDTO() != null) {
+											++attemptedQsnCount;
+											
+											AnswerDTO selectedAnswr = candQsn.getSelectedAnswerDTO();
+											
+											ArrayList<AnswerDTO> correctOptionList = candQsn.getAnswerDTOList();
+											
+											if (correctOptionList != null && !correctOptionList.isEmpty()) {
+												
+												Iterator<AnswerDTO> answerIT = candQsn.getAnswerDTOList().iterator();
+												AnswerDTO correctOption = null;
+												
+												while (answerIT.hasNext()) {
+													AnswerDTO correctOptionTemp = answerIT.next();
+													System.out.println("while Option: "+correctOptionTemp.isCorrect());
+													if (correctOptionTemp.isCorrect()) {
+														correctOption = correctOptionTemp;
+														break;
+													}
+												}
+												
+												if (correctOption != null && correctOption.getId().equalsIgnoreCase(selectedAnswr.getId())){
+													++correctAnswers;
+												}
+											}
+										}
+									}
+									//Calculate Score
+									if (totalQuestion > 0) {
+										double score = (((double)correctAnswers)/totalQuestion) * 100;
+										scorePerc =  score + "%";
+									}
+								}
+									String attemptedQsnStr = attemptedQsnCount+"/"+totalQuestion;
+									String candidateRowFormated = String.format(candidateRow, rsltCand.getName(), "#", attemptedQsnStr,correctAnswers, scorePerc);
 									out.write(candidateRowFormated);
 								}
 								
