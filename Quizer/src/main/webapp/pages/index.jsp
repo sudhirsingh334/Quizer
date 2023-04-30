@@ -32,7 +32,7 @@
 		     <input type="submit" onClick="openCreateQuizPage()" value="Create" class="button"/>
 			 <input type="submit" onClick="openQuizListPage()" value="Library" class="button"/>
 			 
-			  <input type="submit" onClick="testPage()" value="Test" class="button"/>
+			  <input type="submit" onClick="getQuizerResults()" value="Results" class="button"/>
 			 
 			 
 			
@@ -51,8 +51,8 @@
 		}
 		
 		
-		function testPage() {
-			window.location.href = "pages/test.html";
+		function getQuizerResults() {
+			window.location.href = "pages/quizerResults.jsp";
 		}
 	</script>
 </body>
