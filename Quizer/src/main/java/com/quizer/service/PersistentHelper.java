@@ -474,11 +474,14 @@ public class PersistentHelper {
 						String hostQuizCode = rs.getString("quizCode");
 						String hostQuizStateString = rs.getString("status");
 						
-
-						if (hostQuizCode != null && quizId != null) {
+						QuizDTO quiz = this.getQuizDTO(quizId);
+						
+						if (hostQuizCode != null && quizId != null && quiz != null) {
 							QuizHostDTO quizHost = new QuizHostDTO();
 							quizHost.setId(hostId);
 							quizHost.setCode(hostQuizCode);
+							quizHost.setQuizId(quizId);
+							quizHost.setQuizName(quiz.getName());
 							quizHost.setHostedAt(hostedAt);
 							quizHost.setStatus(QuizHostState.valueOf(hostQuizStateString));
 							results.add(quizHost);

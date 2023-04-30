@@ -48,7 +48,7 @@ ArrayList<QuizHostDTO> hosts = new ArrayList<QuizHostDTO>();
 							<tr>
 								<th></th>
 								<th>Quiz Name</th>
-								<th>Quiz Code</th>
+								<th>Code</th>
 								<th>Hosted On</th>
 								<th>Status</th>
 								<th>Participants</th>
@@ -76,7 +76,7 @@ ArrayList<QuizHostDTO> hosts = new ArrayList<QuizHostDTO>();
 									"<td>%s</td>"+
 									"<td>%s</td>"+
 								"</tr>";
-							String hostRowHTMLFormated = String.format(hostRowHTML, dataTarget, "Name", host.getCode(), host.getHostedAt(), host.getStatus(), "#");
+							String hostRowHTMLFormated = String.format(hostRowHTML, dataTarget, host.getQuizName(), host.getCode(), host.getHostedAt(), host.getStatus(), "#");
 							out.write(hostRowHTMLFormated);
 							
 							String hiddenRowHeader = "<tr>"+
