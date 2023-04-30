@@ -86,19 +86,16 @@
 		
 		
 		//timestamp
-		var startDate = new Date();
-           var myVar=setInterval(function () {myTimer()}, 1000);
-           var counter = 0;
+	var startDateString = '<%=quizHost.getHostedAt()%>';
+	var myVar=setInterval(function () {myTimer()}, 1000);
+	var counter = 0;
 
-   function myTimer() {
-      var startTimeString = '<%=quizHost.getHostedAt()%>';
-      
-      if (startTimeString.length === 0) {
+   function myTimer() {      
+      if (startDateString.length === 0) {
     	  document.getElementById("timelapse").innerHTML = '00:00:00';
     	  return;
       }
       
-      var startDateString = '<%=quizHost.getHostedAt()%>';
       var startDate = new Date(startDateString);
       var currentDate = new Date();
       var diff = currentDate-startDate;

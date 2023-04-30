@@ -1,6 +1,7 @@
 package com.quizer.servlet;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.UUID;
 
 import com.database.QuizAnswerDAO;
@@ -25,6 +26,8 @@ public class QuizerManagerServlet extends HttpServlet {
 		String button = request.getParameter("QuizerManager-Button");
 		HttpSession session = request.getSession(false);
 		session.setAttribute("User-Tried-To-Join", false);
+		String timestamp = new Timestamp(System.currentTimeMillis()).toString();
+
 		String nextPage = "/";
 
 		if (button == null) {
@@ -42,13 +45,15 @@ public class QuizerManagerServlet extends HttpServlet {
 
 			String candidateId = UUID.randomUUID().toString();
 
+			
 			// Prepare Candidate DTO.
 			QuizHostDAO quizHost = PersistentHelper.singleton.getQuizHost(quizCode);
 
 			QuizDTO quizDTO = PersistentHelper.singleton.getQuizDTO(quizHost.getQuizId());
 
 			CandidateDTO candidate = new CandidateDTO(candidateId, candidateName, quizHost, quizDTO);
-
+			candidate.setJoinedAt(timestamp);
+			
 			session.setAttribute("CandidateDTO", candidate);
 			nextPage = "joinQuiz.jsp";
 		} else if (button.equalsIgnoreCase("Quiz-Question-Next") || button.equalsIgnoreCase("Quiz-Question-Back") || button.equalsIgnoreCase("Quiz-Done")) {
@@ -76,6 +81,7 @@ public class QuizerManagerServlet extends HttpServlet {
 			} else if (button.equalsIgnoreCase("Quiz-Done")) {
 				// Save The Quiz
 				CandidateDTO candidate = (CandidateDTO) session.getAttribute("CandidateDTO");
+				candidate.setCompletedAt(timestamp);
 				if (PersistentHelper.singleton.saveCandidate(candidate)) {
 					//Show quiz completed successfully.
 					session.invalidate();

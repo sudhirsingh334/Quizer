@@ -25,6 +25,7 @@
 	<%@ page import="com.quizer.utilities.*"%>
 	<%@ page import="com.database.*"%>
 	<%@ page import="com.quiz.dto.*"%>
+	<%@ page import="java.text.SimpleDateFormat"%>
 	<%
 //Fetch QuizHosts
 QuizResults results = PersistentHelper.singleton.getQuizResults();
@@ -87,7 +88,7 @@ ArrayList<QuizHostDTO> hosts = new ArrayList<QuizHostDTO>();
 											"<thead>"+
 												"<tr class='info'>"+
 												    "<th>Candidate</th>"+
-													"<th>Joined At</th>"+
+													"<th>Time Taken</th>"+
 													"<th>Attempted</th>"+
 													"<th>Correct</th>"+
 													"<th>Score</th>"+
@@ -171,8 +172,32 @@ ArrayList<QuizHostDTO> hosts = new ArrayList<QuizHostDTO>();
 										scorePerc =  score + "%";
 									}
 								}
+									//Calculate Time Take
+									String duration = "NA";
+									String joinedAt = rsltCand.getJoinedAt();
+									String completedAt = rsltCand.getCompletedAt();
+									
+									if (joinedAt != null && completedAt != null) {
+										Date joinedAtDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS").parse(joinedAt);
+										Date completedAtDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS").parse(completedAt);
+										long timeDiff = completedAtDate.getTime() - joinedAtDate.getTime();
+										   
+										 // Calucalte time difference in seconds  
+							            long secDiff = (timeDiff / 1000)% 60;   
+							            // Calucalte time difference in minutes  
+							            long minDiff = (timeDiff / (1000*60)) % 60;      
+							            // Calucalte time difference in hours  
+							            long hrDiff = (timeDiff / (1000*60*60)) % 24; 
+							         	// Calucalte time difference in days  
+							            long dayDiff = (timeDiff / (1000*60*60*24)) % 365;
+							         	if (dayDiff>=1) {
+							         		duration = ">"+dayDiff;
+							         	} else {
+							         		duration = String.format("%02d:%02d:%02d", hrDiff, minDiff, secDiff);
+							         	}
+									}
 									String attemptedQsnStr = attemptedQsnCount+"/"+totalQuestion;
-									String candidateRowFormated = String.format(candidateRow, rsltCand.getName(), "#", attemptedQsnStr,correctAnswers, scorePerc);
+									String candidateRowFormated = String.format(candidateRow, rsltCand.getName(), duration, attemptedQsnStr,correctAnswers, scorePerc);
 									out.write(candidateRowFormated);
 								}
 								

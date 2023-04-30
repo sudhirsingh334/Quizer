@@ -432,11 +432,12 @@ public class PersistentHelper {
 			try (Connection connection = DriverManager.getConnection(DBConfig.url, DBConfig.username,
 					DBConfig.password)) {
 				try (PreparedStatement stmt = connection
-						.prepareStatement("INSERT INTO Candidate (id, name, quizHostId) VALUES (?, ?, ?)")) {
+						.prepareStatement("INSERT INTO Candidate (id, name, quizHostId, joinedAt, completedAt) VALUES (?, ?, ?, ?, ?)")) {
 					stmt.setString(1, candidate.getId());
 					stmt.setString(2, candidate.getName());
 					stmt.setString(3, candidate.getQuizHost().getId());
-					stmt.setString(3, candidate.getQuizHost().getId());
+					stmt.setString(4, candidate.getJoinedAt());
+					stmt.setString(5, candidate.getCompletedAt());
 					status = stmt.executeUpdate() == 1 ? true : false;
 
 					try (PreparedStatement answerStmt = connection.prepareStatement(
@@ -513,9 +514,12 @@ public class PersistentHelper {
 								while (candidateRS.next()) {
 									String candId = candidateRS.getString("id");
 									String name = candidateRS.getString("name");
-									String quizHostId = candidateRS.getString("quizHostId");
+									String joinedAt = candidateRS.getString("joinedAt");
+									String completedAt = candidateRS.getString("completedAt");
 									ResultCandidate candidate = new ResultCandidate(candId, name);
-
+									candidate.setJoinedAt(joinedAt);
+									candidate.setCompletedAt(completedAt);
+									
 									// Fetch QuestionListAttempted by candidate
 									try (PreparedStatement selectedAnswrStmt = connection.prepareStatement(
 											"SELECT * FROM CandidateSelectedAnswer where candidateId = ?")) {

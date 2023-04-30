@@ -5,7 +5,25 @@ import java.util.ArrayList;
 public class ResultCandidate {
 	private String id;
 	private String name;
+	private String joinedAt;
+	private String completedAt;
 	private ArrayList<CandidateQuestionDTO> attemptedQuestionList;
+
+	public String getJoinedAt() {
+		return joinedAt;
+	}
+
+	public void setJoinedAt(String joinedAt) {
+		this.joinedAt = joinedAt;
+	}
+
+	public String getCompletedAt() {
+		return completedAt;
+	}
+
+	public void setCompletedAt(String completedAt) {
+		this.completedAt = completedAt;
+	}
 
 	public ResultCandidate(String id, String name) {
 		super();

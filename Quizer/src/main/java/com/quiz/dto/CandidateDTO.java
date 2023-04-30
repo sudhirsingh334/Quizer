@@ -9,6 +9,26 @@ public class CandidateDTO {
 	private String name;
 	private QuizHostDAO quizHost;
 	private QuizDTO quiz;
+	private String joinedAt;
+	private String completedAt;
+	
+	
+	public String getJoinedAt() {
+		return joinedAt;
+	}
+
+	public void setJoinedAt(String joinedAt) {
+		this.joinedAt = joinedAt;
+	}
+
+	public String getCompletedAt() {
+		return completedAt;
+	}
+
+	public void setCompletedAt(String completedAt) {
+		this.completedAt = completedAt;
+	}
+
 	
 	
 	public CandidateDTO(String id, String name, QuizHostDAO quizHost, QuizDTO quiz) {

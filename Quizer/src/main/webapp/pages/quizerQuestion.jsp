@@ -228,25 +228,31 @@
 		}
 	}
 	
-	var startDate = new Date();
+    var startDateString = '<%=candidate.getJoinedAt()%>';
 	var myVar=setInterval(function () {myTimer()}, 1000);
 	var counter = 0;
 
-	function myTimer() {
-	    var date = new Date();
-	    var diff = date-startDate;
+	   function myTimer() {      
+	      if (startDateString.length === 0) {
+	    	  document.getElementById("timelapse").innerHTML = '00:00:00';
+	    	  return;
+	      }
+	      
+	      var startDate = new Date(startDateString);
+	      var currentDate = new Date();
+	      var diff = currentDate-startDate;
+	      
+	      var duration = diff/1000;//in seconds
 	    
-	    var duration = diff/1000;//in seconds
-	    
-	    var hrs = duration/3600;
-	    var mins = (duration%3600)/60;//in min
-	    var secs = (duration%3600)%60;
+	      var hrs = duration/3600;
+	      var mins = (duration%3600)/60;//in min
+	      var secs = (duration%3600)%60;
 
-	    var timelapse = padZero(Math.floor(hrs)) + ":" + padZero(Math.floor(mins)) + ":" + padZero(Math.round(secs));
-	    document.getElementById("timelapse").innerHTML = timelapse;
+	      var timelapse = padZero(Math.floor(hrs)) + ":" + padZero(Math.floor(mins)) + ":" + padZero(Math.round(secs));
+	      document.getElementById("timelapse").innerHTML = timelapse;
 	}
 
-	function padZero(number){
+	     function padZero(number){
 	         let result = number.toString().padStart(2, '0');
 	         return result;
 	}
