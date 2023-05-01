@@ -11,6 +11,11 @@ html {
   color: white;
 }
 
+input[type=radio] {
+  width: 20px;
+  height: 20px;
+}
+
 .p1 {
   font-size: 20px;
   color: black;
@@ -21,7 +26,7 @@ html {
 .button, .button-extended, .button-error-extended, .button-error {
   background-color: purple;
   color: white;
-  font-size: 16px;
+  font-size: 20px;
   padding: 10px;
   cursor: pointer;
   width: 150px;

@@ -64,6 +64,7 @@
 	margin-left:70%;
 	
 }
+
 </style>
 </head>
 <body>
@@ -112,7 +113,9 @@
 	%>
 
 	<div class="validation">
+	
 		<form action="QuizerManager" method="post" name="completeQuizRedirect"
+		
 			id="completeQuizRedirect">
 
 			<table id="answer-options-table" style="width: 100%">
