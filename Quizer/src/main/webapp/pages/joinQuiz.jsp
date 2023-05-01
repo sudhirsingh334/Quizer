@@ -4,14 +4,22 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" 
+              content="width=device-width,
+                       initial-scale=1" />
 <link rel="stylesheet"required
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="styles/style.css" rel="stylesheet" />
+
 <script language="javascript" src="../scripts/Quizervalidator.js"></script>
-    <link href="https://companieslogo.com/img/orig/KAHOT.OL-e50e329b.png?t=1603470544"rel="icon" class="headericon">
+<link href="https://companieslogo.com/img/orig/KAHOT.OL-e50e329b.png?t=1603470544"rel="icon" class="headericon">
+
+
+
 
 </head>
 <body>
+
 	<%@ page import="com.quizer.pojo.*"%>
 	<%@ page import="java.util.*"%>
 	<%@ page import="com.database.*"%>
@@ -45,8 +53,11 @@
 		}
 	}
 	%>
+	
+	
 	<div class="container-center">
 		<form class="form-container" name="f1" action="QuizerManager"
+		
 			method="post" class="form" id="join-quiz-form"
 			onsubmit="return quizerValidator()">
 			<div class="form-group">
