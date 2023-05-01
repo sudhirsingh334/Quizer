@@ -4,10 +4,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet"
+<link rel="stylesheet"required
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="styles/style.css" rel="stylesheet" />
 <script language="javascript" src="../scripts/Quizervalidator.js"></script>
+    <link href="https://companieslogo.com/img/orig/KAHOT.OL-e50e329b.png?t=1603470544"rel="icon" class="headericon">
+
 </head>
 <body>
 	<%@ page import="com.quizer.pojo.*"%>
@@ -50,11 +52,11 @@
 			<div class="form-group">
 
 				<div class="container-center,">
-					<input type="text" placeholder="Your Name" name="quizername"><br></br>
+					<input type="text" placeholder="Your Name" name="quizername" required><br></br>
 				</div>
 
 				<div class="container-center">
-					<input type="text" placeholder="Quiz PIN" name="QuizCode"><br></br>
+					<input type="text" placeholder="Quiz PIN" name="QuizCode" required><br></br>
 				</div>
 				<button type="submit" class="button-extended"
 					name="QuizerManager-Button" value="Join-Quiz">Join</button>

@@ -3,7 +3,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+ 
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.8.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  
+
 <title>Quizer</title>
 <link href="pages/styles/style.css" rel="stylesheet" />
     <link href="https://companieslogo.com/img/orig/KAHOT.OL-e50e329b.png?t=1603470544"rel="icon" class="headericon">
@@ -21,21 +27,23 @@
 
 
 <body>
-
+ <div class="container mt-4">
+ 
 	<div class="container-center" style="margin-top: 10%;">
 		<div class="container-center">
 			<img alt="" src="assets/quizer-white-XS.png"
 				style="width: 1200px; margin-left: 60%; margin-bottom: 5%;" />
 		</div>
 		
-		     <input type="submit"onClick="openJoinQuizPage()" value="Join" class="button"/>
+		     <input  type="submit"onClick="openJoinQuizPage()" value="Join" class="button"/>
 		     <input type="submit" onClick="openCreateQuizPage()" value="Create" class="button"/>
 			 <input type="submit" onClick="openQuizListPage()" value="Library" class="button"/>
 			 
 			  <input type="submit" onClick="getQuizerResults()" value="Results" class="button"/>
 			 
+			 <input type="submit" onClick="checkBootstrap()" value="bootstrap" class="button"/>
 			 
-			
+			</div>
 	</div>
 	<script>
 	function openJoinQuizPage() {
@@ -53,6 +61,10 @@
 		
 		function getQuizerResults() {
 			window.location.href = "pages/quizerResults.jsp";
+		}
+		
+		function checkBootstrap() {
+			window.location.href = "pages/bootstrap.html";
 		}
 	</script>
 </body>
