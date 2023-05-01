@@ -8,6 +8,16 @@
 <link href="styles/style.css" rel="stylesheet" />
 <script type="text/javascript" src="../scripts/jquery.min.js"></script>
 <link href="https://companieslogo.com/img/orig/KAHOT.OL-e50e329b.png?t=1603470544"rel="icon" class="headericon">
+<meta name="viewport" 
+              content="width=device-width,
+                       initial-scale=1" />
+<link rel="stylesheet"required
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="styles/style.css" rel="stylesheet" />
+
+<script language="javascript" src="../scripts/Quizervalidator.js"></script>
+<link href="https://companieslogo.com/img/orig/KAHOT.OL-e50e329b.png?t=1603470544"rel="icon" class="headericon">
+
 
 </head>
 
