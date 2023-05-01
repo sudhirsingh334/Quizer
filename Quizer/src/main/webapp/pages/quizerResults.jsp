@@ -11,7 +11,6 @@
 <link
 	href="https://companieslogo.com/img/orig/KAHOT.OL-e50e329b.png?t=1603470544"
 	rel="icon" class="headericon">
-<title>CodePen - Collapse + Table with Bootstrap</title>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
 <link rel='stylesheet'
