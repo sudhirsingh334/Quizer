@@ -19,8 +19,14 @@
 
 .headericon{
 	size: 20px;
-
-
+}
+   .responsive{
+         max-width: 100%;
+         height: auto;
+         margin-left:300px;
+         
+      
+}
 </style>
 </head>
 
@@ -31,18 +37,15 @@
  
 	<div class="container-center" style="margin-top: 10%;">
 		<div class="container-center">
-			<img alt="" src="assets/quizer-white-XS.png"
-				style="width: 1200px; margin-left: 60%; margin-bottom: 5%;" />
+			<img  src="assets/quizer-white-XS.png" alt="Nature" class="responsive">
+				<!-- style="width: 1200px; margin-left: 60%; margin-bottom: 5%;" /> -->
 		</div>
 		
 		     <input  type="submit"onClick="openJoinQuizPage()" value="Join" class="button"/>
 		     <input type="submit" onClick="openCreateQuizPage()" value="Create" class="button"/>
 			 <input type="submit" onClick="openQuizListPage()" value="Library" class="button"/>
 			 
-			  <input type="submit" onClick="getQuizerResults()" value="Results" class="button"/>
-			 
-			 <input type="submit" onClick="checkBootstrap()" value="bootstrap" class="button"/>
-			 
+			  <input type="submit" onClick="getQuizerResults()" value="Results" class="button"/>			 
 			</div>
 	</div>
 	<script>
@@ -63,9 +66,7 @@
 			window.location.href = "pages/quizerResults.jsp";
 		}
 		
-		function checkBootstrap() {
-			window.location.href = "pages/bootstrap.html";
-		}
+		
 	</script>
 </body>
 </html>

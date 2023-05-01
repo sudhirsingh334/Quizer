@@ -7,7 +7,7 @@
 <title>QuizList</title>
 <link href="styles/style.css" rel="stylesheet" />
 <script type="text/javascript" src="../scripts/jquery.min.js"></script>
-    <link href="https://companieslogo.com/img/orig/KAHOT.OL-e50e329b.png?t=1603470544"rel="icon" class="headericon">
+<link href="https://companieslogo.com/img/orig/KAHOT.OL-e50e329b.png?t=1603470544"rel="icon" class="headericon">
 
 </head>
 
