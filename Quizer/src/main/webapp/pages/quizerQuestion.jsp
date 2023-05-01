@@ -4,12 +4,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Quizer</title>
 <link href="styles/style.css" rel="stylesheet" />
 <script language="javascript" src="Quizer.js"></script>
-<link
-	href="https://companieslogo.com/img/orig/KAHOT.OL-e50e329b.png?t=1603470544"
-	rel="icon" class="headericon">
+ <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.8.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  
+
+<title>Quizer</title>
+    <link href="https://companieslogo.com/img/orig/KAHOT.OL-e50e329b.png?t=1603470544"rel="icon" class="headericon">
+
 
 <style type="text/css">
 .radioLeft {
@@ -56,9 +61,8 @@
 
 .timedate {
 	color: white;
-	position: absolute;
-	top: 0;
-	right: 0;
+	margin-left:70%;
+	
 }
 </style>
 </head>
