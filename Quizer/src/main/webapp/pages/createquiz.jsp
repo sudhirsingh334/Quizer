@@ -24,8 +24,8 @@
 </head>
 
 <body>
-	<div class="container-center" style="margin-top:10%;">
-		<h1 class="header-center">Create Quiz</h1>
+	<div class="container-center" style="margin-top:20%;zoom:120%;">
+		<h1 class="header-center"><em>Create Quiz</em></h1>
 
 		<form action="quizmanager" method="post"
 			onsubmit="return validateQuizName(this)" style="margin-top:5%;">
