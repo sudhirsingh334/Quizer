@@ -19,7 +19,18 @@
 <script language="javascript" src="../scripts/Quizervalidator.js"></script>
 <link href="https://companieslogo.com/img/orig/KAHOT.OL-e50e329b.png?t=1603470544"rel="icon" class="headericon">
 
+<script>
+    document.write('<a href="' + document.referrer + '">Go back</a>');
+
+</script>
+    <style type="text/css">
     
+    a{
+    color:white;
+    font-size:25px;
+    margin:3%; 
+    }
+    </style>
 
 </head>
 
@@ -34,5 +45,6 @@
 			<a href="#"> <input type="submit" class="button" value="Submit"></a>
 		</form>
 	</div>
+	
 </body>
 </html>
