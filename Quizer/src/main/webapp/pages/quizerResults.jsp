@@ -37,11 +37,14 @@ ArrayList<QuizHostDTO> hosts = new ArrayList<QuizHostDTO>();
 	}
 %>
 	<!-- partial:index.partial.html -->
-	<div class="container" style="margin-top: 5%;">
+	<div class="container" style="margin-top:5%;zoom:110%;margin-top:4%; ">
+				  <input type="submit" onClick="getQuizerBack()" value="Back" class="button"/>
+	
 		<div class="col-md-12">
 			<div class="panel panel-default" style="border-color: rebeccapurple;">
 				<div class="panel-heading"
 					style="color: white; background-color: rebeccapurple; border-color: rebeccapurple; font-size: x-large;">Results</div>
+					<div class="table-responsive">
 				<div class="panel-body">
 					<table class="table table-condensed table-striped"
 						style="color: rebeccapurple;">
@@ -220,8 +223,12 @@ ArrayList<QuizHostDTO> hosts = new ArrayList<QuizHostDTO>();
 						}
 						
 						%>
-						</tbody>
+						
+						</body>
+						</div>
 					</table>
+				</div>
+					
 				</div>
 
 			</div>
@@ -233,6 +240,12 @@ ArrayList<QuizHostDTO> hosts = new ArrayList<QuizHostDTO>();
 		src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
 	<script
 		src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js'></script>
+		<script type="text/javascript">
+
+		function getQuizerBack() {
+			window.location.href = "/Quizer";
+		}
+		</script>
 </body>
 
 </html>
