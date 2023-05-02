@@ -22,7 +22,7 @@
 </head>
 
 <body>
-<form action="PrepareQuizServlet" method="POST">
+<form action="PrepareQuizServlet" method="POST" style="margin-top:100px;zoom:130%;">
 	<%@ page import="java.util.*"%>
 	<%@ page import="com.quizer.service.*"%>
 	<%@ page import="com.database.*"%>
