@@ -23,7 +23,7 @@
    .responsive{
          max-width: 100%;
          height: auto;
-         margin-left:300px;
+         margin-left:240px;
          
       
 }
@@ -35,7 +35,7 @@
 <body>
  <div class="container mt-4">
  
-	<div class="container-center" style="margin-top: 10%;">
+	<div class="container-center" style="margin-top:16%;zoom:133%;">
 		<div class="container-center">
 			<img  src="assets/quizer-white-XS.png" alt="Nature" class="responsive">
 				<!-- style="width: 1200px; margin-left: 60%; margin-bottom: 5%;" /> -->
