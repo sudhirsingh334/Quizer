@@ -40,7 +40,9 @@
 
 		<form action="quizmanager" method="post"
 			onsubmit="return validateQuizName(this)" style="margin-top:5%;">
-			<input type="text" name="quizname" placeholder="quize name"><br><br>
+		
+			<input type="text" name="quizname" placeholder= "quiz name"><br><br>
+			</em>
 			<span id="quizerError" style="color: palevioletred"><%=request.getAttribute("ERRORMESSAGE") != null ?  request.getAttribute("ERRORMESSAGE"):""%></span><br>
 			<a href="#"> <input type="submit" class="button" value="Submit"></a>
 		</form>
