@@ -169,8 +169,9 @@ ul {
   
   padding: 14px 28px;
   background: #fff;
-  border: 1px solid green;
-  color: #fff;
+  border: 1px solid ;
+  border-radius:10px;
+  color: purple;
 }
 .subscribe-form button {
     position: absolute;
@@ -225,15 +226,12 @@ background-color: white;
 }
 
 
-
 </style>
 </head>
 
 
 
-<body>
-	
-</div>
+
  <div class="container mt-4">
  <div class="header"></div>
  
@@ -323,7 +321,8 @@ background-color: white;
               <a href="https://www.instagram.com/aryank_730_/"><i class="fab fa-instagram"></i></a>
                <a href="https://www.facebook.com/profile.php?id=100035853871948"><i class="fab fa-facebook-f"></i></a>
                 <a href="https://github.com/sudhirsingh334"><i class="fab fa-github"></i></a>
-                 <a href="#"><i class="fab fa-google-plus-g google"></i></a>
+                 <a href="https://www.hackerrank.com/sudhir_manjsingh"><i class="fab fa-hackerrank"></i></a>
+                   <a href="https://google.com"><i class="fab fa-google-plus-g google"></i></a>
               
               
             </div>
@@ -360,7 +359,9 @@ background-color: white;
             </div>
             <div class="subscribe-form">
               <form action="#">
+              <em>
                 <input type="text" placeholder="Email Address">
+                </em>
                 <button><i class="fab fa-telegram-plane"></i></button>
               </form>
             </div>
