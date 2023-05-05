@@ -7,15 +7,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.8.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-  
-	      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
 
-<title>Quizer</title>
-<link href="pages/styles/style.css" rel="stylesheet" />
+    <title>Quizer</title>
+    <link href="pages/styles/style.css" rel="stylesheet" />
     <link href="https://companieslogo.com/img/orig/KAHOT.OL-e50e329b.png?t=1603470544"rel="icon" class="headericon">
 
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
 <style type="text/css">
 
 .headericon{
@@ -198,6 +198,7 @@ ul {
 .copyright-text p a{
   color: #fff;
   font-size: 25px;
+  font-family: 'Pacifico', cursive;
   text-decoration: none;
   
   
@@ -230,16 +231,19 @@ background-color: white;
 </head>
 
 
+<body class="p-3 m-0 border-0 bd-example">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 
 
  <div class="container mt-4">
  <div class="header"></div>
  
  
+ 
 	<div class="container-center" style="margin-top:16%;zoom:133%;">
 		<div class="container-center">
 			<!-- <img  src="assets/quizer-white-XS.png" alt="Nature" class="headerName"> -->
-			<h1 style="color:white";><em>Quizer</em></h1>
+			<h1 style="color:green";><em>Quizer</em></h1>
 				<!-- style="width: 1200px; margin-left: 60%; margin-bottom: 5%;" /> -->
 		</div>
 		
@@ -249,7 +253,13 @@ background-color: white;
 			 
 			  <input type="submit" onClick="getQuizerResults()" value="Results" class="button"/>			 
 			</div>
-	</div>
+			
+		
+  </div>
+
+
+
+	
 	<script>
 	function openJoinQuizPage() {
 		window.location.href = "pages/joinQuiz.jsp";
