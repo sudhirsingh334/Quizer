@@ -128,7 +128,7 @@ ArrayList<QuizHostDTO> hosts = new ArrayList<QuizHostDTO>();
 									"<td>%s</td>"+
 									"<td>%s</td>"+
 									"<td>%s</td>"+
-									"<td><a href='#' class='btn btn-default btn-sm'> "+
+									"<td><a href='createQuizSummary.jsp' class='btn btn-default btn-sm'> "+
 									"<i class='glyphicon glyphicon-cog'></i>"+
 									"</a></td>"+
 								"</tr>";
@@ -170,7 +170,6 @@ ArrayList<QuizHostDTO> hosts = new ArrayList<QuizHostDTO>();
 												
 												while (answerIT.hasNext()) {
 													AnswerDTO correctOptionTemp = answerIT.next();
-													System.out.println("while Option: "+correctOptionTemp.isCorrect());
 													if (correctOptionTemp.isCorrect()) {
 														correctOption = correctOptionTemp;
 														break;
