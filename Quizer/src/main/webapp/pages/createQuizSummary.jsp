@@ -13,91 +13,52 @@
 <link
 	href="https://companieslogo.com/img/orig/KAHOT.OL-e50e329b.png?t=1603470544"
 	rel="icon" class="headericon">
-<style>
-body {
-	padding: 40px;
-}
-
-button {
-	padding: 12px 50px;
-	border: none;
-	background-color:purple;
-	color: white;
-	cursor: pointer;
-	display: inline-block;
-}
-
-input {
-	padding: 12px 20px;
-}
-</style>
 </head>
 <body>
 
-<%
-//path where the PDF file will be store  
-String downloadFolder = System.getProperty("user.home") + "/Downloads/QuizSummary.pdf";
+	<%
+	//path where the PDF file will be store  
+	String downloadFolder = System.getProperty("user.home") + "/Downloads/QuizSummary.pdf";
 
-PDDocument pdfdoc= new PDDocument();  
+	PDDocument pdfdoc = new PDDocument();
 
-PDPage page1 = new PDPage();
+	PDPage page1 = new PDPage();
 
-pdfdoc.addPage(page1);
+	pdfdoc.addPage(page1);
 
-PDPageContentStream contentStream = new PDPageContentStream(pdfdoc, page1);  
+	PDPageContentStream contentStream = new PDPageContentStream(pdfdoc, page1);
 
-//Begin the Content stream   
-contentStream.beginText();   
-  
-//Setting the font to the Content stream    
-contentStream.setFont(PDType1Font.TIMES_BOLD_ITALIC, 14);  
+	//Begin the Content stream   
+	contentStream.beginText();
 
-//Setting the position for the line   
-contentStream.newLineAtOffset(20, 450);  
+	//Setting the font to the Content stream    
+	contentStream.setFont(PDType1Font.TIMES_BOLD_ITALIC, 14);
 
-String text = "Quiz Summary";  
+	//Setting the position for the line   
+	contentStream.newLineAtOffset(20, 450);
 
-//Adding text in the form of string   
-contentStream.showText(text);        
+	String text = "Quiz Summary";
 
-//Ending the content stream  
-contentStream.endText();  
+	//Adding text in the form of string   
+	contentStream.showText(text);
 
-//Closing the content stream  
-contentStream.close();  
+	//Ending the content stream  
+	contentStream.endText();
 
-try {
-	System.out.println("saving:");
-	pdfdoc.save(downloadFolder); 
-	System.out.println("saved:");
-} catch(Exception ex) {
-	System.out.println("Exception:"+ex);
-}
-//prints the message if the PDF is created successfully   
-System.out.println("PDF created");  
-//closes the document  
-pdfdoc.close();  
-%>
-	<button>Invoice</button>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"
-		integrity="sha256-vIL0pZJsOKSz76KKVCyLxzkOT00vXs+Qz4fYRVMoDhw="
-		crossorigin="anonymous">
-	</script>
+	//Closing the content stream  
+	contentStream.close();
 
-	<script>
-		const pdf = new jsPDF();
-		let button = document.querySelector('button');
-		let input = document.querySelector('input');
-		button.addEventListener('click', printPDF)
-		function printPDF() {
-			pdf.text(10,10, "QUIZ SUMMARY");
-			<%
-			%>
-			pdf.save();
-
-		}
-
-	</script>
+	try {
+		System.out.println("saving:");
+		pdfdoc.save(downloadFolder);
+		System.out.println("saved:");
+	} catch (Exception ex) {
+		System.out.println("Exception:" + ex);
+	}
+	//prints the message if the PDF is created successfully   
+	System.out.println("PDF created");
+	//closes the document  
+	pdfdoc.close();
+	%>
 </body>
 </html>
