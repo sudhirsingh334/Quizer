@@ -2,8 +2,9 @@
 <%@page import="java.io.File"%>
 <%@page import="com.itextpdf.*"%>
 <%@page import="com.itextpdf.*"%>
-<%@page import="org.apache.pdfbox.pdmodel.*"%>
-<%@page import="org.apache.pdfbox.pdmodel.font.*"%>
+<%@page import="com.itextpdf.kernel.pdf.*"%>
+<%@page import="com.itextpdf.layout.*"%>
+<%@page import="com.itextpdf.layout.element.*"%>
 	<%@ page import="com.quizer.pojo.*"%>
 	<%@ page import="java.util.*"%>
 	<%@ page import="com.quizer.utilities.*"%>
@@ -35,44 +36,27 @@
 	 //path where the PDF file will be store  
 	String downloadFolder = System.getProperty("user.home") + "/Downloads/QuizSummary.pdf";
 
-	PDDocument pdfdoc = new PDDocument();
-
-	PDPage page1 = new PDPage();
-
-	pdfdoc.addPage(page1);
-
-	PDPageContentStream contentStream = new PDPageContentStream(pdfdoc, page1);
-
-	//Begin the Content stream   
-	contentStream.beginText();
-
-	//Setting the font to the Content stream    
-	contentStream.setFont(PDType1Font.TIMES_BOLD_ITALIC, 14);
-
-	//Setting the position for the line   
-	contentStream.newLineAtOffset(10, 450);
-
-	String text = "Quiz Summary";
-	
-
-	//Adding text in the form of string   
-	contentStream.showText("Candidate: "+ candidate.getName());
-	 
-	//Ending the content stream  
-	contentStream.endText();
-
-	//Closing the content stream  
-	contentStream.close();
-
-	try {
-		pdfdoc.save(downloadFolder);
-	} catch (Exception ex) {
-		System.out.println("Exception:" + ex);
-	}
-	//prints the message if the PDF is created successfully   
-	System.out.println("PDF created");
-	//closes the document  
-	pdfdoc.close(); 
+	PdfWriter writer = new PdfWriter(downloadFolder); 
+	   
+	PdfDocument pdf = new PdfDocument(writer);              
+    
+    // Creating a Document        
+    Document document = new Document(pdf);              
+    String para1 = "Quiz Summary.";  
+    
+    String para2 = "Candidate: "+candidate.getName();              
+    
+    // Creating Paragraphs       
+    Paragraph paragraph1 = new Paragraph(para1);             
+    Paragraph paragraph2 = new Paragraph(para2);              
+    
+    // Adding paragraphs to document       
+    document.add(paragraph1);       
+    document.add(paragraph2);           
+    
+    // Closing the document       
+    document.close();             
+    System.out.println("Paragraph added"); 
 	%>
 </body>
 </html>
