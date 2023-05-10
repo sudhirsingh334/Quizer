@@ -516,9 +516,11 @@ public class PersistentHelper {
 									String name = candidateRS.getString("name");
 									String joinedAt = candidateRS.getString("joinedAt");
 									String completedAt = candidateRS.getString("completedAt");
+									String candHostId = candidateRS.getString("quizHostId");
 									ResultCandidate candidate = new ResultCandidate(candId, name);
 									candidate.setJoinedAt(joinedAt);
 									candidate.setCompletedAt(completedAt);
+									candidate.setHostId(candHostId);
 									
 									// Fetch QuestionListAttempted by candidate
 									try (PreparedStatement selectedAnswrStmt = connection.prepareStatement(
@@ -616,5 +618,42 @@ public class PersistentHelper {
 			}
 		}
 		return answerDTO;
+	}
+	
+	public ResultCandidate getCandidate(String id) {
+		ResultCandidate candidate = null;
+		try {
+			try {
+				Class.forName("com.mysql.cj.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+				return candidate;
+			}
+
+			try (Connection connection = DriverManager.getConnection(DBConfig.url, DBConfig.username,
+					DBConfig.password)) {
+				try (PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Candidate where id = ?")) {
+					stmt.setString(1, id);
+					ResultSet rs = stmt.executeQuery();
+					if (rs.next()) {
+						String candId = rs.getString("id");
+						String name = rs.getString("name");
+						String joinedAt = rs.getString("joinedAt");
+						String completedAt = rs.getString("completedAt");
+						String candHostId = rs.getString("quizHostId");
+						candidate = new ResultCandidate(candId, name);
+						candidate.setJoinedAt(joinedAt);
+						candidate.setCompletedAt(completedAt);
+						candidate.setHostId(candHostId);
+					}
+				}
+			}
+
+		} catch (SQLException e) {
+			System.out.print("SQL Exception is::" + e.getStackTrace());
+			return candidate;
+
+		}
+		return candidate;
 	}
 }

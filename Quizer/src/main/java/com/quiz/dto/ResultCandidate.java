@@ -5,9 +5,18 @@ import java.util.ArrayList;
 public class ResultCandidate {
 	private String id;
 	private String name;
+	private String hostId;
 	private String joinedAt;
 	private String completedAt;
 	private ArrayList<CandidateQuestionDTO> attemptedQuestionList;
+
+	public String getHostId() {
+		return hostId;
+	}
+
+	public void setHostId(String hostId) {
+		this.hostId = hostId;
+	}
 
 	public String getJoinedAt() {
 		return joinedAt;

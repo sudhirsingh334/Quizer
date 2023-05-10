@@ -25,9 +25,12 @@
 	<%@ page import="com.database.*"%>
 	<%@ page import="com.quiz.dto.*"%>
 	<%@ page import="java.text.SimpleDateFormat"%>
+		<%@ page import="com.quizer.servlet.*"%>
+	
 	<%
 //Fetch QuizHosts
 QuizResults results = PersistentHelper.singleton.getQuizResults();
+	session.setAttribute("Results", results);
 ArrayList<QuizHostDTO> hosts = new ArrayList<QuizHostDTO>();
 	if (results != null) {
 		ArrayList<QuizHostDTO> hostTemp = results.getHostList();
@@ -36,7 +39,7 @@ ArrayList<QuizHostDTO> hosts = new ArrayList<QuizHostDTO>();
 		}
 	}
 %>
-	<!-- partial:index.partial.html -->
+
 	<div class="container" style="margin-top:5%;zoom:110%;margin-top:4%; ">
 				  <input type="submit" onClick="getQuizerBack()" value="Back" class="button"/>
 	
@@ -59,8 +62,11 @@ ArrayList<QuizHostDTO> hosts = new ArrayList<QuizHostDTO>();
 							</tr>
 						</thead>
 
-						<tbody>
+						<body>
 						<% 
+						
+						
+						
 						
 						if (hosts == null || hosts.size() <1) {
 							String noHostRecordRow = "<tr data-toggle='collapse' data-target='#%s' class='accordion-toggle'>" +
@@ -102,6 +108,7 @@ ArrayList<QuizHostDTO> hosts = new ArrayList<QuizHostDTO>();
 							String hiddenRowHeader = "<tr>"+
 									"<td colspan='12' class='hiddenRow'>"+
 									"<div class='accordian-body collapse' id=\"%s\">"+
+									"<form action='preparQuizSummary' method='post'>"+
 										"<table class='table table-striped'>"+
 											"<thead>"+
 												"<tr class='info'>"+
@@ -128,7 +135,7 @@ ArrayList<QuizHostDTO> hosts = new ArrayList<QuizHostDTO>();
 									"<td>%s</td>"+
 									"<td>%s</td>"+
 									"<td>%s</td>"+
-									"<td><a href='createQuizSummary.jsp' class='btn btn-default btn-sm'> "+
+									"<td><button type='submit' class='btn btn-default btn-sm' name='download' value='%s'> download</button>"+
 									"<i class='glyphicon glyphicon-cog'></i>"+
 									"</a></td>"+
 								"</tr>";
@@ -140,6 +147,8 @@ ArrayList<QuizHostDTO> hosts = new ArrayList<QuizHostDTO>();
 									//Calculate Total Correct Questions
 									// Correct Question -> if the id of slected Answer is equal to the id of answer from OptionList of question which is correct
 
+									
+									
 									int totalQuestion = 0;
 									int attemptedQsnCount = 0;
 									int correctAnswers = 0;
@@ -213,11 +222,11 @@ ArrayList<QuizHostDTO> hosts = new ArrayList<QuizHostDTO>();
 							         	}
 									}
 									String attemptedQsnStr = attemptedQsnCount+"/"+totalQuestion;
-									String candidateRowFormated = String.format(candidateRow, rsltCand.getName(), duration, attemptedQsnStr,correctAnswers, scorePerc);
+									String candidateRowFormated = String.format(candidateRow, rsltCand.getName(), duration, attemptedQsnStr,correctAnswers, scorePerc,rsltCand.getId());
 									out.write(candidateRowFormated);
 								}
 								
-								out.write("</tbody> </table> </div></td></tr>");
+								out.write("</body> </table> </form> </div></td></tr>");
 								++hostRowCounter;	
 						}
 						
