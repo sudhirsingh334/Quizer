@@ -75,12 +75,31 @@
 				while (it.hasNext()) {
 					CandidateQuestionDTO qsn = it.next();
 					document.add(new Paragraph(qsn.getTitle()));
-					AnswerDTO answerDTO =  qsn.getAnswerDTOList().stream().filter(answer -> answer.isCorrect()).toList().get(0);
-					Text answerTitle = new Text(answerDTO.getTitle());
-					answerTitle.setFontColor(ColorConstants.GREEN);
+					AnswerDTO correctAnswer =  qsn.getAnswerDTOList().stream().filter(answer -> answer.isCorrect()).toList().get(0);
 					
-					document.add(new Paragraph().add(answerTitle));
 					
+					if (qsn.getSelectedAnswerDTO().getId().equalsIgnoreCase(correctAnswer.getId())) {
+						Text answerTitle = new Text(correctAnswer.getTitle());
+						answerTitle.setFontColor(ColorConstants.GREEN);
+						document.add(new Paragraph().add(answerTitle));
+					} else {
+						Text answerTitle = new Text(qsn.getSelectedAnswerDTO().getTitle());
+						answerTitle.setFontColor(ColorConstants.RED);
+						document.add(new Paragraph().add(answerTitle));
+						
+						Paragraph correctAnsPara = new Paragraph();
+						
+						Text correct = new Text("Corret Answer: ");
+						correctAnsPara.add(correct);
+						
+						Text correctAns = new Text(correctAnswer.getTitle());
+						correctAns.setFontColor(ColorConstants.GREEN);
+						
+						correctAnsPara.add(correctAns);
+						
+						document.add(correctAnsPara);
+						
+					}
 				}
     
     // Closing the document       
