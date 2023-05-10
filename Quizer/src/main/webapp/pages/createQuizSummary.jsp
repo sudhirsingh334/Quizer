@@ -1,5 +1,10 @@
 <!-- iText -->
 
+<%@page import="com.itextpdf.layout.borders.SolidBorder"%>
+<%@page import="com.itextpdf.layout.borders.Border"%>
+<%@page import="com.itextpdf.layout.element.Cell"%>
+<%@page import="com.itextpdf.layout.properties.UnitValue"%>
+<%@page import="com.itextpdf.layout.element.Table"%>
 <%@page import="com.itextpdf.kernel.colors.ColorConstants"%>
 <%@page import="com.itextpdf.layout.element.Paragraph"%>
 <%@page import="com.itextpdf.layout.element.Text"%>
@@ -62,7 +67,8 @@
     String para4 = "Joined At\t\t: "+candidate.getJoinedAt(); 
     String para5 = "Completed At\t: "+candidate.getCompletedAt(); 
     
-    
+    Table table = new Table(1, true);
+	
     // Adding paragraphs to document 
     document.add(header);
     document.add(new Paragraph(para2));
@@ -72,20 +78,29 @@
 	
 	Iterator<CandidateQuestionDTO> it = candidate.getAttemptedQuestionList().iterator();
 	
+				Border border =  Border.NO_BORDER;
+				
 				while (it.hasNext()) {
 					CandidateQuestionDTO qsn = it.next();
-					document.add(new Paragraph(qsn.getTitle()));
+					Cell cell = new Cell();
+					cell.setBorderBottom(Border.NO_BORDER);
+					cell.setBorderLeft(Border.NO_BORDER);
+					cell.setBorderRight(Border.NO_BORDER);
+					cell.setBorderTop(new SolidBorder(ColorConstants.LIGHT_GRAY, 1));
+				    cell.setMinHeight(60);
+					cell.add(new Paragraph(qsn.getTitle()));
+				    table.addCell(cell);
 					AnswerDTO correctAnswer =  qsn.getAnswerDTOList().stream().filter(answer -> answer.isCorrect()).toList().get(0);
 					
 					
 					if (qsn.getSelectedAnswerDTO().getId().equalsIgnoreCase(correctAnswer.getId())) {
 						Text answerTitle = new Text(correctAnswer.getTitle());
 						answerTitle.setFontColor(ColorConstants.GREEN);
-						document.add(new Paragraph().add(answerTitle));
+						cell.add(new Paragraph().add(answerTitle));
 					} else {
 						Text answerTitle = new Text(qsn.getSelectedAnswerDTO().getTitle());
 						answerTitle.setFontColor(ColorConstants.RED);
-						document.add(new Paragraph().add(answerTitle));
+						cell.add(new Paragraph().add(answerTitle));
 						
 						Paragraph correctAnsPara = new Paragraph();
 						
@@ -97,11 +112,12 @@
 						
 						correctAnsPara.add(correctAns);
 						
-						document.add(correctAnsPara);
+						cell.add(correctAnsPara);
 						
 					}
 				}
-    
+			    document.add(table);
+
     // Closing the document       
     document.close();             
     System.out.println("Paragraph added"); 
