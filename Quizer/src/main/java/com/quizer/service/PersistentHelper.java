@@ -645,6 +645,43 @@ public class PersistentHelper {
 						candidate.setJoinedAt(joinedAt);
 						candidate.setCompletedAt(completedAt);
 						candidate.setHostId(candHostId);
+						
+						// Fetch QuestionListAttempted by candidate
+						try (PreparedStatement selectedAnswrStmt = connection.prepareStatement(
+								"SELECT * FROM CandidateSelectedAnswer where candidateId = ?")) {
+							selectedAnswrStmt.setString(1, candId);
+							ResultSet selectedAnswrRS = selectedAnswrStmt.executeQuery();
+							ArrayList<CandidateQuestionDTO> candQsnList = new ArrayList<CandidateQuestionDTO>();
+
+							while (selectedAnswrRS.next()) {
+								String answerOptionId = selectedAnswrRS.getString("answerOptionId");
+								String questionId = selectedAnswrRS.getString("questionId");
+
+								// Fetch Question
+								try (PreparedStatement qsnStmt = connection
+										.prepareStatement("SELECT * FROM Question where id = ?")) {
+									qsnStmt.setString(1, questionId);
+									ResultSet qsnRS = qsnStmt.executeQuery();
+
+									if (qsnRS.next()) {
+										String qsnId = qsnRS.getString("id");
+										String qsnTitle = qsnRS.getString("title");
+										String qsnQuizId = qsnRS.getString("quizId");
+										CandidateQuestionDTO candQsn = new CandidateQuestionDTO();
+										candQsn.setId(qsnQuizId);
+										candQsn.setTitle(qsnTitle);
+										// Fetch Answer Option for the question
+										candQsn.setAnswerDTOList(
+												getAnswerOptionList(connection, questionId));
+										// Fetch Selected Answer Option
+										candQsn.setSelectedAnswerDTO(
+												getAnswerOption(connection, answerOptionId));
+										candQsnList.add(candQsn);
+									}
+								}
+								candidate.setAttemptedQuestionList(candQsnList);
+							}
+						}
 					}
 				}
 			}

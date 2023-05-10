@@ -34,7 +34,7 @@
 		return;
 	}
 	 //path where the PDF file will be store  
-	String downloadFolder = System.getProperty("user.home") + "/Downloads/QuizSummary.pdf";
+	String downloadFolder = System.getProperty("user.home") + "/Downloads/"+candidate.getName()+"-quiz_summary.pdf";
 
 	PdfWriter writer = new PdfWriter(downloadFolder); 
 	   
@@ -44,15 +44,25 @@
     Document document = new Document(pdf);              
     String para1 = "Quiz Summary.";  
     
-    String para2 = "Candidate: "+candidate.getName();              
+    String para2 = "Candidate\t\t\t:"+candidate.getName(); 
+    String para3 = "Code\t\t\t:"+"XXXX"; 
+    String para4 = "Joined At\t\t: "+candidate.getJoinedAt(); 
+    String para5 = "Completed At\t: "+candidate.getCompletedAt(); 
     
-    // Creating Paragraphs       
-    Paragraph paragraph1 = new Paragraph(para1);             
-    Paragraph paragraph2 = new Paragraph(para2);              
     
     // Adding paragraphs to document       
-    document.add(paragraph1);       
-    document.add(paragraph2);           
+    document.add(new Paragraph(para1));       
+    document.add(new Paragraph(para2));
+	document.add(new Paragraph(para3));
+	document.add(new Paragraph(para4));
+	document.add(new Paragraph(para5));
+	
+	Iterator<CandidateQuestionDTO> it = candidate.getAttemptedQuestionList().iterator();
+	
+				while (it.hasNext()) {
+					CandidateQuestionDTO qsn = it.next();
+					document.add(new Paragraph(qsn.getTitle()));
+				}
     
     // Closing the document       
     document.close();             
